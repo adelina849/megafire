@@ -78,6 +78,9 @@ $route['translate_uri_dashes'] = FALSE;
 		
 		$route['data-apar-hapus'] = "C_data_apar/hapus";
 		$route['data-apar-hapus/(:any)'] = 'C_data_apar/hapus';
+		
+		$route['data-apar-excel'] = "C_data_apar/view_excel";
+		$route['data-apar-excel/(:any)'] = 'C_data_apar/view_excel';
 	//DATA APAR
 	
 	//DATA PEMILIK
@@ -89,4 +92,21 @@ $route['translate_uri_dashes'] = FALSE;
 		
 		$route['data-pemilik-hapus'] = "C_data_pelanggan/hapus";
 		$route['data-pemilik-hapus/(:any)'] = 'C_data_pelanggan/hapus';
+		
+		$route['data-pemilik-excel'] = "C_data_pelanggan/view_excel";
+		$route['data-pemilik-excel/(:any)'] = 'C_data_pelanggan/view_excel';
 	//DATA PEMILIK
+	
+	//DATA PETUGAS
+		$route['data-petugas'] = "C_data_petugas/index";
+		$route['data-petugas/(:any)'] = 'C_data_petugas/index';
+		
+		$route['data-petugas-simpan'] = "C_data_petugas/simpan";
+		$route['data-petugas-simpan/(:any)'] = 'C_data_petugas/simpan';
+		
+		$route['data-petugas-hapus'] = "C_data_petugas/hapus";
+		$route['data-petugas-hapus/(:any)'] = 'C_data_petugas/hapus';
+		
+		$route['data-petugas-excel'] = "C_data_petugas/view_excel";
+		$route['data-petugas-excel/(:any)'] = 'C_data_petugas/view_excel';
+	//DATA PETUGAS

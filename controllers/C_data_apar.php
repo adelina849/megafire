@@ -219,4 +219,54 @@ class C_data_apar extends CI_Controller
 			}
 		}
 	}
+	
+	public function view_excel()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				if((!empty($_GET['cari'])) && ($_GET['cari']!= "")  )
+				{
+					$cari = str_replace("'","",$_GET['cari']);
+				}
+				else
+				{
+					$cari = "";
+				}
+				
+				//1. GET DATA APAR
+					$query = "
+								SELECT * FROM tb_apar 
+								WHERE (no_apar LIKE '%".$cari."%' OR jenis_apar LIKE '%".$cari."%')
+								ORDER BY tgl_ins DESC
+								;
+							";
+					$get_data_apar = $this->M_general->view_query_general($query);
+					if(!empty($get_data_apar))
+					{
+						$jum_apar = $get_data_apar->num_rows();
+						$list_data_apar = $get_data_apar;
+					}
+					else
+					{
+						$jum_apar = 0;
+						$list_data_apar = false;
+					}
+				//1. GET DATA APAR
+				
+				$data = array('page_content'=>'excel_data_dasar_apar','list_data_apar'=>$list_data_apar);
+				$this->load->view('admin/excel_data_dasar_apar.html',$data);
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
 }

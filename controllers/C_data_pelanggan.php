@@ -31,7 +31,7 @@ class C_data_pelanggan extends CI_Controller
 					$cari = "";
 				}
 				
-				//1. GET DATA PELANGGAN
+				//1. GET DATA PELANGGAN/PEMILIK
 					$query = "
 								SELECT 
 									* 
@@ -64,7 +64,7 @@ class C_data_pelanggan extends CI_Controller
 						$jum_pelanggan = 0;
 						$list_data_pelanggan = false;
 					}
-				//1. GET DATA APAR
+				//1. GET DATA PELANGGAN/PEMILIK
 				
 				
 				$this->load->library('pagination');
@@ -161,6 +161,7 @@ class C_data_pelanggan extends CI_Controller
 						$_POST['nik_pelanggan'],
 						$_POST['no_pelanggan'],
 						$_POST['nama_pelanggan'],
+						$_POST['kelamin'],
 						$_POST['tempat_lahir'],
 						$_POST['tgl_lahir'],
 						$_POST['tlp'],
@@ -171,6 +172,8 @@ class C_data_pelanggan extends CI_Controller
 						$_POST['wil_des'],
 						$_POST['alamat'],
 						$_POST['ket_pelanggan'],
+						$_POST['nama_perusahaan'],
+						$_POST['jabatan'],
 						$_POST['user'],
 						$_POST['pass'],
 						$_POST['avatar']
@@ -184,6 +187,7 @@ class C_data_pelanggan extends CI_Controller
 						$_POST['nik_pelanggan'],
 						$_POST['no_pelanggan'],
 						$_POST['nama_pelanggan'],
+						$_POST['kelamin'],
 						$_POST['tempat_lahir'],
 						$_POST['tgl_lahir'],
 						$_POST['tlp'],
@@ -194,6 +198,8 @@ class C_data_pelanggan extends CI_Controller
 						$_POST['wil_des'],
 						$_POST['alamat'],
 						$_POST['ket_pelanggan'],
+						$_POST['nama_perusahaan'],
+						$_POST['jabatan'],
 						'', //$_POST['user'],
 						'', //$_POST['pass'],
 						'' //$_POST['avatar']
@@ -225,6 +231,35 @@ class C_data_pelanggan extends CI_Controller
 				$this->M_general->exec_query_general($query);
 				
 				header('Location: '.base_url().'data-pemilik');
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
+	
+	function simpan_akun()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				$query = "
+							UPDATE tb_pelanggan 
+								SET 
+									user = '".htmlentities(str_replace("'","",$_POST['user']), ENT_QUOTES, 'UTF-8')."',
+									pass = '".htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')."'
+							WHERE MD5(id_pelanggan) = '".htmlentities(str_replace("'","",$_POST['id_pelanggan']), ENT_QUOTES, 'UTF-8')."';
+						";
+				$this->M_general->exec_query_general($query);
+				
+				echo'BERHASIL';
 			}
 			else
 			{
@@ -298,6 +333,71 @@ class C_data_pelanggan extends CI_Controller
 				{
 					return false;
 				}
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
+	
+	public function view_excel()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				if((!empty($_GET['cari'])) && ($_GET['cari']!= "")  )
+				{
+					$cari = str_replace("'","",$_GET['cari']);
+				}
+				else
+				{
+					$cari = "";
+				}
+				
+				//1. GET DATA PELANGGAN/PEMILIK
+					$query = "
+								SELECT 
+									* 
+									,
+									SUBSTRING_INDEX(A.wil_prov,'|',1) AS kode_prov,
+									SUBSTRING_INDEX(A.wil_prov,'|',-1) AS nama_prov,
+									
+									SUBSTRING_INDEX(A.wil_kabkot,'|',1) AS kode_kabkot,
+									SUBSTRING_INDEX(A.wil_kabkot,'|',-1) AS nama_kabkot,
+									
+									SUBSTRING_INDEX(A.wil_kec,'|',1) AS kode_kec,
+									SUBSTRING_INDEX(A.wil_kec,'|',-1) AS nama_kec,
+									
+									SUBSTRING_INDEX(A.wil_des,'|',1) AS kode_des,
+									SUBSTRING_INDEX(A.wil_des,'|',-1) AS nama_des
+								FROM tb_pelanggan AS A
+								WHERE (nik_pelanggan LIKE '%".$cari."%' OR no_pelanggan LIKE '%".$cari."%' OR nama_pelanggan LIKE '%".$cari."%')
+								ORDER BY tgl_ins DESC
+								LIMIT ".$this->uri->segment(2,0).",50
+								;
+							";
+					$get_data_pelanggan = $this->M_general->view_query_general($query);
+					if(!empty($get_data_pelanggan))
+					{
+						$jum_pelanggan = $get_data_pelanggan->num_rows();
+						$list_data_pelanggan = $get_data_pelanggan;
+					}
+					else
+					{
+						$jum_pelanggan = 0;
+						$list_data_pelanggan = false;
+					}
+				//1. GET DATA PELANGGAN/PEMILIK
+				
+				$data = array('page_content'=>'excel_data_dasar_pelanggan','list_data_pelanggan'=>$list_data_pelanggan);
+				$this->load->view('admin/excel_data_dasar_pelanggan.html',$data);
 			}
 			else
 			{

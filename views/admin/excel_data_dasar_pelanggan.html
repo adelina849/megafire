@@ -1,0 +1,113 @@
+ <title>DataPemilik</title>
+ 
+ <?php
+ 
+ $title = "DataPemilik";
+ header("Content-type: application/vnd-ms-excel");
+ header("Content-Disposition: attachment; filename=$title.xls");
+ header("Pragma: no-cache");
+ header("Expires: 0");
+ 
+ ?>
+
+<?php
+	//TABLE
+	if(!empty($list_data_pelanggan))
+	{
+		//$sum_laporan_h_penjualan = $sum_laporan_h_penjualan->row();
+		
+		echo'<table width="100%" id="example2" class="table table-hover hoverTable">';
+			echo '<thead>';
+			
+			echo '<tbody>
+				<tr>
+					<td colspan="19" style="text-align:center;">
+						<b>LAPORAN DATA PEMILIK</b>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="19" style="text-align:center;">
+					</td>
+				</tr>
+			';
+			
+			echo'
+					<tr>';
+						echo '<th style="background-color:green;">NO</th>';
+						echo '<th style="background-color:green;">NIK</th>';
+						echo '<th style="background-color:green;">NAMA SESUAI KTP</th>';
+						echo '<th style="background-color:green;">TEMPAT LAHIR</th>';
+						echo '<th style="background-color:green;">TANGGAL LAHIR</th>';
+						echo '<th style="background-color:green;">JENIS KELAMIN</th>';
+						echo '<th style="background-color:green;">ALAMAT</th>';
+						echo '<th style="background-color:green;">RT/RW</th>';
+						echo '<th style="background-color:green;">KELURAHAN/DESA</th>';
+						echo '<th style="background-color:green;">KECAMATAN</th>';
+						echo '<th style="background-color:green;">KABUPATEN</th>';
+						echo '<th style="background-color:green;">NAMA PERUSAHAAN/LEMBAGA</th>';
+						echo '<th style="background-color:green;">JABATAN</th>';
+						echo '<th style="background-color:green;">KONTAK</th>';
+						echo '<th style="background-color:green;">EMAIL</th>';
+						echo '<th style="background-color:green;">USER ID</th>';
+						echo '<th style="background-color:green;">KATA SANDI 1</th>';
+						echo '<th style="background-color:green;">KATA SANDI 2</th>';
+						echo '<th style="background-color:green;">KETERANGAN</th>';
+
+						
+			echo '</tr>
+				</thead>';
+			$list_result = $list_data_pelanggan->result();
+			
+			
+			$no = 1;
+			$nominal = 0;
+			$grand_total = 0;
+			
+			echo '<tbody>';
+			
+			foreach($list_result as $row)
+			{
+				echo'<tr class="tr_utama">';
+					echo'<td>'.$no.'</td>';
+					echo'<td>'.$row->nik_pelanggan.'</td>';
+					echo'<td>'.$row->nama_pelanggan.'</td>';
+					echo'<td>'.$row->tempat_lahir.'</td>';
+					echo'<td>'.$row->tgl_lahir.'</td>';
+					echo'<td>'.$row->kelamin.'</td>';
+					echo'<td>'.$row->alamat.'</td>';
+					echo'<td></td>';
+					echo'<td>'.$row->nama_des.'</td>';
+					echo'<td>'.$row->nama_kec.'</td>';
+					echo'<td>'.$row->nama_kabkot.'</td>';
+					echo'<td>'.$row->nama_perusahaan.'</td>';
+					echo'<td>'.$row->jabatan.'</td>';
+					echo'<td>'.$row->tlp.'</td>';
+					echo'<td>'.$row->email.'</td>';
+					echo'<td>'.$row->user.'</td>';
+					echo'<td></td>';
+					echo'<td></td>';
+					echo'<td></td>';
+					
+					//echo'<td style="text-align:right;">'.number_format( $row->NOMINAL ,0,'.',',').'</td>';
+					//echo'<td style="text-align:right;">'.($row->NOMINAL).'</td>';
+				echo'</tr>';
+				$no++;
+				//$grand_total = $grand_total + $row->NOMINAL;
+			}		
+				/*
+				echo'<tr>';
+					echo'<td colspan="6" style="text-align:right;font-weight:bold;">GRAND TOTAL</td>';
+					echo'<td style="text-align:right;font-weight:bold;">'.($grand_total).'</td>';
+				echo'</tr>';
+				*/
+			echo '</tbody>';
+		echo'</table>';
+	}
+	else
+	{
+		echo'<center>';
+		echo'Tidak Ada Data Yang Ditampilkan !';
+		echo'</center>';
+	}
+	//TABLE
+?>

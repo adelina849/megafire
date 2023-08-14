@@ -245,7 +245,7 @@
 						
 						<li id="12_data_dasar_pemilik"><a href="<?php echo base_url();?>data-pemilik"><i class="fa fa-user"></i> Data Pemilik </a></li>
 						
-						<li id="42_pengaturan_Operasional_hargaDasar"><a href="<?php echo base_url();?>gl-admin-harga-dasar-satuan"><i class="fa fa-users"></i> Data Petugas </a></li>
+						<li id="13_data_dasar_petugas"><a href="<?php echo base_url();?>data-petugas"><i class="fa fa-users"></i> Data Petugas </a></li>
 				  </ul>
 				</li>
 			<!-- DATA DASAR APAR -->

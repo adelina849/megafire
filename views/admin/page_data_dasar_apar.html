@@ -284,6 +284,12 @@
 												<!-- <input type="text" name="cari"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['berdasarkan'])){echo $_GET['cari'];} ?>"/> -->
 												<input type="text" name="cari"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>"/>
 											</td>
+											<td>	
+												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
+											</td>
+											<td>
+												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-apar-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
+											</td>
 										</tr>
 									</table>
 								</form>

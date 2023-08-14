@@ -248,6 +248,25 @@
 							</div>
 							
 							<div class="form-group">
+							  <label for="kelamin">JENIS KELAMIN</label>
+							  <select name="kelamin" id="kelamin" class="required form-control select2" title="Jenis KELAMIN">
+									<option value="">== Pilih Jenis Kelamin ==</option>
+									<option value="PRIA">PRIA</option>
+									<option value="WANITA">WANITA</option>
+							   </select>
+							</div>
+							
+							<div class="form-group">
+								<label for="nama_perusahaan">NAMA PERUSAHAAN/INSTANSI/LEMBAGA</label>
+								<input type="text" id="nama_perusahaan" name="nama_perusahaan"  maxlength="35" class="form-control" size="35" alt="Nama PERUSAHAAN/INSTANSI/LEMBAGA" title="Nama PERUSAHAAN/INSTANSI/LEMBAGA" placeholder="*Nama PERUSAHAAN/INSTANSI/LEMBAGA" />
+							</div>
+							
+							<div class="form-group">
+								<label for="jabatan">JABATAN</label>
+								<input type="text" id="jabatan" name="jabatan"  maxlength="35" class="form-control" size="35" alt="Jabatan" title="Jabatan" placeholder="*Jabatan" />
+							</div>
+							
+							<div class="form-group">
 								<label for="tempat_lahir">TEMPAT LAHIR</label>
 								<input type="text" id="tempat_lahir" name="tempat_lahir"  maxlength="35" class="required form-control" size="35" alt="Tempat Lahir" title="Tempat Lahir" placeholder="*Tempat Lahir" />
 							</div>
@@ -375,6 +394,12 @@
 												<!-- <input type="text" name="cari"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['berdasarkan'])){echo $_GET['cari'];} ?>"/> -->
 												<input type="text" name="cari"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>"/>
 											</td>
+											<td>	
+												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
+											</td>
+											<td>
+												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-pemilik-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
+											</td>
 										</tr>
 									</table>
 								</form>
@@ -415,6 +440,9 @@
 															<b>NO Pelanggan : </b> '.$row->no_pelanggan.'
 															<br/><b>NIK : </b> '.$row->nik_pelanggan.'
 															<br/><b>Nama Lengkap : </b> '.$row->nama_pelanggan.'
+															<br/><b>Jenis Kelamin : </b> '.$row->kelamin.'
+															<br/><b>Perusahaan/Instansi : </b> '.$row->nama_perusahaan.'
+															<br/><b>Jabatan : </b> '.$row->jabatan.'
 															<br/><b>Tempat Lahir : </b> '.$row->tempat_lahir.'
 															<br/><b>Tgl Lahir : </b> '.$row->tgl_lahir.'
 														</td>';
@@ -426,22 +454,34 @@
 												
 												echo '<td>
 														<b>Jenis Pemilik :</b> '.$row->jenis_pelanggan.'
-														<br/><b>Akun :</b> '.$row->user.'
+														<br/>
+														<br/><b>Akun :</b> 
+														<br/><input type="text" id="user_'.$no.'" value="'.$row->user.'"/>
+														<br/><b>Password :</b> 
+														<br/><input type="password" id="pass_'.$no.'" value="password"/>
+														<br/><b>Konfirm Password :</b> 
+														<br/><input type="password" id="pass2_'.$no.'" value="password"/>
 													</td>';
 												
 echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
 
 echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
+echo'<input type="hidden" id="id_pelanggan_md5_'.$no.'" name="id_pelanggan_md5_'.$no.'" value="'.md5($row->id_pelanggan).'" />';
 echo'<input type="hidden" id="jenis_pelanggan_'.$no.'" name="jenis_pelanggan_'.$no.'" value="'.$row->jenis_pelanggan.'" />';
 echo'<input type="hidden" id="nik_pelanggan_'.$no.'" name="nik_pelanggan_'.$no.'" value="'.$row->nik_pelanggan.'" />';
 echo'<input type="hidden" id="no_pelanggan_'.$no.'" name="no_pelanggan_'.$no.'" value="'.$row->no_pelanggan.'" />';
 echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no.'" value="'.$row->nama_pelanggan.'" />';
+echo'<input type="hidden" id="kelamin_'.$no.'" name="kelamin_'.$no.'" value="'.$row->kelamin.'" />';
 echo'<input type="hidden" id="tempat_lahir_'.$no.'" name="tempat_lahir_'.$no.'" value="'.$row->tempat_lahir.'" />';
 echo'<input type="hidden" id="tgl_lahir_'.$no.'" name="tgl_lahir_'.$no.'" value="'.$row->tgl_lahir.'" />';
 echo'<input type="hidden" id="tlp_'.$no.'" name="tlp_'.$no.'" value="'.$row->tlp.'" />';
 echo'<input type="hidden" id="email_'.$no.'" name="email_'.$no.'" value="'.$row->email.'" />';
 
 echo'<input type="hidden" id="alamat_'.$no.'" name="alamat_'.$no.'" value="'.$row->alamat.'" />';
+
+echo'<input type="hidden" id="nama_perusahaan_'.$no.'" name="nama_perusahaan_'.$no.'" value="'.$row->nama_perusahaan.'" />';
+echo'<input type="hidden" id="jabatan_'.$no.'" name="jabatan_'.$no.'" value="'.$row->jabatan.'" />';
+
 echo'<input type="hidden" id="ket_pelanggan_'.$no.'" name="ket_pelanggan_'.$no.'" value="'.$row->ket_pelanggan.'" />';
 echo'<input type="hidden" id="user_'.$no.'" name="user_'.$no.'" value="'.$row->user.'" />';
 echo'<input type="hidden" id="pass_'.$no.'" name="pass_'.$no.'" value="'.$row->pass.'" />';
@@ -470,6 +510,8 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_pelanggan.'" alt = "Ubah Data '.$row->no_pelanggan.'">Edit</a>
 	
 	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-pemilik-hapus/'.(md5($row->id_pelanggan)).'" title = "Hapus Data '.$row->no_pelanggan.'" alt = "Hapus Data '.$row->no_pelanggan.'">Hapus</a>
+	
+	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'" alt = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'">Simpan Akun</a>
 												</td>';
 												
 											echo'</tr>';
@@ -505,6 +547,55 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 			
 		
 <script type='text/javascript'>
+	function ubah_akun(id)
+	{
+		var id_pelanggan = $('#id_pelanggan_md5_'+id).val();
+		var nama_pemilik = $('#nama_pelanggan_'+id).val();
+		var user = $('#user_'+id).val();
+		var pass = $('#pass_'+id).val();
+		var pass2 = $('#pass2_'+id).val();
+		
+		var r = confirm("Apakah anda yakin akan menyimpan akun untuk "+nama_pemilik+" dengan nama akun *"+user+"* ?");
+		if (r == true) 
+		{
+			//alert("1.Cek Konfirm");
+			if(pass == pass2)
+			{
+				//alert("2.Proses Ajax");
+				$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/simpan_akun/"
+				, data: 
+						{
+							id_pelanggan:id_pelanggan,
+							user:user,
+							pass:pass
+						}
+				, cache: false
+				, success:function(data)
+				{ 
+					if(data==0)
+					//if(data==0)
+					{
+						$('#user_'+id).css('border', '3px #C33 solid');
+						$('#pass_'+id).css('border', '3px #C33 solid');
+						$('#pass2_'+id).css('border', '3px #C33 solid');
+						
+					}
+					else
+					{
+						$('#user_'+id).css('border', '3px #090 solid');
+						$('#pass_'+id).css('border', '3px #090 solid');
+						$('#pass2_'+id).css('border', '3px #090 solid');
+					}
+					  
+				} 
+				});
+			}
+			else
+			{
+				alert("Password dan Konfirmasi Password berbeda. Pastikan password diisi dengan benar !");
+			}
+		}
+	}
 	
 	function get_kabkot(evt)
 	{
@@ -606,10 +697,14 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		$('input[name=nik_pelanggan]').val($('#nik_pelanggan_'+id).val());
 		$('input[name=no_pelanggan]').val($('#no_pelanggan_'+id).val());
 		$('input[name=nama_pelanggan]').val($('#nama_pelanggan_'+id).val());
+		$('input[name=kelamin_]').val($('#kelamin'+id).val());
 		$('input[name=tempat_lahir]').val($('#tempat_lahir_'+id).val());
 		$('input[name=tgl_lahir]').val($('#tgl_lahir_'+id).val());
 		$('input[name=tlp]').val($('#tlp_'+id).val());
 		$('input[name=email]').val($('#email_'+id).val());
+		
+		$('input[name=nama_perusahaan]').val($('#nama_perusahaan_'+id).val());
+		$('input[name=jabatan]').val($('#jabatan_'+id).val());
 		
 		
 		document.getElementById("wil_prov").options.item(0).text = $('#nama_prov_'+id).val();
