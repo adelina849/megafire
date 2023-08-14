@@ -243,7 +243,7 @@
 				  <ul class="treeview-menu">
 						<li id="11_data_dasar_apar"><a href="<?php echo base_url();?>data-apar"><i class="fa fa-fire-extinguisher"></i> Data APAR </a></li>
 						
-						<li id="42_pengaturan_Operasional_hargaDasar"><a href="<?php echo base_url();?>gl-admin-harga-dasar-satuan"><i class="fa fa-user"></i> Data Pemilik </a></li>
+						<li id="12_data_dasar_pemilik"><a href="<?php echo base_url();?>data-pemilik"><i class="fa fa-user"></i> Data Pemilik </a></li>
 						
 						<li id="42_pengaturan_Operasional_hargaDasar"><a href="<?php echo base_url();?>gl-admin-harga-dasar-satuan"><i class="fa fa-users"></i> Data Petugas </a></li>
 				  </ul>

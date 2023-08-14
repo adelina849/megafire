@@ -99,7 +99,19 @@ class C_data_apar extends CI_Controller
 				
 				$msgbox_title = " Data Dasar APAR";
 				
-				$data = array('page_content'=>'page_data_dasar_apar','halaman'=>$halaman,'list_data_apar'=>$list_data_apar,'msgbox_title' => $msgbox_title);
+				//2. GET NO APAR
+					$get_no_apar = $this->M_data_apar->get_no_apar();
+					if(!empty($get_no_apar))
+					{
+						$get_no_apar = $get_no_apar->id_apar;
+					}
+					else
+					{
+						$get_no_apar = "";
+					}
+				//2. GET NO APAR
+				
+				$data = array('page_content'=>'page_data_dasar_apar','halaman'=>$halaman,'list_data_apar'=>$list_data_apar,'msgbox_title' => $msgbox_title,'get_no_apar' => $get_no_apar);
 				$this->load->view('admin/container',$data);
 			}
 			else

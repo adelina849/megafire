@@ -87,6 +87,6 @@ $route['translate_uri_dashes'] = FALSE;
 		$route['data-pemilik-simpan'] = "C_data_pelanggan/simpan";
 		$route['data-pemilik-simpan/(:any)'] = 'C_data_pelanggan/simpan';
 		
-		$route['data-pemilik-hapus'] = "C_data_pelanggan/hapus";
-		$route['data-pemilik-hapus/(:any)'] = 'C_data_pelanggan/hapus';
+		$route['data-pemilik-simpan'] = "C_data_pelanggan/simpan";
+		$route['data-pemilik-simpan/(:any)'] = 'C_data_pelanggan/simpan';
 	//DATA PEMILIK

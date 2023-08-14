@@ -57,6 +57,57 @@ class M_general extends CI_Model
 			return false;
 		}
 	}
+	
+	function get_kabkot($cari)
+	{
+		$query = "
+			SELECT * FROM wilayah_2020 WHERE LENGTH(kode) = '5' ".$cari." GROUP BY kode,nama  ORDER BY nama ASC;
+		";
+		
+		$query = $this->db->query($query);
+		if($query->num_rows() > 0)
+		{
+			return $query;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function get_kec($cari)
+	{
+		$query = "
+			SELECT * FROM wilayah_2020 WHERE LENGTH(kode) = '8' ".$cari." GROUP BY kode,nama  ORDER BY nama ASC;
+		";
+		
+		$query = $this->db->query($query);
+		if($query->num_rows() > 0)
+		{
+			return $query;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function get_desa($cari)
+	{
+		$query = "
+			SELECT * FROM wilayah_2020 WHERE LENGTH(kode) = '13' ".$cari." GROUP BY kode,nama  ORDER BY nama ASC;
+		";
+		
+		$query = $this->db->query($query);
+		if($query->num_rows() > 0)
+		{
+			return $query;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
 
 /* End of file M_general.php */

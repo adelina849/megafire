@@ -104,42 +104,42 @@
 					{
 					*/
 						$('#1_data_dasar').attr('class', 'active treeview');
-						$('#11_data_dasar_apar').attr('class', 'active treeview');
+						$('#12_data_dasar_pemilik').attr('class', 'active treeview');
 					//}
 					
-					$("#no_apar").change(function()
+					$("#no_pelanggan").change(function()
                     {  
                 
-                        var no_apar = $("#no_apar").val();
+                        var no_pelanggan = $("#no_pelanggan").val();
                         $("#pesan").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek <?php echo $msgbox_title;?> ...");
                 
-                        if(no_apar =='')
+                        if(no_pelanggan =='')
                         {
                           $("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> Kolom Tidak Boleh Kosong');
-                          $("#no_apar").css('border', '3px #C33 solid');
+                          $("#no_pelanggan").css('border', '3px #C33 solid');
                         }
 						else
 						{
-							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_apar/cek_no_apar/"
+							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/cek_data_pelanggan/"
 							, data: 
 									{
-										no_apar:no_apar
+										no_pelanggan:no_pelanggan
 									}
 							, cache: false
 							, success:function(data)
 							{ 
-								if(data==0 || ($("#no_apar").val() == $("#cek_no_apar").val()))
+								if(data==0 || ($("#no_pelanggan").val() == $("#cek_no_pelanggan").val()))
 								//if(data==0)
 								  {
 									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/true.png">');
-									$("#no_apar").css('border', '3px #090 solid');
+									$("#no_pelanggan").css('border', '3px #090 solid');
 									$("#btnsimpan").attr("disabled", false);
 								}
 								  else
 								  {
 									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> No/Kode <?php echo $msgbox_title;?> Telah Digunakan, Tombol Save Terkunci');
 									//$("#pesan").html(data); 
-									$("#no_apar").css('border', '3px #C33 solid');
+									$("#no_pelanggan").css('border', '3px #C33 solid');
 									$("#btnsimpan").attr("disabled", true);
 								  }
 								  
@@ -183,7 +183,7 @@
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 			<li><a href="#"><i class="fa fa-desktop"></i> Data Dasar</a></li>
-			<li class="active"><i class="fa fa-fire-extinguisher"></i> APAR</li>
+			<li class="active"><i class="fa fa-user"></i> Pemilik</li>
 			
 		</ol>
 		</section>
@@ -200,7 +200,7 @@
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				<h4><?php echo $msgbox_title;?></h4>
 				<p>
-					Halaman ini menampilkan data jenis - jenis APAR yang tersedia. Klik tombol "+" untuk menambah data.
+					Halaman ini menampilkan data pelanggan yang tersedia. Klik tombol "+" untuk menambah data.
 				</P>
 				<!-- <p style="color:red;"><?php //echo $sum_pesan; ?></p> -->
 			</div>
@@ -216,35 +216,126 @@
 				
 				
 				<!-- ISI FORM -->
-						<form role="form" action="<?php echo base_url();?>data-apar-simpan" method="post" class="frm-input">
+						<form role="form" action="<?php echo base_url();?>data-pemilik-simpan" method="post" class="frm-input">
 						<input type="hidden" name="stat_edit" id="stat_edit"/>
-						<input type="hidden" name="id_apar" id="id_apar"/>
+						<input type="hidden" name="id_pelanggan" id="id_pelanggan"/>
 						<div class="box-body">
 							
 							<div class="form-group">
-							<label for="no_apar">NO APAR</label>
-							<input type="hidden" id="cek_no_apar" name="cek_no_apar" />
-							<input type="text" id="no_apar" name="no_apar"  maxlength="25" class="required form-control" size="15" onkeyup="this.value = this.value.toUpperCase()" onkeypress="return RestrictSpace()" alt="NO APAR" title="NO APAR" placeholder="*NO APAR" value="<?php echo $get_no_apar;?>"/><span id="pesan"></span>
+							  <label for="jenis_pelanggan">JENIS PEMILIK</label>
+							  <select name="jenis_pelanggan" id="jenis_pelanggan" class="required form-control select2" title="Jenis Pemilik">
+									<option value="">== Pilih Jenis Pemilik ==</option>
+									<option value="DINAS">DINAS</option>
+									<option value="PERUSAHAAN">PERUSAHAAN</option>
+									<option value="PERORANGAN">PERORANGAN</option>
+							   </select>
 							</div>
 							
 							<div class="form-group">
-							<label for="jenis_apar">JENIS APAR</label>
-							<input type="text" id="jenis_apar" name="jenis_apar"  maxlength="25" class="required form-control" size="35" onkeyup="this.value = this.value.toUpperCase()" alt="Jenis APAR" title="Jenis APAR" placeholder="*Jenis APAR"/>
+								<label for="nik_pelanggan">NIK</label>
+								<input type="text" id="nik_pelanggan" name="nik_pelanggan"  maxlength="25" class=" form-control" size="35" alt="NIK " title="NIK " placeholder="*NIK " onkeypress="return isNumberKey(event)"/>
 							</div>
 							
 							<div class="form-group">
-								<label for="kapasitas">KAPASITAS APAR</label>
-								<input type="text" id="kapasitas" name="kapasitas"  maxlength="2" onkeypress="return isNumberKey(event)" class="required form-control" size="35" alt="Kapasitas APAR" value="0" title="Kapasitas APAR" placeholder="*Kapasitas APAR"/>
+								<label for="no_pelanggan">NO/KODE PEMILIK</label>
+								<input type="hidden" id="cek_no_pelanggan" name="cek_no_pelanggan" />
+								<input type="text" id="no_pelanggan" name="no_pelanggan"  maxlength="15" class="required form-control" size="15" alt="No/Kode" title="No/Kode" placeholder="*No/Kode adalah no unik yang diberikan sebagai penanda atau identitas bagi tersebut, No ini bersifat unik atau tidak ada yang sama." value="<?php echo $get_no_pelanggan; ?>" /><span id="pesan"></span>
 							</div>
 							
 							<div class="form-group">
-								<label for="merek">MEREK</label>
-								<input type="text" id="merek" name="merek"  maxlength="150" onkeypress="return isNumberKey(event)" class="required form-control" size="35" alt="Merek APAR" value="MEGAFIRE" title="Merek APAR" placeholder="*Merek APAR" readonly/>
+								<label for="nama_pelanggan">NAMA LENGKAP</label>
+								<input type="text" id="nama_pelanggan" name="nama_pelanggan"  maxlength="35" class="required form-control" size="35" alt="Nama Lengkap" title="Nama Lengkap" placeholder="*Nama Lengkap" />
 							</div>
 							
 							<div class="form-group">
-                              <label for="ket_apar">Keterangan</label>
-                              <textarea name="ket_apar" id="ket_apar" class="required form-control" title="Isikan lengkap tentang keterangan APAR" placeholder="*Isikan lengkap tentang keterangan APAR"></textarea>
+								<label for="tempat_lahir">TEMPAT LAHIR</label>
+								<input type="text" id="tempat_lahir" name="tempat_lahir"  maxlength="35" class="required form-control" size="35" alt="Tempat Lahir" title="Tempat Lahir" placeholder="*Tempat Lahir" />
+							</div>
+							
+							<div class="form-group">
+								<label>TANGGAL LAHIR</label>
+								<div class="input-group date">
+								  <div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								  </div>
+								  <input name="tgl_lahir" id="tgl_lahir" type="text" class=" form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="<?php echo date("Y-m-d"); ?>" data-date-format="yyyy-mm-dd">
+								</div>
+								<!-- /.input group -->
+							</div>
+							
+							<div class="form-group">
+								<label for="tlp">NO TLP/HP</label>
+								<input type="text" id="tlp" name="tlp"  maxlength="35" class="required form-control" size="35" alt="No hp/tlp" title="No hp/tlp" placeholder="*No hp/tlp" />
+							</div>
+							
+							<div class="form-group">
+                              <label for="email">EMAIL</label>
+                              <input type="text" id="email" name="email"  maxlength="50" class="email form-control" size="35" alt="Email Harus Valid" title="Email Harus Valid" placeholder="Email Harus Valid"/> <span id="pesan2"></span>
+                            </div>
+							
+							<div class="form-group">
+                              <label for="wil_prov">PROVINSI</label>
+                              <select name="wil_prov" id="wil_prov" class="required form-control select2" title="Provinsi" onchange="get_kabkot(this)">
+								<!-- <option value="">== Pilih Provinsi ==</option> -->
+								<?php
+									if(!empty($get_data_prov))
+									{
+										$list_result = $get_data_prov->result();
+										foreach($list_result as $row)
+										{
+											echo'<option value="'.$row->kode.'|'.$row->nama.'">'.$row->nama.'</option>';
+											//echo'<option value="'.$row->nama.'">'.$row->nama.'</option>';
+										}
+									}
+								?>
+                               </select>
+                            </div>
+							
+							<div class="form-group">
+                              <label for="wil_kabkot">KABUPATEN/KOTA</label>
+                              <select name="wil_kabkot" id="wil_kabkot" class="required form-control select2" title="Kabupaten/Kota"  onchange="get_kec(this)">
+								<option value="">== Pilih Kabupaten/Kota ==</option>
+								<?php
+									/*
+									if(!empty($get_kabkot))
+									{
+										$list_result = $get_kabkot->result();
+										foreach($list_result as $row)
+										{
+											echo'<option value="'.$row->kode.'|'.$row->nama.'">'.$row->nama.'</option>';
+											//echo'<option value="'.$row->nama.'">'.$row->nama.'</option>';
+										}
+									}
+									*/
+								?>
+                               </select>
+                            </div>
+							
+							
+							
+							<div class="form-group">
+								<label for="wil_kec">KECAMATAN</label>
+								<span style="float:right;" id="notif_pesan_paket" style="color:red;"></span>
+								<select name="wil_kec" id="wil_kec" class="required form-control select2" title="Kecamatan" onchange="get_desa(this)">
+									<option value="">== Pilih Kecamatan ==</option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label for="wil_des">DESA</label>
+								<select name="wil_des" id="wil_des" class="required form-control select2" title="Desa">
+									<option value="">== Pilih Desa ==</option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+                              <label for="alamat">ALAMAT DETAIL</label>
+                              <textarea name="alamat" id="alamat" class="required form-control" title="Isikan lengkap tentang ALAMAT" placeholder="*Isikan lengkap tentang ALAMAT"></textarea>
+                            </div>
+							
+							<div class="form-group">
+                              <label for="ket_pelanggan">KETERANGAN</label>
+                              <textarea name="ket_pelanggan" id="ket_pelanggan" class="required form-control" title="Isikan lengkap tentang keterangan Pelanggan" placeholder="*Isikan lengkap tentang keterangan Pelanggan"></textarea>
                             </div>
 							
 						</div><!-- /.box-body -->
@@ -269,7 +360,7 @@
 							</h3>
 							<div class="pull-right">
 								<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
-								<form action="<?=base_url();?>data-apar" method="get" class="frm-cari">
+								<form action="<?=base_url();?>data-pemilik" method="get" class="frm-cari">
 									<table>
 										<tr>
 											<!-- <td>Berdasarkan</td><td>:</td> -->
@@ -294,7 +385,7 @@
 						
 						<?php
 							//TABLE
-							if(!empty($list_data_apar))
+							if(!empty($list_data_pelanggan))
 								{
 									//echo gethostname();
 									//echo $this->M_gl_pengaturan->getUserIpAddr();
@@ -306,15 +397,13 @@
 										echo '<thead>
 	<tr>';
 													echo '<th width="5%">NO</th>';
-													echo '<th width="10%">NO APAR</th>';
-													echo '<th width="10%">JENIS</th>';
-													echo '<th width="10%">KAPASITAS</th>';
+													echo '<th width="30%">BIODATA</th>';
 													echo '<th width="30%">KETERANGAN</th>';
-													echo '<th width="25%">INPUT</th>';
+													echo '<th width="25%">AKUN</th>';
 													echo '<th width="10%">AKSI</th>';
 										echo '</tr>
 	</thead>';
-										$list_result = $list_data_apar->result();
+										$list_result = $list_data_pelanggan->result();
 										$no =$this->uri->segment(2,0)+1;
 										echo '<tbody>';
 										foreach($list_result as $row)
@@ -322,33 +411,65 @@
 											echo'<tr>';
 												echo'<td>'.$no.'</td>';
 												
-												echo '<td>'.$row->no_apar.'</td>';
-												echo '<td>'.$row->jenis_apar.'</td>';
-												echo '<td>'.$row->kapasitas.' Kg</td>';
-												echo '<td>'.$row->ket_apar.'</td>';
 												echo '<td>
-														<b>Input :</b> '.$row->user_ins.'
-														<br/><b>Edit :</b> '.$row->user_updt.'
+															<b>NO Pelanggan : </b> '.$row->no_pelanggan.'
+															<br/><b>NIK : </b> '.$row->nik_pelanggan.'
+															<br/><b>Nama Lengkap : </b> '.$row->nama_pelanggan.'
+															<br/><b>Tempat Lahir : </b> '.$row->tempat_lahir.'
+															<br/><b>Tgl Lahir : </b> '.$row->tgl_lahir.'
+														</td>';
+												echo '<td>
+															<b>Telp/Hp : </b> '.$row->tlp.'
+															<br/><b>Email : </b> '.$row->email.'
+															<br/><b>Alamat :</b> '.$row->nama_prov.' '.$row->nama_kabkot.' '.$row->nama_kec.' '.$row->nama_des.' '.$row->alamat.'
+														</td>';
+												
+												echo '<td>
+														<b>Jenis Pemilik :</b> '.$row->jenis_pelanggan.'
+														<br/><b>Akun :</b> '.$row->user.'
 													</td>';
 												
-echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';			
-echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';
-echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
-echo'<input type="hidden" id="jenis_apar_'.$no.'" name="jenis_apar_'.$no.'" value="'.$row->jenis_apar.'" />';
-echo'<input type="hidden" id="kapasitas_'.$no.'" name="kapasitas_'.$no.'" value="'.$row->kapasitas.'" />';
-echo'<input type="hidden" id="merek_'.$no.'" name="merek_'.$no.'" value="'.$row->merek.'" />';
-echo'<input type="hidden" id="ket_apar_'.$no.'" name="ket_apar_'.$no.'" value="'.$row->ket_apar.'" />';
+echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
+
+echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
+echo'<input type="hidden" id="jenis_pelanggan_'.$no.'" name="jenis_pelanggan_'.$no.'" value="'.$row->jenis_pelanggan.'" />';
+echo'<input type="hidden" id="nik_pelanggan_'.$no.'" name="nik_pelanggan_'.$no.'" value="'.$row->nik_pelanggan.'" />';
+echo'<input type="hidden" id="no_pelanggan_'.$no.'" name="no_pelanggan_'.$no.'" value="'.$row->no_pelanggan.'" />';
+echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no.'" value="'.$row->nama_pelanggan.'" />';
+echo'<input type="hidden" id="tempat_lahir_'.$no.'" name="tempat_lahir_'.$no.'" value="'.$row->tempat_lahir.'" />';
+echo'<input type="hidden" id="tgl_lahir_'.$no.'" name="tgl_lahir_'.$no.'" value="'.$row->tgl_lahir.'" />';
+echo'<input type="hidden" id="tlp_'.$no.'" name="tlp_'.$no.'" value="'.$row->tlp.'" />';
+echo'<input type="hidden" id="email_'.$no.'" name="email_'.$no.'" value="'.$row->email.'" />';
+
+echo'<input type="hidden" id="alamat_'.$no.'" name="alamat_'.$no.'" value="'.$row->alamat.'" />';
+echo'<input type="hidden" id="ket_pelanggan_'.$no.'" name="ket_pelanggan_'.$no.'" value="'.$row->ket_pelanggan.'" />';
+echo'<input type="hidden" id="user_'.$no.'" name="user_'.$no.'" value="'.$row->user.'" />';
+echo'<input type="hidden" id="pass_'.$no.'" name="pass_'.$no.'" value="'.$row->pass.'" />';
+echo'<input type="hidden" id="avatar_'.$no.'" name="avatar_'.$no.'" value="'.$row->avatar.'" />';
 echo'<input type="hidden" id="tgl_ins_'.$no.'" name="tgl_ins_'.$no.'" value="'.$row->tgl_ins.'" />';
 echo'<input type="hidden" id="tgl_updt_'.$no.'" name="tgl_updt_'.$no.'" value="'.$row->tgl_updt.'" />';
 echo'<input type="hidden" id="user_ins_'.$no.'" name="user_ins_'.$no.'" value="'.$row->user_ins.'" />';
 echo'<input type="hidden" id="user_updt_'.$no.'" name="user_updt_'.$no.'" value="'.$row->user_updt.'" />';
 
 
+echo'<input type="hidden" id="kode_prov_'.$no.'" name="kode_prov_'.$no.'" value="'.$row->kode_prov.'" />';
+echo'<input type="hidden" id="nama_prov_'.$no.'" name="nama_prov_'.$no.'" value="'.$row->nama_prov.'" />';
+
+echo'<input type="hidden" id="kode_kabkot_'.$no.'" name="kode_kabkot_'.$no.'" value="'.$row->kode_kabkot.'" />';
+echo'<input type="hidden" id="nama_kabkot_'.$no.'" name="nama_kabkot_'.$no.'" value="'.$row->nama_kabkot.'" />';
+
+echo'<input type="hidden" id="kode_kec_'.$no.'" name="kode_kec_'.$no.'" value="'.$row->kode_kec.'" />';
+echo'<input type="hidden" id="nama_kec_'.$no.'" name="nama_kec_'.$no.'" value="'.$row->nama_kec.'" />';
+
+echo'<input type="hidden" id="kode_des_'.$no.'" name="kode_des_'.$no.'" value="'.$row->kode_des.'" />';
+echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'.$row->nama_des.'" />';
+
+
 												echo'<td>
 												
-	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_apar.'" alt = "Ubah Data '.$row->no_apar.'">Edit</a>
+	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_pelanggan.'" alt = "Ubah Data '.$row->no_pelanggan.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-apar-hapus/'.(md5($row->id_apar)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'">Hapus</a>
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-pemilik-hapus/'.(md5($row->id_pelanggan)).'" title = "Hapus Data '.$row->no_pelanggan.'" alt = "Hapus Data '.$row->no_pelanggan.'">Hapus</a>
 												</td>';
 												
 											echo'</tr>';
@@ -385,19 +506,131 @@ echo'<input type="hidden" id="user_updt_'.$no.'" name="user_updt_'.$no.'" value=
 		
 <script type='text/javascript'>
 	
+	function get_kabkot(evt)
+	{
+		var id = evt.id;
+		var kode_prov = $('#'+id).find(":selected").val();
+		var nama_prov = $('#'+id).find(":selected").text();
+		
+		//alert(kode_kec);
+		$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Melakukan Proses ...</br></br>");
+		//KODE AKUN
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/get_list_kabkot/", data: {
+					kode_prov:kode_prov
+
+			}, success:function(data)
+			{
+				if(data!=0)
+				{
+					$("#wil_kabkot").html(data);
+					$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/true.png'>Proses Selesai ...</br></br>");
+				} 
+				else
+				{
+					//$("#id_kat_uang_keluar").html("Tidak Ada Data Yang Ditampilkan");
+					$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/salah.png'>Tidak ada data yang ditampilkan ...</br></br>");
+				}
+			}
+			});
+		//KODE AKUN
+	}
+
+	function get_kec(evt)
+	{
+		var id = evt.id;
+		var kode_kabkot = $('#'+id).find(":selected").val();
+		var nama_kabkot = $('#'+id).find(":selected").text();
+		
+		//alert(kode_kec);
+		$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Melakukan Proses ...</br></br>");
+		//KODE AKUN
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/get_list_kec/", data: {
+					kode_kabkot:kode_kabkot
+
+			}, success:function(data)
+			{
+				if(data!=0)
+				{
+					$("#wil_kec").html(data);
+					$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/true.png'>Proses Selesai ...</br></br>");
+				} 
+				else
+				{
+					//$("#id_kat_uang_keluar").html("Tidak Ada Data Yang Ditampilkan");
+					$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/salah.png'>Tidak ada data yang ditampilkan ...</br></br>");
+				}
+			}
+			});
+		//KODE AKUN
+	}
+	
+	function get_desa(evt)
+	{
+		var id = evt.id;
+		var kode_kec = $('#'+id).find(":selected").val();
+		var nama_kec = $('#'+id).find(":selected").text();
+		
+		//alert(kode_kec);
+		$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Melakukan Proses ...</br></br>");
+		//KODE AKUN
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/get_list_desa/", data: {
+					kode_kec:kode_kec
+
+			}, success:function(data)
+			{
+				if(data!=0)
+				{
+					$("#wil_des").html(data);
+					$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/true.png'>Proses Selesai ...</br></br>");
+				} 
+				else
+				{
+					//$("#id_kat_uang_keluar").html("Tidak Ada Data Yang Ditampilkan");
+					$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/salah.png'>Tidak ada data yang ditampilkan ...</br></br>");
+				}
+			}
+			});
+		//KODE AKUN
+	}
 	
 	function edit(id)
 	{
 		
-		$('input[name=stat_edit]').val($('#id_apar_'+id).val());
-		$('input[name=id_apar]').val($('#id_apar_'+id).val());
-		$('input[name=no_apar]').val($('#no_apar_'+id).val());
-		$('input[name=jenis_apar]').val($('#jenis_apar_'+id).val());
-		$('input[name=kapasitas]').val($('#kapasitas_'+id).val());
-		$('input[name=merek]').val($('#merek_'+id).val());
+		$('input[name=stat_edit]').val($('#id_pelanggan_'+id).val());
+		$('input[name=id_pelanggan]').val($('#id_pelanggan_'+id).val());
 		
-		//$('input[name=ket_apar]').val($('#ket_apar_'+id).val());
-		document.getElementById("ket_apar").value = $('#ket_apar_'+id).val();
+		//$('input[name=jenis_pelanggan]').val($('#jenis_pelanggan_'+id).val());
+		document.getElementById("jenis_pelanggan").options.item(0).text = $('#jenis_pelanggan_'+id).val();
+		document.getElementById("jenis_pelanggan").options.item(0).value = $('#jenis_pelanggan_'+id).val();
+		
+		$('input[name=nik_pelanggan]').val($('#nik_pelanggan_'+id).val());
+		$('input[name=no_pelanggan]').val($('#no_pelanggan_'+id).val());
+		$('input[name=nama_pelanggan]').val($('#nama_pelanggan_'+id).val());
+		$('input[name=tempat_lahir]').val($('#tempat_lahir_'+id).val());
+		$('input[name=tgl_lahir]').val($('#tgl_lahir_'+id).val());
+		$('input[name=tlp]').val($('#tlp_'+id).val());
+		$('input[name=email]').val($('#email_'+id).val());
+		
+		
+		document.getElementById("wil_prov").options.item(0).text = $('#nama_prov_'+id).val();
+		document.getElementById("wil_prov").options.item(0).value = $('#kode_prov_'+id).val()+'|'+$('#nama_prov_'+id).val();
+		
+		document.getElementById("wil_kabkot").options.item(0).text = $('#nama_kabkot_'+id).val();
+		document.getElementById("wil_kabkot").options.item(0).value = $('#kode_kabkot_'+id).val()+'|'+$('#nama_kabkot_'+id).val();
+		
+		document.getElementById("wil_kec").options.item(0).text = $('#nama_kec_'+id).val();
+		document.getElementById("wil_kec").options.item(0).value = $('#kode_kec_'+id).val()+'|'+$('#nama_kec_'+id).val();
+		
+		document.getElementById("wil_des").options.item(0).text = $('#nama_des_'+id).val();
+		document.getElementById("wil_des").options.item(0).value = $('#kode_des_'+id).val()+'|'+$('#nama_des_'+id).val();
+		
+		//$('input[name=alamat]').val($('#alamat_'+id).val());
+		document.getElementById("alamat").value = $('#alamat_'+id).val();
+		
+		//$('input[name=ket_pelanggan]').val($('#ket_pelanggan_'+id).val());
+		document.getElementById("ket_pelanggan").value = $('#ket_pelanggan_'+id).val();
+		
+		
 		
 		alert("Mode Perubahan Aktif Untuk Data "+ $('#no_apar_'+id).val());
 		
