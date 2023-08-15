@@ -216,7 +216,7 @@
 				
 				
 				<!-- ISI FORM -->
-						<form role="form" action="<?php echo base_url();?>data-pemilik-simpan" method="post" class="frm-input">
+						<form role="form" action="<?php echo base_url();?>data-petugas-simpan" method="post" class="frm-input">
 						<input type="hidden" name="stat_edit" id="stat_edit"/>
 						<input type="hidden" name="id_petugas" id="id_petugas"/>
 						<div class="box-body">
@@ -384,7 +384,7 @@
 												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
 											</td>
 											<td>
-												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-pemilik-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
+												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-petugas-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
 											</td>
 										</tr>
 									</table>
@@ -423,8 +423,7 @@
 												echo'<td>'.$no.'</td>';
 												
 												echo '<td>
-															<b>NO petugas : </b> '.$row->nama_petugas.'
-															<br/><b>NIK : </b> '.$row->nik.'
+															<b>NIK : </b> '.$row->nik.'
 															<br/><b>Nama Lengkap : </b> '.$row->nama_petugas.'
 															<br/><b>Jenis Kelamin : </b> '.$row->kelamin.'
 															<br/><b>Perusahaan/Instansi : </b> '.$row->tempat_tugas.'
@@ -492,9 +491,9 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 												
 	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->nama_petugas.'" alt = "Ubah Data '.$row->nama_petugas.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-pemilik-hapus/'.(md5($row->id_petugas)).'" title = "Hapus Data '.$row->nama_petugas.'" alt = "Hapus Data '.$row->nama_petugas.'">Hapus</a>
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-petugas-hapus/'.(md5($row->id_petugas)).'" title = "Hapus Data '.$row->nama_petugas.'" alt = "Hapus Data '.$row->nama_petugas.'">Hapus</a>
 	
-	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun pemilik '.$row->nama_petugas.'" alt = "Klik untuk simpan akun pemilik '.$row->nama_petugas.'">Simpan Akun</a>
+	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun petugas '.$row->nama_petugas.'" alt = "Klik untuk simpan akun petugas '.$row->nama_petugas.'">Simpan Akun</a>
 												</td>';
 												
 											echo'</tr>';
@@ -533,12 +532,12 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 	function ubah_akun(id)
 	{
 		var id_petugas = $('#id_petugas_md5_'+id).val();
-		var nama_pemilik = $('#nama_petugas_'+id).val();
+		var nama_petugas = $('#nama_petugas_'+id).val();
 		var user = $('#user_'+id).val();
 		var pass = $('#pass_'+id).val();
 		var pass2 = $('#pass2_'+id).val();
 		
-		var r = confirm("Apakah anda yakin akan menyimpan akun untuk "+nama_pemilik+" dengan nama akun *"+user+"* ?");
+		var r = confirm("Apakah anda yakin akan menyimpan akun untuk "+nama_petugas+" dengan nama akun *"+user+"* ?");
 		if (r == true) 
 		{
 			//alert("1.Cek Konfirm");

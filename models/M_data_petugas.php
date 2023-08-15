@@ -12,12 +12,10 @@ class M_data_petugas extends CI_Model
 	
 	function simpan
 	(
-		$jenis_petugas,
-		$nik_petugas,
-		$no_petugas,
+		$nik,
 		$nama_petugas,
 		$kelamin,
-		$tempat_lahir,
+		$tampat_lahir,
 		$tgl_lahir,
 		$tlp,
 		$email,
@@ -27,11 +25,11 @@ class M_data_petugas extends CI_Model
 		$wil_des,
 		$alamat,
 		$ket_petugas,
-		$nama_perusahaan,
+		$tempat_tugas,
 		$jabatan,
 		$user,
 		$pass,
-		$avatar
+		$avatar_url
 
 	)
 	{
@@ -39,12 +37,10 @@ class M_data_petugas extends CI_Model
 			INSERT INTO tb_petugas
 			(
 				id_petugas,
-				jenis_petugas,
-				nik_petugas,
-				no_petugas,
+				nik,
 				nama_petugas,
 				kelamin,
-				tempat_lahir,
+				tampat_lahir,
 				tgl_lahir,
 				tlp,
 				email,
@@ -54,11 +50,11 @@ class M_data_petugas extends CI_Model
 				wil_des,
 				alamat,
 				ket_petugas,
-				nama_perusahaan,
+				tempat_tugas,
 				jabatan,
 				user,
 				pass,
-				avatar,
+				avatar_url,
 				tgl_ins,
 				user_ins
 			)
@@ -89,12 +85,10 @@ class M_data_petugas extends CI_Model
 					) AS AA
 				),
 				
-				'".$jenis_petugas."',
-				'".$nik_petugas."',
-				'".$no_petugas."',
+				'".$nik."',
 				'".$nama_petugas."',
 				'".$kelamin."',
-				'".$tempat_lahir."',
+				'".$tampat_lahir."',
 				'".$tgl_lahir."',
 				'".$tlp."',
 				'".$email."',
@@ -104,11 +98,11 @@ class M_data_petugas extends CI_Model
 				'".$wil_des."',
 				'".$alamat."',
 				'".$ket_petugas."',
-				'".$nama_perusahaan."',
+				'".$tempat_tugas."',
 				'".$jabatan."',
 				'".$user."',
 				'".$pass."',
-				'".$avatar."',
+				'".$avatar_url."',
 				NOW(),
 				'".$this->session->userdata('ses_gbl_nama_akun')."'
 			)
@@ -122,12 +116,10 @@ class M_data_petugas extends CI_Model
 	function ubah
 	(
 		$id_petugas,
-		$jenis_petugas,
-		$nik_petugas,
-		$no_petugas,
+		$nik,
 		$nama_petugas,
 		$kelamin,
-		$tempat_lahir,
+		$tampat_lahir,
 		$tgl_lahir,
 		$tlp,
 		$email,
@@ -137,21 +129,19 @@ class M_data_petugas extends CI_Model
 		$wil_des,
 		$alamat,
 		$ket_petugas,
-		$nama_perusahaan,
+		$tempat_tugas,
 		$jabatan,
 		$user,
 		$pass,
-		$avatar
+		$avatar_url
 	)
 	{
 		$query = "
 				UPDATE tb_petugas SET
-					jenis_petugas = '".$jenis_petugas."',
-					nik_petugas = '".$nik_petugas."',
-					no_petugas = '".$no_petugas."',
+					nik = '".$nik."',
 					nama_petugas = '".$nama_petugas."',
 					kelamin = '".$kelamin."',
-					tempat_lahir = '".$tempat_lahir."',
+					tampat_lahir = '".$tampat_lahir."',
 					tgl_lahir = '".$tgl_lahir."',
 					tlp = '".$tlp."',
 					email = '".$email."',
@@ -161,9 +151,9 @@ class M_data_petugas extends CI_Model
 					wil_des = '".$wil_des."',
 					alamat = '".$alamat."',
 					ket_petugas = '".$ket_petugas."',
-					nama_perusahaan = '".$nama_perusahaan."',
+					tempat_tugas = '".$tempat_tugas."',
 					jabatan = '".$jabatan."',
-					avatar = '".$avatar."',
+					avatar_url = '".$avatar_url."',
 					tgl_updt = NOW(),
 					user_updt = '".$this->session->userdata('ses_gbl_nama_akun')."'
 				WHERE id_petugas = '".$id_petugas."'

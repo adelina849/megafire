@@ -31,7 +31,7 @@ class C_data_petugas extends CI_Controller
 					$cari = "";
 				}
 				
-				//1. GET DATA petugas/PEMILIK
+				//1. GET DATA petugas/petugas
 					$query = "
 								SELECT 
 									* 
@@ -64,15 +64,15 @@ class C_data_petugas extends CI_Controller
 						$jum_petugas = 0;
 						$list_data_petugas = false;
 					}
-				//1. GET DATA petugas/PEMILIK
+				//1. GET DATA petugas/petugas
 				
 				
 				$this->load->library('pagination');
 				//$config['first_url'] = base_url().'admin/jabatan?'.http_build_query($_GET);
 				//$config['base_url'] = base_url().'admin/jabatan/';
 				
-				$config['first_url'] = site_url('data-pemilik?'.http_build_query($_GET));
-				$config['base_url'] = site_url('data-pemilik/');
+				$config['first_url'] = site_url('data-petugas?'.http_build_query($_GET));
+				$config['base_url'] = site_url('data-petugas/');
 				$config['total_rows'] = $jum_petugas;
 				$config['uri_segment'] = 2;	
 				$config['per_page'] = 30;
@@ -118,19 +118,7 @@ class C_data_petugas extends CI_Controller
 					$get_data_prov = $this->M_general->view_query_general($query);
 				//1. GET DATA PROVINSI
 				
-				//2. GET NO petugas
-					$get_no_petugas = $this->M_data_petugas->get_no_petugas();
-					if(!empty($get_no_petugas))
-					{
-						$get_no_petugas = $get_no_petugas->id_petugas;
-					}
-					else
-					{
-						$get_no_petugas = "";
-					}
-				//2. GET NO petugas
-				
-				$data = array('page_content'=>'page_data_dasar_petugas','halaman'=>$halaman,'list_data_petugas'=>$list_data_petugas,'msgbox_title' => $msgbox_title,'get_data_prov' => $get_data_prov,'get_no_petugas' => $get_no_petugas);
+				$data = array('page_content'=>'page_data_dasar_petugas','halaman'=>$halaman,'list_data_petugas'=>$list_data_petugas,'msgbox_title' => $msgbox_title,'get_data_prov' => $get_data_prov);
 				$this->load->view('admin/container',$data);
 			}
 			else
@@ -157,12 +145,10 @@ class C_data_petugas extends CI_Controller
 					$this->M_data_petugas->ubah
 					(
 						$_POST['stat_edit'],
-						$_POST['jenis_petugas'],
 						$_POST['nik'],
-						$_POST['no_petugas'],
 						$_POST['nama_petugas'],
 						$_POST['kelamin'],
-						$_POST['tempat_lahir'],
+						$_POST['tampat_lahir'],
 						$_POST['tgl_lahir'],
 						$_POST['tlp'],
 						$_POST['email'],
@@ -172,23 +158,21 @@ class C_data_petugas extends CI_Controller
 						$_POST['wil_des'],
 						$_POST['alamat'],
 						$_POST['ket_petugas'],
-						$_POST['nama_perusahaan'],
+						$_POST['tempat_tugas'],
 						$_POST['jabatan'],
-						$_POST['user'],
-						$_POST['pass'],
-						$_POST['avatar']
+						'', //$_POST['user'],
+						'', //$_POST['pass'],
+						'' //$_POST['avatar_url']
 					);
 				}
 				else
 				{
 					$this->M_data_petugas->simpan
 					(
-						$_POST['jenis_petugas'],
 						$_POST['nik'],
-						$_POST['no_petugas'],
 						$_POST['nama_petugas'],
 						$_POST['kelamin'],
-						$_POST['tempat_lahir'],
+						$_POST['tampat_lahir'],
 						$_POST['tgl_lahir'],
 						$_POST['tlp'],
 						$_POST['email'],
@@ -198,16 +182,16 @@ class C_data_petugas extends CI_Controller
 						$_POST['wil_des'],
 						$_POST['alamat'],
 						$_POST['ket_petugas'],
-						$_POST['nama_perusahaan'],
+						$_POST['tempat_tugas'],
 						$_POST['jabatan'],
 						'', //$_POST['user'],
 						'', //$_POST['pass'],
-						'' //$_POST['avatar']
+						'' //$_POST['avatar_url']
 
 					);
 					
 				}
-				header('Location: '.base_url().'data-pemilik');
+				header('Location: '.base_url().'data-petugas');
 			}
 			else
 			{
@@ -230,7 +214,7 @@ class C_data_petugas extends CI_Controller
 				$query = "DELETE FROM tb_petugas WHERE MD5(id_petugas) = '".$this->uri->segment(2,0)."';";
 				$this->M_general->exec_query_general($query);
 				
-				header('Location: '.base_url().'data-pemilik');
+				header('Location: '.base_url().'data-petugas');
 			}
 			else
 			{
@@ -361,7 +345,7 @@ class C_data_petugas extends CI_Controller
 					$cari = "";
 				}
 				
-				//1. GET DATA petugas/PEMILIK
+				//1. GET DATA petugas/petugas
 					$query = "
 								SELECT 
 									* 
@@ -378,7 +362,7 @@ class C_data_petugas extends CI_Controller
 									SUBSTRING_INDEX(A.wil_des,'|',1) AS kode_des,
 									SUBSTRING_INDEX(A.wil_des,'|',-1) AS nama_des
 								FROM tb_petugas AS A
-								WHERE (nik LIKE '%".$cari."%' OR no_petugas LIKE '%".$cari."%' OR nama_petugas LIKE '%".$cari."%')
+								WHERE (nik LIKE '%".$cari."%' OR nama_petugas LIKE '%".$cari."%')
 								ORDER BY tgl_ins DESC
 								LIMIT ".$this->uri->segment(2,0).",50
 								;
@@ -394,7 +378,7 @@ class C_data_petugas extends CI_Controller
 						$jum_petugas = 0;
 						$list_data_petugas = false;
 					}
-				//1. GET DATA petugas/PEMILIK
+				//1. GET DATA petugas/petugas
 				
 				$data = array('page_content'=>'excel_data_dasar_petugas','list_data_petugas'=>$list_data_petugas);
 				$this->load->view('admin/excel_data_dasar_petugas.html',$data);
