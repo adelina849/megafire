@@ -337,7 +337,7 @@
 														<br/><b>Edit :</b> '.$row->user_updt.'
 													</td>';
 												
-//echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';			
+echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';			
 echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';
 echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
 echo'<input type="hidden" id="jenis_apar_'.$no.'" name="jenis_apar_'.$no.'" value="'.$row->jenis_apar.'" />';

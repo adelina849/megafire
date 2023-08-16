@@ -128,4 +128,10 @@ $route['translate_uri_dashes'] = FALSE;
 	//PEMBELIAN
 		$route['transaksi-pembelian'] = "C_transaksi_pembelian/index";
 		$route['transaksi-pembelian/(:any)'] = 'C_transaksi_pembelian/index';
+		
+		$route['transaksi-pembelian-simpan'] = "C_transaksi_pembelian/simpan";
+		$route['transaksi-pembelian-simpan/(:any)'] = 'C_transaksi_pembelian/simpan';
+		
+		$route['transaksi-pembelian-hapus'] = "C_transaksi_pembelian/hapus";
+		$route['transaksi-pembelian-hapus/(:any)'] = 'C_transaksi_pembelian/hapus';
 	//PEMBELIAN

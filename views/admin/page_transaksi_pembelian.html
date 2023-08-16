@@ -183,7 +183,7 @@
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 			<li><a href="#"><i class="fa fa-money"></i> Transaksi</a></li>
-			<li class="active"><i class="fa fa-cart-arrow-down"></i> quis</li>
+			<li class="active"><i class="fa fa-cart-arrow-down"></i> Pembelian APAR</li>
 			
 		</ol>
 		</section>
@@ -216,48 +216,77 @@
 				
 				
 				<!-- ISI FORM -->
-						<form role="form" action="<?php echo base_url();?>data-quis-simpan" method="post" class="frm-input">
+						<form role="form" action="<?php echo base_url();?>transaksi-pembelian-simpan" method="post" class="frm-input">
 						<input type="hidden" name="stat_edit" id="stat_edit"/>
 						<div class="box-body">
 							
+							<div class="form-group">
+								<label for="no_apar">NO TRANSAKSI APAR/NO APAR</label>
+								<input type="text" id="no_apar" name="no_apar"  maxlength="35" class="required form-control" size="35" alt="Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" title="Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" placeholder="*Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" value="<?php echo $get_no_tr_apar;?>" readonly/>
+							</div>
+							
+							<div class="form-group">
+								<label>TANGGAL PEMBELIAN/TRANSAKSI</label>
+								<div class="input-group date">
+								  <div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								  </div>
+								  <input name="tgl_beli" id="tgl_beli" type="text" class=" form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="<?php echo date("Y-m-d"); ?>" data-date-format="yyyy-mm-dd">
+								</div>
+								<!-- /.input group -->
+							</div>
+							
 							<div class="box box-danger collapsed-box box-solid" Style="padding:2%;">
-								<label for="id_apar">PILIH APAR</label>
+								<label for="merek">MEREK APAR</label>
 								<div class="input-group input-group-sm">
 									<input type="hidden" id="id_apar" name="id_apar" />
-									<input type="text" id="no_apar" name="no_apar"  maxlength="35" class="required form-control" size="35" alt="No APAR (NB: Tidak bisa diisi, hanya memilih)" title="No APAR (NB: Tidak bisa diisi, hanya memilih)" placeholder="*No APAR (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
+									<input type="text" id="merek" name="merek"  maxlength="35" class="required form-control" size="35" alt="MEREK (NB: Tidak bisa diisi, hanya memilih)" title="MEREK (NB: Tidak bisa diisi, hanya memilih)" placeholder="*MEREK (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
 									<span class="input-group-btn">
-									<button class="btn btn-success btn-flat" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModal" onclick="list_data_karyawan()">...</button>
+									<button class="btn btn-success btn-flat" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModal_apar" onclick="list_data_apar()">...</button>
 									</span>
 								</div><!-- /input-group<br />-->
 								<br />
 								<div class="form-group">
 									<label for="jenis_apar">JENIS APAR</label>
-									<input type="text" id="jenis_apar" name="jenis_apar"  maxlength="35" class="required form-control" size="35" alt="Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" title="Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" placeholder="*Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
+									<input type="text" id="jenis_apar" name="jenis_apar"  maxlength="35" class="form-control" size="35" alt="Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" title="Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" placeholder="*Jenis APAR (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
 								</div>
 								<div class="form-group">
 									<label for="kapasitas">KAPASITAS APAR</label>
-									<input type="text" id="kapasitas" name="kapasitas"  maxlength="35" class="required form-control" size="35" onkeypress="return isNumberKey(event)" alt="kapasitas APAR (NB: Tidak bisa diisi, hanya memilih)" title="kapasitas APAR (NB: Tidak bisa diisi, hanya memilih)" placeholder="*kapasitas APAR (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
+									<input type="text" id="kapasitas" name="kapasitas"  maxlength="35" class="form-control" size="35" onkeypress="return isNumberKey(event)" alt="kapasitas APAR (NB: Tidak bisa diisi, hanya memilih)" title="kapasitas APAR (NB: Tidak bisa diisi, hanya memilih)" placeholder="*kapasitas APAR (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
 								</div>
 							</div>
 							
-							<label for="id_karyawan">PILIH PEMILIK/PELANGGAN</label>
-							<div class="input-group input-group-sm">
-								<input type="hidden" id="id_karyawan" name="id_karyawan" />
-								<input type="text" id="no_karyawan" name="no_karyawan"  maxlength="35" class="required form-control" size="35" alt="No Karyawan (NB: Tidak bisa diisi, hanya memilih)" title="No Karyawan (NB: Tidak bisa diisi, hanya memilih)" placeholder="*No Karyawan (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
-								<span class="input-group-btn">
-								<button class="btn btn-success btn-flat" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModal" onclick="list_data_karyawan()">...</button>
-								</span>
-							</div><!-- /input-group<br />-->
-							<br />
+							<div class="box box-danger collapsed-box box-solid" Style="padding:2%;">
+								<label for="id_pelanggan">NO PEMILIK/PELANGGAN</label>
+								<div class="input-group input-group-sm">
+									<input type="hidden" id="id_pelanggan" name="id_pelanggan" />
+									<input type="text" id="no_pelanggan" name="no_pelanggan"  maxlength="35" class="required form-control" size="35" alt="No Pelanggan (NB: Tidak bisa diisi, hanya memilih)" title="No Pelanggan (NB: Tidak bisa diisi, hanya memilih)" placeholder="*No Pelanggan (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
+									<span class="input-group-btn">
+									<button class="btn btn-success btn-flat" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModal_pelanggan" onclick="list_data_pelanggan()">...</button>
+									</span>
+								</div><!-- /input-group<br />-->
+								<br />
+								<div class="form-group">
+									<label for="nama_pelanggan">NAMA PELANGGAN</label>
+									<input type="text" id="nama_pelanggan" name="nama_pelanggan"  maxlength="35" class="form-control" size="35" alt="NAMA PELANGGAN (NB: Tidak bisa diisi, hanya memilih)" title="NAMA PELANGGAN (NB: Tidak bisa diisi, hanya memilih)" placeholder="*NAMA PELANGGAN (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
+								</div>
+							</div>
 							
-							<label for="id_karyawan">PILIH PETUGAS</label>
-							<div class="input-group input-group-sm">
-								<input type="hidden" id="id_karyawan" name="id_karyawan" />
-								<input type="text" id="no_karyawan" name="no_karyawan"  maxlength="35" class="required form-control" size="35" alt="No Karyawan (NB: Tidak bisa diisi, hanya memilih)" title="No Karyawan (NB: Tidak bisa diisi, hanya memilih)" placeholder="*No Karyawan (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
-								<span class="input-group-btn">
-								<button class="btn btn-success btn-flat" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModal" onclick="list_data_karyawan()">...</button>
-								</span>
-							</div><!-- /input-group<br />-->
+							<div class="box box-danger collapsed-box box-solid" Style="padding:2%;">
+								<label for="id_petugas">NIK PETUGAS</label>
+								<div class="input-group input-group-sm">
+									<input type="hidden" id="id_petugas" name="id_petugas" />
+									<input type="text" id="nik" name="nik"  maxlength="35" class="form-control" size="35" alt="NIK PETUGAS (NB: Tidak bisa diisi, hanya memilih)" title="NIK PETUGAS (NB: Tidak bisa diisi, hanya memilih)" placeholder="*NIK PETUGAS (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
+									<span class="input-group-btn">
+									<button class="btn btn-success btn-flat" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModal_petugas" onclick="list_data_petugas()">...</button>
+									</span>
+								</div><!-- /input-group<br />-->
+								<br />
+								<div class="form-group">
+									<label for="nama_petugas">NAMA PETUGAS</label>
+									<input type="text" id="nama_petugas" name="nama_petugas"  maxlength="35" class="required form-control" size="35" alt="NAMA PETUGAS (NB: Tidak bisa diisi, hanya memilih)" title="NAMA PETUGAS (NB: Tidak bisa diisi, hanya memilih)" placeholder="*NAMA PETUGAS (NB: Tidak bisa diisi, hanya memilih)" disabled="true"/>
+								</div>
+							</div>
 							
 						</div><!-- /.box-body -->
 		
@@ -281,7 +310,7 @@
 							</h3>
 							<div class="pull-right">
 								<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
-								<form action="<?=base_url();?>data-quis" method="get" class="frm-cari">
+								<form action="<?=base_url();?>transaksi-pembelian" method="get" class="frm-cari">
 									<table>
 										<tr>
 											<!-- <td>Berdasarkan</td><td>:</td> -->
@@ -299,9 +328,9 @@
 											<td>	
 												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
 											</td>
-											<td>
-												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
-											</td>
+											<!-- <td> -->
+												<!-- <a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a> -->
+											<!-- </td> -->
 										</tr>
 									</table>
 								</form>
@@ -312,7 +341,7 @@
 						
 						<?php
 							//TABLE
-							if(!empty($list_data_quis))
+							if(!empty($list_pembelian))
 								{
 									//echo gethostname();
 									//echo $this->M_gl_pengaturan->getUserIpAddr();
@@ -324,13 +353,14 @@
 										echo '<thead>
 	<tr>';
 													echo '<th width="5%" Style="text-align:center;">NO</th>';
-													echo '<th width="5%" Style="text-align:center;">INDEX</th>';
-													echo '<th width="50%" Style="text-align:center;">PERTANYAAN/QUIS</th>';
-													echo '<th width="30%" Style="text-align:center;">APAKH BOOLEAN/PILIHAN</th>';
+													echo '<th width="15%" Style="text-align:center;">QR CODE</th>';
+													echo '<th width="20%" Style="text-align:center;">JENIS APAR</th>';
+													echo '<th width="25%" Style="text-align:center;">PEMILIK/PEMBELI</th>';
+													echo '<th width="25%" Style="text-align:center;">PETUGAS</th>';
 													echo '<th width="10%" Style="text-align:center;">AKSI</th>';
 										echo '</tr>
 	</thead>';
-										$list_result = $list_data_quis->result();
+										$list_result = $list_pembelian->result();
 										$no =$this->uri->segment(2,0)+1;
 										echo '<tbody>';
 										foreach($list_result as $row)
@@ -338,23 +368,89 @@
 											echo'<tr>';
 												echo'<td>'.$no.'</td>';
 												
-												echo '<td>'.$row->idx.'</td>';
-												echo '<td>'.$row->pertanyaan.'</td>';
-												echo '<td Style="text-align:center;">'.$row->isBollean.'</td>';
+												if(!(file_exists("assets/global/images/qrcode/".$row->id_pembelian.".png")))
+												{
+													//$src = base_url().'assets/global/karyawan/loading.gif';
+													$src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3UZvZSXvWFIWFY7JZr7v8qrXdx3VlPReve_WcIgI1wg&s";
+												}
+												else
+												{
+													//$src = base_url().'assets/global/karyawan/'.$row->avatar;
+													$src = base_url()."assets/global/images/qrcode/".$row->id_pembelian.".png";
+												}
 												
-echo'<input type="hidden" id="idx_'.$no.'" name="idx_'.$no.'" value="'.$row->idx.'" />';			
-echo'<input type="hidden" id="pertanyaan_'.$no.'" name="pertanyaan_'.$no.'" value="'.$row->pertanyaan.'" />';
-echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value="'.$row->isBollean.'" />';
-
+												echo '<td Style="text-align:center;">
+													<TABLE Style="width:100%;padding:1%;text-align:center;">
+														<tr><td Style="width:100%;padding:1%;text-align:center;">
+															<a href="'.$src.'" target="_blank" Style="text-align:center;">
+															<img id="IMG_'.$no.'"  width="100px" height="100px" style="border:1px solid #C8C8C8;float:center;" src="'.$src.'" />
+															</a>
+														</td></tr>
+														<tr><td Style="width:100%;padding:1%;text-align:center;">'.$row->no_apar.'</td></tr>
+														<tr><td Style="width:100%;padding:1%;text-align:center;"><b>Tgl Beli :</b> '.$row->tgl_beli.'</td></tr>
+													</TABLE>
+												</td>';
+												echo '<td>
+														<b>Jenis :</b> '.$row->jenis_apar.'
+														<br/><b>Merek :</b> '.$row->merek_apar.'
+														<br/><b>Kapasitas :</b> '.$row->kapasitas_apar.'
+													</td>';
+												echo '<td>
+														<b>Nama :</b> '.$row->nama_pelanggan.'
+														<br/><b>Perusahaan :</b> '.$row->nama_perusahaan_pelanggan.'
+														<br/><b>Jabatan :</b> '.$row->jabatan_pelanggan.'
+													</td>';
+												echo '<td>
+														<b>Nama :</b> '.$row->nama_petugas.'
+														<br/><b>Penugasan :</b> '.$row->tempat_tugas_petugas.'
+														<br/><b>Jabatan :</b> '.$row->jabatan_petugas.'
+													</td>';
+													
 
 												echo'<td>
-												
-	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->idx.'" alt = "Ubah Data '.$row->idx.'">Edit</a>
+	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="generate_qr('.$no.')" title = "Ubah Data '.$row->no_apar.'" alt = "Ubah Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Generate QR</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-quis-hapus/'.(md5($row->idx)).'" title = "Hapus Data '.$row->idx.'" alt = "Hapus Data '.$row->idx.'">Hapus</a>
+	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_apar.'" alt = "Ubah Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Edit</a>
+	
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-hapus/'.(($row->id_pembelian)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Hapus</a>
+	
+	<a href="javascript:void(0)" class="btn btn-default btn-sm btn-block btn-flat" onclick="" title = "Input Data Awal '.$row->no_apar.'" alt = "Input Data Awal '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;" data-toggle="modal" data-target="#myModal_data_awal">Data Awal</a>
+	
+	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-hapus/'.(($row->id_pembelian)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Pemindahan</a>
+	
 												</td>';
 												
 											echo'</tr>';
+											
+											
+											
+echo'<input type="hidden" id="id_pembelian_'.$no.'" name="id_pembelian_'.$no.'" value="'.$row->id_pembelian.'" />';
+echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
+echo'<input type="hidden" id="tgl_beli_'.$no.'" name="tgl_beli_'.$no.'" value="'.$row->tgl_beli.'" />';
+echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';
+echo'<input type="hidden" id="merek_apar_'.$no.'" name="merek_apar_'.$no.'" value="'.$row->merek_apar.'" />';
+echo'<input type="hidden" id="jenis_apar_'.$no.'" name="jenis_apar_'.$no.'" value="'.$row->jenis_apar.'" />';
+echo'<input type="hidden" id="kapasitas_apar_'.$no.'" name="kapasitas_apar_'.$no.'" value="'.$row->kapasitas_apar.'" />';
+echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
+echo'<input type="hidden" id="no_pelanggan_'.$no.'" name="no_pelanggan_'.$no.'" value="'.$row->no_pelanggan.'" />';
+echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no.'" value="'.$row->nama_pelanggan.'" />';
+echo'<input type="hidden" id="id_petugas_'.$no.'" name="id_petugas_'.$no.'" value="'.$row->id_petugas.'" />';
+echo'<input type="hidden" id="nama_petugas_'.$no.'" name="nama_petugas_'.$no.'" value="'.$row->nama_petugas.'" />';
+echo'<input type="hidden" id="nik_petugas_'.$no.'" name="nik_petugas_'.$no.'" value="'.$row->nik_petugas.'" />';
+
+
+echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
+echo'<input type="hidden" id="pemilik_apar_'.$no.'" name="pemilik_apar_'.$no.'" value="'.$row->pemilik_apar.'" />';
+echo'<input type="hidden" id="desa_'.$no.'" name="desa_'.$no.'" value="'.$row->desa.'" />';
+echo'<input type="hidden" id="kecamatan_'.$no.'" name="kecamatan_'.$no.'" value="'.$row->kecamatan.'" />';
+echo'<input type="hidden" id="lokasi_apar_'.$no.'" name="lokasi_apar_'.$no.'" value="'.$row->lokasi_apar.'" />';
+echo'<input type="hidden" id="penyimpanan_'.$no.'" name="penyimpanan_'.$no.'" value="'.$row->penyimpanan.'" />';
+echo'<input type="hidden" id="longi_'.$no.'" name="longi_'.$no.'" value="'.$row->longi.'" />';
+echo'<input type="hidden" id="lati_'.$no.'" name="lati_'.$no.'" value="'.$row->lati.'" />';
+echo'<input type="hidden" id="tgl_transaksi_'.$no.'" name="tgl_transaksi_'.$no.'" value="'.$row->tgl_transaksi.'" />';
+echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" value="'.$row->tgl_update.'" />';
+
+
 											$no++;
 										}
 										
@@ -375,8 +471,275 @@ echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value=
 						</div><!-- /.box-body -->
 					</div><!-- /.box -->
 					
-					
-					
+			
+					<!-- Show MOdal - TABLE 1 -->
+						<div class="modal fade" id="myModal_apar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel">DATA APAR</h4>
+								</div>
+								<div class="modal-body">
+									
+									
+									<!-- ISI BODY -->
+									<div class="box">
+										<div class="box-header">
+										<!-- <h3 class="box-title">TABLE LIST APAR</h3> -->
+											<div class="pull-right">
+												<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
+												<!--<form action="#" method="get" class="frm-cari">-->
+													<table>
+														<tr>
+															<td>
+																<input onkeydown="list_data_apar_enter()" type="text" id="json_cari_apar" name="json_cari_apar"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['berdasarkan'])){echo $_GET['json_cari_apar'];} ?>"/>
+															</td>
+															<td>
+																<a href="javascript:void(0)" id="btn_cari_json_apar" class="btn btn-success btn-sm btn-flat btn-block" onclick="list_data_apar()" title = "Cari Dokter" >CARI</a>
+															</td>
+															<td>
+																<a href="javascript:void(0)" id="btn_tambah_json_apar" class="btn btn-warning btn-sm btn-flat btn-block" onclick="tambah_apar()" title = "Cari Dokter" >TAMBAH DATA APAR</a>
+															</td>
+														</tr>
+													</table>
+												<!-- </form> -->
+											</div>
+										</div><!-- /.box-header -->
+										<div  id="tb_cari_list_apar" class="box-body">
+											<!-- ISI DENGAN DATA APAR -->
+										</div><!-- /.box-body -->
+									</div><!-- /.box -->
+									<!-- ISI BODY -->
+									
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+									<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+								</div>
+								</div>
+							</div>
+							</div>
+
+					<!-- Show MOdal - TABLE 1-->
+
+					<!-- Show MOdal - TABLE 2 -->
+						<div class="modal fade" id="myModal_pelanggan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel_pelanggan">DATA PELANGGAN/PEMILIK</h4>
+								</div>
+								<div class="modal-body">
+									
+									
+									<!-- ISI BODY -->
+									<div class="box">
+										<div class="box-header">
+										<!-- <h3 class="box-title">TABLE LIST APAR</h3> -->
+											<div class="pull-right">
+												<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
+												<!--<form action="#" method="get" class="frm-cari">-->
+													<table>
+														<tr>
+															<td>
+																<input onkeydown="list_data_pelanggan_enter()" type="text" id="json_cari_pelanggan" name="json_cari_pelanggan"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['berdasarkan'])){echo $_GET['json_cari_pelanggan'];} ?>"/>
+															</td>
+															<td>
+																<a href="javascript:void(0)" id="btn_cari_json_pelanggan" class="btn btn-success btn-sm btn-flat btn-block" onclick="list_data_pelanggan()" title = "Cari Dokter" >CARI</a>
+															</td>
+															<td>
+																<a href="javascript:void(0)" id="btn_tambah_json_pelanggan" class="btn btn-warning btn-sm btn-flat btn-block" onclick="tambah_pelanggan()" title = "Cari Pelanggan" >TAMBAH DATA PELANGGAN</a>
+															</td>
+														</tr>
+													</table>
+												<!-- </form> -->
+											</div>
+										</div><!-- /.box-header -->
+										<div  id="tb_cari_list_pelanggan" class="box-body">
+											<!-- ISI DENGAN DATA APAR -->
+										</div><!-- /.box-body -->
+									</div><!-- /.box -->
+									<!-- ISI BODY -->
+									
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+									<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+								</div>
+								</div>
+							</div>
+							</div>
+
+					<!-- Show MOdal - TABLE 2-->
+
+					<!-- Show MOdal - TABLE 3 -->
+						<div class="modal fade" id="myModal_petugas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel_petugas">DATA PETUGAS</h4>
+								</div>
+								<div class="modal-body">
+									
+									
+									<!-- ISI BODY -->
+									<div class="box">
+										<div class="box-header">
+										<!-- <h3 class="box-title">TABLE LIST APAR</h3> -->
+											<div class="pull-right">
+												<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
+												<!--<form action="#" method="get" class="frm-cari">-->
+													<table>
+														<tr>
+															<td>
+																<input onkeydown="list_data_petugas_enter()" type="text" id="json_cari_petugas" name="json_cari_petugas"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['berdasarkan'])){echo $_GET['json_cari_petugas'];} ?>"/>
+															</td>
+															<td>
+																<a href="javascript:void(0)" id="btn_cari_json_petugas" class="btn btn-success btn-sm btn-flat btn-block" onclick="list_data_petugas()" title = "Cari Dokter" >CARI</a>
+															</td>
+															<td>
+																<a href="javascript:void(0)" id="btn_tambah_json_petugas" class="btn btn-warning btn-sm btn-flat btn-block" onclick="tambah_petugas()" title = "Cari petugas" >TAMBAH DATA petugas</a>
+															</td>
+														</tr>
+													</table>
+												<!-- </form> -->
+											</div>
+										</div><!-- /.box-header -->
+										<div  id="tb_cari_list_petugas" class="box-body">
+											<!-- ISI DENGAN DATA APAR -->
+										</div><!-- /.box-body -->
+									</div><!-- /.box -->
+									<!-- ISI BODY -->
+									
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+									<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+								</div>
+								</div>
+							</div>
+							</div>
+
+					<!-- Show MOdal - TABLE 3-->
+
+					<!-- Show MOdal - TABLE 4 INPUT DATA AWAL -->
+						<div class="modal fade" id="myModal_data_awal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel_data_awal">INPUT DATA AWAL APAR</h4>
+								</div>
+								<div class="modal-body">
+									
+									<div class="box">
+									<!--<div class="box-header">-->
+										
+											<br/>
+											  <div class="tab-pane" id="settings">
+												<!-- <form class="form-horizontal"> -->
+												
+												
+												<form role="form" action="<?php echo base_url();?>gl-profile-simpan" method="post" class="form-horizontal frm-input" enctype="multipart/form-data">
+												
+												
+													<input type="hidden" name="prof_id_akun" id="prof_id_akun" value="<?php echo $this->session->userdata('ses_gbl_id_akun');?>"/>
+												
+													<div class="form-group">
+														<label for="prof_nik" class="col-sm-3 control-label">NIK</label>
+														<div class="col-sm-9">
+															<input type="text" id="prof_nik" name="prof_nik"  maxlength="35" class="required form-control" size="35" alt="NIK" title="NIK" placeholder="*NIK" value="<?php echo $this->session->userdata('ses_gbl_nik_akun'); ?>"/>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="prof_nama_pegawai" class="col-sm-3 control-label">Nama Pegawai</label>
+														<div class="col-sm-9">
+															<input type="text" id="prof_nama_pegawai" name="prof_nama_pegawai"  maxlength="35" class="required form-control" size="35" alt="Nama Pegawai" title="Nama Pegawai" placeholder="*Nama Pegawai" value="<?php echo $this->session->userdata('ses_gbl_nama_akun'); ?>"/>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="prof_kelamin" class="col-sm-3 control-label">Jenis Kelamin</label>
+														<div class="col-sm-9">
+															<select name="prof_kelamin" id="prof_kelamin" class="required form-control select2" title="Jenis KELAMIN">
+																<option value="<?php echo $this->session->userdata('ses_gbl_kelamin_akun'); ?>"><?php echo $this->session->userdata('ses_gbl_kelamin_akun'); ?></option>
+																<option value="PRIA">PRIA</option>
+																<option value="WANITA">WANITA</option>
+															</select>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="prof_tampat_lahir" class="col-sm-3 control-label">Tempat Lahir</label>
+														<div class="col-sm-9">
+														<input type="text" class="form-control" name="prof_tampat_lahir" id="prof_tampat_lahir" placeholder="*Tempat Lahir" value="<?php echo $this->session->userdata('ses_gbl_tempat_lahir_akun');?>">
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label class="col-sm-3 control-label">Tanggal Lahir</label>
+														<div class="col-sm-9">
+															<div class="input-group date">
+															  <div class="input-group-addon">
+																<i class="fa fa-calendar"></i>
+															  </div>
+															  <input name="prof_tgl_lahir" id="prof_tgl_lahir" type="text" class="required form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="<?php echo $this->session->userdata('ses_gbl_tgl_lahir_akun');?>" data-date-format="yyyy-mm-dd">
+															</div>
+														</div>
+														<!-- /.input group -->
+													</div>
+													
+													
+													<div class="form-group">
+													  <label class="col-sm-3 control-label" for="prof_tlp">No Telpon/Hp</label>
+														<div class="col-sm-9">
+															<input type="text" id="prof_tlp" name="prof_tlp"  maxlength="25" onkeypress="return isNumberKey(event)" class="required form-control" size="35" alt="No Telpon/Hp" title="No Telpon/Hp" placeholder="*No Telpon/Hp" value="<?php echo $this->session->userdata('ses_gbl_tlp_akun');?>"/>
+														</div>
+													</div>
+													
+													<div class="form-group">
+													  <input type="hidden" id="prof_cek_email" name="prof_cek_email" />
+													  <label class="col-sm-3 control-label" for="prof_email">Email</label>
+														<div class="col-sm-9">
+															<input type="text" id="prof_email" name="prof_email"  maxlength="35" class="email form-control" size="35" alt="Email Harus Valid" title="Email Harus Valid" placeholder="Email Harus Valid"  value="<?php echo $this->session->userdata('ses_gbl_email_akun');?>"/> <span id="prof_pesan2"></span>
+														</div>
+													</div>
+													
+													
+													<div class="form-group">
+													  <label class="col-sm-3 control-label" for="prof_alamat">Alamat Lengkap</label>
+														<div class="col-sm-9">
+															<textarea name="prof_alamat" id="prof_alamat" class="required form-control" title="Isi dengan alamat lengkap beserta RT dan RW" placeholder="*Isi dengan alamat lengkap beserta RT dan RW"><?php echo $this->session->userdata('ses_gbl_alamat_akun');?></textarea>
+														</div>
+													</div>
+												
+											  </div>
+											  
+											 
+										
+										
+									<!--</div> -->
+									<!-- ISI BODY -->
+									
+									
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+									<button type="button" class="btn btn-primary">Simpan</button>
+								</div>
+								</div>
+							</div>
+							</div>
+
+					<!-- Show MOdal - TABLE 4 INPUT DATA AWAL -->
+			
 					
 			</div><!-- /.col -->
 		</div><!-- /.row -->
@@ -387,30 +750,213 @@ echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value=
 			
 		
 <script type='text/javascript'>
-	
-	
 	function edit(id)
 	{
 		
-		$('input[name=stat_edit]').val($('#idx_'+id).val());
-		$('input[name=idx]').val($('#idx_'+id).val());
+		$('input[name=stat_edit]').val($('#id_pembelian_'+id).val());
+		$('input[name=id_pembelian]').val($('#id_pembelian_'+id).val());
+		$('input[name=no_apar]').val($('#no_apar_'+id).val());
+		$('input[name=tgl_beli]').val($('#tgl_beli_'+id).val());
+		$('input[name=id_apar]').val($('#id_apar_'+id).val());
+		$('input[name=merek]').val($('#merek_apar_'+id).val());
+		$('input[name=kapasitas]').val($('#kapasitas_apar_'+id).val());
+		$('input[name=jenis_apar]').val($('#jenis_apar_'+id).val());
+		$('input[name=id_pelanggan]').val($('#id_pelanggan_'+id).val());
+		$('input[name=no_pelanggan]').val($('#no_pelanggan_'+id).val());
+		$('input[name=nama_pelanggan]').val($('#nama_pelanggan_'+id).val());
+		$('input[name=id_petugas]').val($('#id_petugas_'+id).val());
+		$('input[name=nama_petugas]').val($('#nama_petugas_'+id).val());
+		$('input[name=nik]').val($('#nik_petugas_'+id).val());
+
 		
-		//$('input[name=pertanyaan]').val($('#pertanyaan_'+id).val());
-		document.getElementById("pertanyaan").value = $('#pertanyaan_'+id).val();
-		
-		//$('input[name=isBollean]').val($('#isBollean_'+id).val());
-		document.getElementById("isBollean").options.item(0).text = $('#isBollean_'+id).val();
-		document.getElementById("isBollean").options.item(0).value = $('#isBollean_'+id).val();
-		
-		
-		
-		alert("Mode Perubahan Aktif Untuk Data "+ $('#pertanyaan_'+id).val());
+		alert("Mode Perubahan Aktif Untuk Data "+ $('#no_apar_'+id).val());
 		
 		/*Buka Form*/
 			$('#icon_form').attr('class', 'fa fa-minus');
 			$('#box-form').attr('class', 'box box-warning ellapsed-box box-solid');
 		/*Buka Form*/
 	}
+	
+	function generate_qr(no)
+	{
+		var id_pembelian = $("#id_pembelian_"+no).val();
+		//alert(id_pembelian);
+		$.ajax(
+		{
+			type: "POST"
+			, url: "<?php echo base_url();?>C_transaksi_pembelian/generate_qr/"
+			, data: 
+					{
+						id_pembelian:id_pembelian
+					}
+			, cache: false
+			, success:function(data)
+		{
+			if(data!=0)
+			{
+				location.reload();
+			} 
+			else
+			{
+				alert("GAGAL GENERATE QR CODE");
+			}
+		}
+		});
+	}
+	
+	function tambah_petugas()
+	{
+		//var href = "<?php echo base_url();?>gl-admin-pendaftaran-print-faktur/"+id_h_penjualan+"?kembalian="+kembalian_new;
+		
+		var href = "<?php echo base_url();?>data-petugas";
+		window.open(href, 'popup', 'height=800,width=500,toolbar=no');
+	}
+	
+	function list_data_petugas()
+	{
+		var cari = $("#json_cari_petugas").val();
+		var limit = 30;
+		var offset = 0;
+		
+		$("#tb_cari_list_petugas").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek Data ...");
+		
+		$.ajax(
+		{
+			type: "POST"
+			, url: "<?php echo base_url();?>C_transaksi_pembelian/list_petugas/"
+			, data: 
+					{
+						cari:cari
+						,limit:limit
+						,offset:offset
+					}
+			, cache: false
+			, success:function(data)
+		{
+			if(data!=0)
+			{
+				$("#tb_cari_list_petugas").html(data);
+				$("#json_cari_petugas").focus();
+			} 
+			else
+			{
+				$("#tb_cari_list_petugas").html("Tidak Ada Data Yang Ditampilkan");
+				$("#json_cari_petugas").focus();
+			}
+		}
+		});
+	}
+	
+	function insert_petugas(id)
+	{
+		$('input[name=id_petugas]').val($('#id_petugas_'+id).val());
+		$('#nik').val($('#nik_'+id).val());
+		$('#nama_petugas').val($('#nama_petugas_'+id).val());
+	}
+	
+
+	function tambah_pelanggan()
+	{
+		//var href = "<?php echo base_url();?>gl-admin-pendaftaran-print-faktur/"+id_h_penjualan+"?kembalian="+kembalian_new;
+		
+		var href = "<?php echo base_url();?>data-pemilik";
+		window.open(href, 'popup', 'height=800,width=500,toolbar=no');
+	}
+	
+	function list_data_pelanggan()
+	{
+		var cari = $("#json_cari_pelanggan").val();
+		var limit = 30;
+		var offset = 0;
+		
+		$("#tb_cari_list_pelanggan").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek Data ...");
+		
+		$.ajax(
+		{
+			type: "POST"
+			, url: "<?php echo base_url();?>C_transaksi_pembelian/list_pelanggan/"
+			, data: 
+					{
+						cari:cari
+						,limit:limit
+						,offset:offset
+					}
+			, cache: false
+			, success:function(data)
+		{
+			if(data!=0)
+			{
+				$("#tb_cari_list_pelanggan").html(data);
+				$("#json_cari_pelanggan").focus();
+			} 
+			else
+			{
+				$("#tb_cari_list_pelanggan").html("Tidak Ada Data Yang Ditampilkan");
+				$("#json_cari_pelanggan").focus();
+			}
+		}
+		});
+	}
+	
+	function insert_pelanggan(id)
+	{
+		$('input[name=id_pelanggan]').val($('#id_pelanggan_'+id).val());
+		$('#no_pelanggan').val($('#no_pelanggan_'+id).val());
+		$('#nama_pelanggan').val($('#nama_pelanggan_'+id).val());
+	}
+	
+	function tambah_apar()
+	{
+		//var href = "<?php echo base_url();?>gl-admin-pendaftaran-print-faktur/"+id_h_penjualan+"?kembalian="+kembalian_new;
+		
+		var href = "<?php echo base_url();?>data-apar";
+		window.open(href, 'popup', 'height=800,width=500,toolbar=no');
+	}
+	
+	function list_data_apar()
+	{
+		var cari = $("#json_cari_apar").val();
+		var limit = 30;
+		var offset = 0;
+		
+		$("#tb_cari_list_apar").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek Data ...");
+		
+		$.ajax(
+		{
+			type: "POST"
+			, url: "<?php echo base_url();?>C_transaksi_pembelian/list_apar/"
+			, data: 
+					{
+						cari:cari
+						,limit:limit
+						,offset:offset
+					}
+			, cache: false
+			, success:function(data)
+		{
+			if(data!=0)
+			{
+				$("#tb_cari_list_apar").html(data);
+				$("#json_cari_apar").focus();
+			} 
+			else
+			{
+				$("#tb_cari_pasien").html("Tidak Ada Data Yang Ditampilkan");
+				$("#json_cari_apar").focus();
+			}
+		}
+		});
+	}
+	
+	function insert_apar(id)
+	{
+		$('input[name=id_apar]').val($('#id_apar_'+id).val());
+		$('#merek').val($('#merek_'+id).val());
+		$('#jenis_apar').val($('#jenis_apar_'+id).val());
+		$('#kapasitas').val($('#kapasitas_'+id).val());
+	}
+	
+	
 	
 	$('#btnbatal').click(function(){
 		$('input[name=stat_edit]').val("");
