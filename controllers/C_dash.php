@@ -73,4 +73,115 @@ class C_dash extends CI_Controller
 			}
 		}
 	}
+	
+	function ubah_data_kantor()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				$query = 
+						"
+							UPDATE tb_tentang SET
+								nama_aplikasi= '".htmlentities(str_replace("'","",$_POST['nama_aplikasi']), ENT_QUOTES, 'UTF-8')."',
+								judul_aplikasi= '".htmlentities(str_replace("'","",$_POST['judul_aplikasi']), ENT_QUOTES, 'UTF-8')."',
+								keterangan= '".htmlentities(str_replace("'","",$_POST['keterangan']), ENT_QUOTES, 'UTF-8')."',
+								alamat= '".htmlentities(str_replace("'","",$_POST['alamat']), ENT_QUOTES, 'UTF-8')."',
+								tlp= '".htmlentities(str_replace("'","",$_POST['tlp']), ENT_QUOTES, 'UTF-8')."',
+								email= '".htmlentities(str_replace("'","",$_POST['email']), ENT_QUOTES, 'UTF-8')."',
+								web= '".htmlentities(str_replace("'","",$_POST['web']), ENT_QUOTES, 'UTF-8')."',
+								url_video= '".htmlentities(str_replace("'","",$_POST['url_video']), ENT_QUOTES, 'UTF-8')."',
+								versi_app= '".htmlentities(str_replace("'","",$_POST['versi_app']), ENT_QUOTES, 'UTF-8')."'
+								WHERE id_tentang = '".htmlentities(str_replace("'","",$_POST['id_tentang']), ENT_QUOTES, 'UTF-8')."'
+
+						";
+				/*SIMPAN DAN CATAT QUERY*/
+					$this->db->query($query);
+				/*SIMPAN DAN CATAT QUERY*/
+				
+				$user = array(
+					'ses_gbl_nama_aplikasi' => htmlentities(str_replace("'","",$_POST['nama_aplikasi']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_judul_aplikasi' => htmlentities(str_replace("'","",$_POST['judul_aplikasi']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_ket_aplikasi' => htmlentities(str_replace("'","",$_POST['keterangan']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_tlp_aplikasi' => htmlentities(str_replace("'","",$_POST['tlp']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_email_aplikasi' => htmlentities(str_replace("'","",$_POST['email']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_web_aplikasi' => htmlentities(str_replace("'","",$_POST['web']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_url_video_aplikasi' => htmlentities(str_replace("'","",$_POST['url_video']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_alamat_aplikasi' => htmlentities(str_replace("'","",$_POST['alamat']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_versi_app' => htmlentities(str_replace("'","",$_POST['versi_app']), ENT_QUOTES, 'UTF-8')
+					
+				);
+				$this->session->set_userdata($user);
+				
+				//header('Location: '.base_url().'data-quis');
+				echo'BERHASIL';
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
+	
+	function ubah_profil_akun()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				$query = 
+						"
+							UPDATE tb_akun SET
+									nik= '".htmlentities(str_replace("'","",$_POST['nik']), ENT_QUOTES, 'UTF-8')."',
+									nama_pegawai= '".htmlentities(str_replace("'","",$_POST['nama_pegawai']), ENT_QUOTES, 'UTF-8')."',
+									kelamin= '".htmlentities(str_replace("'","",$_POST['kelamin']), ENT_QUOTES, 'UTF-8')."',
+									tampat_lahir= '".htmlentities(str_replace("'","",$_POST['tampat_lahir']), ENT_QUOTES, 'UTF-8')."',
+									tgl_lahir= '".htmlentities(str_replace("'","",$_POST['tgl_lahir']), ENT_QUOTES, 'UTF-8')."',
+									email= '".htmlentities(str_replace("'","",$_POST['email']), ENT_QUOTES, 'UTF-8')."',
+									tlp= '".htmlentities(str_replace("'","",$_POST['tlp']), ENT_QUOTES, 'UTF-8')."',
+									alamat= '".htmlentities(str_replace("'","",$_POST['alamat']), ENT_QUOTES, 'UTF-8')."',
+									
+									user= '".htmlentities(str_replace("'","",$_POST['user']), ENT_QUOTES, 'UTF-8')."',
+									pass= '".base64_encode(md5(htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')))."'
+								WHERE id_akun = '".htmlentities(str_replace("'","",$_POST['id_akun']), ENT_QUOTES, 'UTF-8')."'
+
+						";
+				/*SIMPAN DAN CATAT QUERY*/
+					$this->db->query($query);
+				/*SIMPAN DAN CATAT QUERY*/
+				
+				$user = array(
+					'ses_gbl_id_akun'=>htmlentities(str_replace("'","",$_POST['id_akun']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_nik_akun'=>htmlentities(str_replace("'","",$_POST['nik']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_nama_akun'=>htmlentities(str_replace("'","",$_POST['nama_pegawai']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_kelamin_akun'=>htmlentities(str_replace("'","",$_POST['kelamin']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_tampat_lahir_akun'=>htmlentities(str_replace("'","",$_POST['tampat_lahir']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_tgl_lahir_akun'=>htmlentities(str_replace("'","",$_POST['tgl_lahir']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_email_akun'=>htmlentities(str_replace("'","",$_POST['email']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_tlp_akun'=>htmlentities(str_replace("'","",$_POST['tlp']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_alamat_akun'=>htmlentities(str_replace("'","",$_POST['alamat']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_user_akun'=>htmlentities(str_replace("'","",$_POST['user']), ENT_QUOTES, 'UTF-8'),
+					'ses_gbl_pass_akun'=>htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')
+				);
+				$this->session->set_userdata($user);
+				
+				//header('Location: '.base_url().'data-quis');
+				echo'BERHASIL';
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
 }

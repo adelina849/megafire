@@ -41,6 +41,7 @@ class C_login extends CI_Controller
 				
 				//3. Set session
 				$user = array(
+					'ses_gbl_id_tentang' => $get_ttg->id_tentang,
 					'ses_gbl_nama_aplikasi' => $get_ttg->nama_aplikasi,
 					'ses_gbl_judul_aplikasi' => $get_ttg->judul_aplikasi,
 					'ses_gbl_ket_aplikasi' => $get_ttg->keterangan,
@@ -49,6 +50,7 @@ class C_login extends CI_Controller
 					'ses_gbl_web_aplikasi' => $get_ttg->web,
 					'ses_gbl_url_video_aplikasi' => $get_ttg->url_video,
 					'ses_gbl_alamat_aplikasi' => $get_ttg->alamat,
+					'ses_gbl_versi_app' => $get_ttg->versi_app,
 					
 					'ses_gbl_id_akun' => $get_login->id_akun,
 					'ses_gbl_nik_akun' => $get_login->nik,

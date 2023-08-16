@@ -1,0 +1,79 @@
+ <title>DataQuis</title>
+ 
+ <?php
+ 
+ $title = "DataQuis";
+ header("Content-type: application/vnd-ms-excel");
+ header("Content-Disposition: attachment; filename=$title.xls");
+ header("Pragma: no-cache");
+ header("Expires: 0");
+ 
+ ?>
+
+<?php
+	//TABLE
+	if(!empty($list_data_quis))
+	{
+		//$sum_laporan_h_penjualan = $sum_laporan_h_penjualan->row();
+		
+		echo'<table width="50%" id="example2" class="table table-hover hoverTable">';
+			echo '<thead>';
+			
+			echo '<tbody>
+				<tr>
+					<td colspan="3" style="text-align:center;">
+						<b>LAPORAN DATA QUIS/PERTANYAAN</b>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" style="text-align:center;">
+					</td>
+				</tr>
+			';
+			
+			echo'
+					<tr>';
+						echo '<th style="background-color:green;">NO</th>';
+						echo '<th style="background-color:green;">INDEX/NO URUT</th>';
+						echo '<th style="background-color:green;">PERTANYAAN</th>';
+			echo '</tr>
+				</thead>';
+			$list_result = $list_data_quis->result();
+			
+			
+			$no = 1;
+			$nominal = 0;
+			$grand_total = 0;
+			
+			echo '<tbody>';
+			
+			foreach($list_result as $row)
+			{
+				echo'<tr class="tr_utama">';
+					echo'<td>'.$no.'</td>';
+					echo'<td>'.$row->idx.'</td>';
+					echo'<td>'.$row->pertanyaan.'</td>';
+					
+					//echo'<td style="text-align:right;">'.number_format( $row->NOMINAL ,0,'.',',').'</td>';
+					//echo'<td style="text-align:right;">'.($row->NOMINAL).'</td>';
+				echo'</tr>';
+				$no++;
+				//$grand_total = $grand_total + $row->NOMINAL;
+			}		
+				/*
+				echo'<tr>';
+					echo'<td colspan="6" style="text-align:right;font-weight:bold;">GRAND TOTAL</td>';
+					echo'<td style="text-align:right;font-weight:bold;">'.($grand_total).'</td>';
+				echo'</tr>';
+				*/
+			echo '</tbody>';
+		echo'</table>';
+	}
+	else
+	{
+		echo'<center>';
+		echo'Tidak Ada Data Yang Ditampilkan !';
+		echo'</center>';
+	}
+	//TABLE
+?>

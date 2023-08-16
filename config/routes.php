@@ -110,3 +110,17 @@ $route['translate_uri_dashes'] = FALSE;
 		$route['data-petugas-excel'] = "C_data_petugas/view_excel";
 		$route['data-petugas-excel/(:any)'] = 'C_data_petugas/view_excel';
 	//DATA PETUGAS
+	
+	//DATA QUIS
+		$route['data-quis'] = "C_data_quis/index";
+		$route['data-quis/(:any)'] = 'C_data_quis/index';
+		
+		$route['data-quis-simpan'] = "C_data_quis/simpan";
+		$route['data-quis-simpan/(:any)'] = 'C_data_quis/simpan';
+		
+		$route['data-quis-hapus'] = "C_data_quis/hapus";
+		$route['data-quis-hapus/(:any)'] = 'C_data_quis/hapus';
+		
+		$route['data-quis-excel'] = "C_data_quis/view_excel";
+		$route['data-quis-excel/(:any)'] = 'C_data_quis/view_excel';
+	//DATA QUIS

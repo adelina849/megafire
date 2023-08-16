@@ -104,42 +104,42 @@
 					{
 					*/
 						$('#1_data_dasar').attr('class', 'active treeview');
-						$('#11_data_dasar_apar').attr('class', 'active treeview');
+						$('#14_data_dasar_quis').attr('class', 'active treeview');
 					//}
 					
-					$("#no_apar").change(function()
+					$("#idx").change(function()
                     {  
                 
-                        var no_apar = $("#no_apar").val();
+                        var idx = $("#idx").val();
                         $("#pesan").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek <?php echo $msgbox_title;?> ...");
                 
-                        if(no_apar =='')
+                        if(idx =='')
                         {
                           $("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> Kolom Tidak Boleh Kosong');
-                          $("#no_apar").css('border', '3px #C33 solid');
+                          $("#idx").css('border', '3px #C33 solid');
                         }
 						else
 						{
-							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_apar/cek_no_apar/"
+							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_quis/cek_idx_quis/"
 							, data: 
 									{
-										no_apar:no_apar
+										idx:idx
 									}
 							, cache: false
 							, success:function(data)
 							{ 
-								if(data==0 || ($("#no_apar").val() == $("#cek_no_apar").val()))
+								if(data==0 || ($("#idx").val() == $("#cek_idx").val()))
 								//if(data==0)
 								  {
 									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/true.png">');
-									$("#no_apar").css('border', '3px #090 solid');
+									$("#idx").css('border', '3px #090 solid');
 									$("#btnsimpan").attr("disabled", false);
 								}
 								  else
 								  {
 									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> No/Kode <?php echo $msgbox_title;?> Telah Digunakan, Tombol Save Terkunci');
 									//$("#pesan").html(data); 
-									$("#no_apar").css('border', '3px #C33 solid');
+									$("#idx").css('border', '3px #C33 solid');
 									$("#btnsimpan").attr("disabled", true);
 								  }
 								  
@@ -183,7 +183,7 @@
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 			<li><a href="#"><i class="fa fa-desktop"></i> Data Dasar</a></li>
-			<li class="active"><i class="fa fa-fire-extinguisher"></i> APAR</li>
+			<li class="active"><i class="fa fa-list-ol"></i> quis</li>
 			
 		</ol>
 		</section>
@@ -200,7 +200,7 @@
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				<h4><?php echo $msgbox_title;?></h4>
 				<p>
-					Halaman ini menampilkan data jenis - jenis APAR yang tersedia. Klik tombol "+" untuk menambah data.
+					Halaman ini menampilkan data jenis - jenis quis yang tersedia. Klik tombol "+" untuk menambah data.
 				</P>
 				<!-- <p style="color:red;"><?php //echo $sum_pesan; ?></p> -->
 			</div>
@@ -216,36 +216,29 @@
 				
 				
 				<!-- ISI FORM -->
-						<form role="form" action="<?php echo base_url();?>data-apar-simpan" method="post" class="frm-input">
+						<form role="form" action="<?php echo base_url();?>data-quis-simpan" method="post" class="frm-input">
 						<input type="hidden" name="stat_edit" id="stat_edit"/>
-						<input type="hidden" name="id_apar" id="id_apar"/>
 						<div class="box-body">
 							
 							<div class="form-group">
-							<label for="no_apar">NO APAR</label>
-							<input type="hidden" id="cek_no_apar" name="cek_no_apar" />
-							<input type="text" id="no_apar" name="no_apar"  maxlength="25" class="required form-control" size="15" onkeyup="this.value = this.value.toUpperCase()" onkeypress="return RestrictSpace()" alt="NO APAR" title="NO APAR" placeholder="*NO APAR" value="<?php echo $get_no_apar;?>"/><span id="pesan"></span>
+							<label for="idx">INDEX/NO URUT</label>
+							<input type="hidden" id="cek_idx" name="cek_idx" />
+							<input type="text" id="idx" name="idx"  maxlength="25" class="required form-control" size="15" onkeyup="this.value = this.value.toUpperCase()" onkeypress="return RestrictSpace()" alt="NO quis" title="NO quis" placeholder="*NO quis" value="<?php echo $get_data_quis_idx;?>"/><span id="pesan"></span>
 							</div>
 							
 							<div class="form-group">
-							<label for="jenis_apar">JENIS APAR</label>
-							<input type="text" id="jenis_apar" name="jenis_apar"  maxlength="25" class="required form-control" size="35" onkeyup="this.value = this.value.toUpperCase()" alt="Jenis APAR" title="Jenis APAR" placeholder="*Jenis APAR"/>
-							</div>
-							
-							<div class="form-group">
-								<label for="kapasitas">KAPASITAS APAR</label>
-								<input type="text" id="kapasitas" name="kapasitas"  maxlength="2" onkeypress="return isNumberKey(event)" class="required form-control" size="35" alt="Kapasitas APAR" value="0" title="Kapasitas APAR" placeholder="*Kapasitas APAR"/>
-							</div>
-							
-							<div class="form-group">
-								<label for="merek">MEREK</label>
-								<input type="text" id="merek" name="merek"  maxlength="150" onkeypress="return isNumberKey(event)" class="required form-control" size="35" alt="Merek APAR" value="MEGAFIRE" title="Merek APAR" placeholder="*Merek APAR" readonly/>
-							</div>
-							
-							<div class="form-group">
-                              <label for="ket_apar">Keterangan</label>
-                              <textarea name="ket_apar" id="ket_apar" class="required form-control" title="Isikan lengkap tentang keterangan APAR" placeholder="*Isikan lengkap tentang keterangan APAR"></textarea>
+                              <label for="pertanyaan">PERTANYAAN/QUIS</label>
+                              <textarea name="pertanyaan" id="pertanyaan" class="required form-control" title="Isikan lengkap tentang keterangan quis" placeholder="*Isikan lengkap tentang keterangan quis"></textarea>
                             </div>
+							
+							<div class="form-group">
+							  <label for="isBollean">APAKAH PERTANYAAN BERBENTUK BOOLEAN/PILIHAN</label>
+							  <select name="isBollean" id="isBollean" class="required form-control select2" title="Jenis KELAMIN">
+									<option value="">== Pilih Jenis Pertanyaan ==</option>
+									<option value="YA">YA</option>
+									<option value="TIDAK">TIDAK</option>
+							   </select>
+							</div>
 							
 						</div><!-- /.box-body -->
 		
@@ -269,7 +262,7 @@
 							</h3>
 							<div class="pull-right">
 								<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
-								<form action="<?=base_url();?>data-apar" method="get" class="frm-cari">
+								<form action="<?=base_url();?>data-quis" method="get" class="frm-cari">
 									<table>
 										<tr>
 											<!-- <td>Berdasarkan</td><td>:</td> -->
@@ -288,7 +281,7 @@
 												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
 											</td>
 											<td>
-												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-apar-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
+												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
 											</td>
 										</tr>
 									</table>
@@ -300,7 +293,7 @@
 						
 						<?php
 							//TABLE
-							if(!empty($list_data_apar))
+							if(!empty($list_data_quis))
 								{
 									//echo gethostname();
 									//echo $this->M_gl_pengaturan->getUserIpAddr();
@@ -312,15 +305,13 @@
 										echo '<thead>
 	<tr>';
 													echo '<th width="5%" Style="text-align:center;">NO</th>';
-													echo '<th width="10%" Style="text-align:center;">NO APAR</th>';
-													echo '<th width="10%" Style="text-align:center;">JENIS</th>';
-													echo '<th width="10%" Style="text-align:center;">KAPASITAS</th>';
-													echo '<th width="30%" Style="text-align:center;">KETERANGAN</th>';
-													echo '<th width="25%" Style="text-align:center;">INPUT</th>';
+													echo '<th width="5%" Style="text-align:center;">INDEX</th>';
+													echo '<th width="50%" Style="text-align:center;">PERTANYAAN/QUIS</th>';
+													echo '<th width="30%" Style="text-align:center;">APAKH BOOLEAN/PILIHAN</th>';
 													echo '<th width="10%" Style="text-align:center;">AKSI</th>';
 										echo '</tr>
 	</thead>';
-										$list_result = $list_data_apar->result();
+										$list_result = $list_data_quis->result();
 										$no =$this->uri->segment(2,0)+1;
 										echo '<tbody>';
 										foreach($list_result as $row)
@@ -328,33 +319,20 @@
 											echo'<tr>';
 												echo'<td>'.$no.'</td>';
 												
-												echo '<td>'.$row->no_apar.'</td>';
-												echo '<td>'.$row->jenis_apar.'</td>';
-												echo '<td>'.$row->kapasitas.' Kg</td>';
-												echo '<td>'.$row->ket_apar.'</td>';
-												echo '<td>
-														<b>Input :</b> '.$row->user_ins.'
-														<br/><b>Edit :</b> '.$row->user_updt.'
-													</td>';
+												echo '<td>'.$row->idx.'</td>';
+												echo '<td>'.$row->pertanyaan.'</td>';
+												echo '<td Style="text-align:center;">'.$row->isBollean.'</td>';
 												
-echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';			
-echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';
-echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
-echo'<input type="hidden" id="jenis_apar_'.$no.'" name="jenis_apar_'.$no.'" value="'.$row->jenis_apar.'" />';
-echo'<input type="hidden" id="kapasitas_'.$no.'" name="kapasitas_'.$no.'" value="'.$row->kapasitas.'" />';
-echo'<input type="hidden" id="merek_'.$no.'" name="merek_'.$no.'" value="'.$row->merek.'" />';
-echo'<input type="hidden" id="ket_apar_'.$no.'" name="ket_apar_'.$no.'" value="'.$row->ket_apar.'" />';
-echo'<input type="hidden" id="tgl_ins_'.$no.'" name="tgl_ins_'.$no.'" value="'.$row->tgl_ins.'" />';
-echo'<input type="hidden" id="tgl_updt_'.$no.'" name="tgl_updt_'.$no.'" value="'.$row->tgl_updt.'" />';
-echo'<input type="hidden" id="user_ins_'.$no.'" name="user_ins_'.$no.'" value="'.$row->user_ins.'" />';
-echo'<input type="hidden" id="user_updt_'.$no.'" name="user_updt_'.$no.'" value="'.$row->user_updt.'" />';
+echo'<input type="hidden" id="idx_'.$no.'" name="idx_'.$no.'" value="'.$row->idx.'" />';			
+echo'<input type="hidden" id="pertanyaan_'.$no.'" name="pertanyaan_'.$no.'" value="'.$row->pertanyaan.'" />';
+echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value="'.$row->isBollean.'" />';
 
 
 												echo'<td>
 												
-	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_apar.'" alt = "Ubah Data '.$row->no_apar.'">Edit</a>
+	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->idx.'" alt = "Ubah Data '.$row->idx.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-apar-hapus/'.(md5($row->id_apar)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'">Hapus</a>
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-quis-hapus/'.(md5($row->idx)).'" title = "Hapus Data '.$row->idx.'" alt = "Hapus Data '.$row->idx.'">Hapus</a>
 												</td>';
 												
 											echo'</tr>';
@@ -395,17 +373,19 @@ echo'<input type="hidden" id="user_updt_'.$no.'" name="user_updt_'.$no.'" value=
 	function edit(id)
 	{
 		
-		$('input[name=stat_edit]').val($('#id_apar_'+id).val());
-		$('input[name=id_apar]').val($('#id_apar_'+id).val());
-		$('input[name=no_apar]').val($('#no_apar_'+id).val());
-		$('input[name=jenis_apar]').val($('#jenis_apar_'+id).val());
-		$('input[name=kapasitas]').val($('#kapasitas_'+id).val());
-		$('input[name=merek]').val($('#merek_'+id).val());
+		$('input[name=stat_edit]').val($('#idx_'+id).val());
+		$('input[name=idx]').val($('#idx_'+id).val());
 		
-		//$('input[name=ket_apar]').val($('#ket_apar_'+id).val());
-		document.getElementById("ket_apar").value = $('#ket_apar_'+id).val();
+		//$('input[name=pertanyaan]').val($('#pertanyaan_'+id).val());
+		document.getElementById("pertanyaan").value = $('#pertanyaan_'+id).val();
 		
-		alert("Mode Perubahan Aktif Untuk Data "+ $('#no_apar_'+id).val());
+		//$('input[name=isBollean]').val($('#isBollean_'+id).val());
+		document.getElementById("isBollean").options.item(0).text = $('#isBollean_'+id).val();
+		document.getElementById("isBollean").options.item(0).value = $('#isBollean_'+id).val();
+		
+		
+		
+		alert("Mode Perubahan Aktif Untuk Data "+ $('#pertanyaan_'+id).val());
 		
 		/*Buka Form*/
 			$('#icon_form').attr('class', 'fa fa-minus');

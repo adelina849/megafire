@@ -51,6 +51,58 @@
 	});	
 	</script>
 	
+	<script type='text/javascript'>
+		function ubah_data_kantor()
+		{
+			var id_tentang = $("#id_tentang").val();
+			var nama_aplikasi = $("#nama_aplikasi").val();
+			var judul_aplikasi = $("#judul_aplikasi").val();
+			var keterangan = $("#ket_app").val();
+			var alamat = $("#alamat").val();
+			var tlp = $("#tlp").val();
+			var email = $("#email").val();
+			var web = $("#web").val();
+			var url_video = $("#url_video").val();
+			var versi_app = $("#versi_app").val();
+
+			var r = confirm("Apakah anda yakin akan menyimpan perubahan data kantor ?");
+			if (r == true) 
+			{
+				$.ajax({type: "POST", url: "<?php echo base_url();?>C_dash/ubah_data_kantor/"
+				, data: 
+						{
+							id_tentang:id_tentang,
+							nama_aplikasi:nama_aplikasi,
+							judul_aplikasi:judul_aplikasi,
+							keterangan:keterangan,
+							alamat:alamat,
+							tlp:tlp,
+							email:email,
+							web:web,
+							url_video:url_video,
+							versi_app:versi_app
+
+						}
+				, cache: false
+				, success:function(data)
+				{ 
+					//if(data==0)
+					if(data == 'BERHASIL')
+					{
+						alert("DATA KANTOR BERHASIL DI RUBAH");
+						location.reload();
+					}
+					else
+					{
+						alert("DATA KANTOR GAGAL DI RUBAH");
+					}
+					  
+				} 
+				});
+			}
+		}
+	</script>
+	
 	
 	
       <div class="content-wrapper">
@@ -272,10 +324,7 @@
 						</div>
 						
 						<?php
-							if( ($this->session->userdata('ses_akses_lvl3_711') > 0) or ($this->session->userdata('ses_nama_jabatan') == 'Admin Aplikasi') )
-							{
-								echo'<a href="'.base_url().'gl-admin-laporan-transaksi-detail-produk" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
-							}
+							echo'<a href="'.base_url().'data-quis" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
 						?>
 						<!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
 					</div>
@@ -308,6 +357,87 @@
 		  
 			
 			<!-- Show MOdal - TABLE 1-->
+				<div class="modal modal-success fade" id="myModalKantor">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title">DATA KANTOR
+								</h4>
+							</div>
+							<div class="modal-body">
+								<!-- ISI FORM -->
+								<!-- <form role="form" action="<?php echo base_url();?>gl-admin-ubah-profile-kantor" method="post" class="frm-input" enctype="multipart/form-data"> -->
+									<input type="hidden" name="id_tentang" id="id_tentang" value="<?php echo $this->session->userdata('ses_gbl_id_tentang'); ?>"/>
+									<div class="box-body">
+										
+										<div class="form-group">
+											<label for="nama_aplikasi">Nama Aplikasi</label>
+											<input type="text" id="nama_aplikasi" name="nama_aplikasi"  maxlength="35" class="required form-control" size="35" alt="Nama Aplikasi" title="Nama Aplikasi" placeholder="*Nama Aplikasi" value="<?php echo $this->session->userdata('ses_gbl_nama_aplikasi'); ?>"/>
+										</div>
+										
+										<div class="form-group">
+											<label for="judul_aplikasi">Judul Aplikasi</label>
+											<input type="text" id="judul_aplikasi" name="judul_aplikasi"  maxlength="35" class="required form-control" size="35" alt="Judul Aplikasi" title="Judul Aplikasi" placeholder="*Judul Aplikasi" value="<?php echo $this->session->userdata('ses_gbl_judul_aplikasi'); ?>"/>
+										</div>
+										
+										<div class="form-group">
+											<label for="tlp">Telpon/Hp</label>
+											<input type="text" id="tlp" name="tlp"  maxlength="35" class="required form-control" size="35" alt="Telpon/Hp Aplikasi" title="Telpon/Hp Aplikasi" placeholder="*Telpon/Hp Aplikasi" value="<?php echo $this->session->userdata('ses_gbl_tlp_aplikasi'); ?>"/>
+										</div>
+										
+										<div class="form-group">
+											<label for="email">Email</label>
+											<input type="text" id="email" name="email"  maxlength="150" class="required form-control" size="150" alt="Email Aplikasi" title="Email Aplikasi" placeholder="*Email Aplikasi" value="<?php echo $this->session->userdata('ses_gbl_email_aplikasi'); ?>"/>
+										</div>
+										
+										<div class="form-group">
+											<label for="web">Website</label>
+											<input type="text" id="web" name="web"  maxlength="150" class="required form-control" size="150" alt="Website Aplikasi" title="Website Aplikasi" placeholder="*Website Aplikasi" value="<?php echo $this->session->userdata('ses_gbl_web_aplikasi'); ?>"/>
+										</div>
+										
+										<div class="form-group">
+										  <label for="alamat">Alamat</label>
+										  <textarea name="alamat" id="alamat" class="required form-control" title="Isikan Alamat kantor" placeholder="*Isikan Alamat kantor"><?php echo $this->session->userdata('ses_gbl_alamat_aplikasi'); ?>></textarea>
+										</div>
+										
+										<div class="form-group">
+										  <label for="ket_app">Keterangan</label>
+										  <textarea name="ket_app" id="ket_app" class="required form-control" title="Isikan Keterangan mengenai kantor" placeholder="*Isikan Keterangan mengenai kantor"><?php echo $this->session->userdata('ses_gbl_ket_aplikasi'); ?>></textarea>
+										</div>
+										
+										<div class="form-group">
+										  <label for="url_video">Video (NB : Sematkan url video youtube)</label>
+										  <textarea name="url_video" id="url_video" class="required form-control" title="Isikan url/alamat video" placeholder="*Isikan url/alamat video"><?php echo $this->session->userdata('ses_gbl_url_video_aplikasi'); ?>></textarea>
+										</div>
+										
+										<div class="form-group">
+											<label for="versi_app">Versi Aplikasi</label>
+											<input type="text" id="versi_app" name="versi_app"  maxlength="150" class="required form-control" size="150" alt="Versi Aplikasi" title="Versi Aplikasi" placeholder="*Versi Aplikasi" value="<?php echo $this->session->userdata('ses_gbl_versi_app'); ?>"/>
+										</div>
+										
+										
+										
+									</div><!-- /.box-body -->
+					
+									<!-- <div class="box-footer"> -->
+										<!-- <button type="reset" id="btnbatal" class="btn btn-default">Batal</button> -->
+										<!-- <button type="submit" id="btnsimpan" class="confirm-btn btn btn-primary" title="Simpan Data?">Simpan</button> -->
+									<!-- </div> -->
+									<!-- </form> -->
+								<!-- ISI FORM -->
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Tutup</button>
+								<button type="button" class="btn btn-outline" onclick="ubah_data_kantor()">Simpan</button>
+							</div>
+							<!-- </form> -->
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal-dialog -->
+				</div>
 			<!-- Show MOdal - TABLE 1-->
 			
         </section><!-- /.content -->

@@ -246,6 +246,8 @@
 						<li id="12_data_dasar_pemilik"><a href="<?php echo base_url();?>data-pemilik"><i class="fa fa-user"></i> Data Pemilik </a></li>
 						
 						<li id="13_data_dasar_petugas"><a href="<?php echo base_url();?>data-petugas"><i class="fa fa-users"></i> Data Petugas </a></li>
+						
+						<li id="14_data_dasar_quis"><a href="<?php echo base_url();?>data-quis"><i class="fa fa-list-ol"></i> Data Quis </a></li>
 				  </ul>
 				</li>
 			<!-- DATA DASAR APAR -->
