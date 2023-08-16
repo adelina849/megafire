@@ -259,7 +259,7 @@
 					<i class="fa fa-angle-left pull-right"></i>
 				  </a>
 				  <ul class="treeview-menu">
-						<li id="21_transaksi_pembelian"><a href="<?php echo base_url();?>transaksi-pembelian"><i class="fa fa-cart-arrow-down"></i> Pembelian APAR </a></li>
+						<li id="41_pengaturan_Operasional_konvSatuan"><a href="<?php echo base_url();?>transaksi-pembelian"><i class="fa fa-cart-arrow-down"></i> Pembelian APAR </a></li>
 				  </ul>
 				</li>
 			<!-- TRANSAKSI -->
