@@ -512,6 +512,8 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-pemilik-hapus/'.(md5($row->id_pelanggan)).'" title = "Hapus Data '.$row->no_pelanggan.'" alt = "Hapus Data '.$row->no_pelanggan.'">Hapus</a>
 	
 	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'" alt = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'">Simpan Akun</a>
+	
+	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian?berdasarkan=PEMILIK&cari='.$row->no_pelanggan.'" title = "Hasil Cek APAR '.$row->nama_pelanggan.'" alt = "Hasil Cek APAR '.$row->nama_pelanggan.'" Style="box-shadow: 1px 2px #888888;">DETAIL</a>
 												</td>';
 												
 											echo'</tr>';

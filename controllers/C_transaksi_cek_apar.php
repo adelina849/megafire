@@ -41,7 +41,8 @@ class C_transaksi_cek_apar extends CI_Controller
 					//2. GET DATA CEK APAR
 						$query = "
 									SELECT id_pembelian,id_petugas,tgl_cek,ket_cek_apar 
-									FROM tb_cek_apar 
+									FROM tb_cek_apar
+									WHERE id_pembelian = '".$get_data_pembelian->id_pembelian."'
 									GROUP BY id_pembelian,id_petugas,tgl_cek,ket_cek_apar
 									ORDER BY tgl_cek DESC
 									;

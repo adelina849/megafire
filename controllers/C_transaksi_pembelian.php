@@ -31,6 +31,15 @@ class C_transaksi_pembelian extends CI_Controller
 					$cari = "";
 				}
 				
+				if((!empty($_GET['berdasarkan'])) && ($_GET['berdasarkan']!= "")  )
+				{
+					$berdasarkan = str_replace("'","",$_GET['berdasarkan']);
+				}
+				else
+				{
+					$berdasarkan = "";
+				}
+				
 				//1. LIST DATA APAR
 					$query = "
 								SELECT
@@ -61,25 +70,62 @@ class C_transaksi_pembelian extends CI_Controller
 									SELECT MAX(tgl_cek) AS tgl_cek,id_pembelian 
 									FROM tb_cek_apar GROUP BY id_pembelian
 								) AS E ON A.id_pembelian = E.id_pembelian
+								";
 								
-								WHERE 
-										(
-											A.no_apar LIKE '%".$cari."%'
-											OR A.pemilik_apar LIKE '%".$cari."%'
-											OR A.penyimpanan LIKE '%".$cari."%'
-											OR A.lokasi_apar LIKE '%".$cari."%'
-											OR A.desa LIKE '%".$cari."%'
-											OR A.kecamatan LIKE '%".$cari."%'
-											
-											OR COALESCE(B.nama_petugas,'') LIKE '%".$cari."%'
-											OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%'
-											OR COALESCE(D.no_apar,'') LIKE '%".$cari."%'
-										)
-											
-								ORDER BY A.tgl_transaksi DESC
-								LIMIT ".$this->uri->segment(2,0).",30
-								;
-							";
+								
+								if($berdasarkan == 'PETUGAS')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(B.nik,'') LIKE '%".$cari."%'
+														OR COALESCE(B.nama_petugas,'') LIKE '%".$cari."%'
+														)
+														
+														ORDER BY A.tgl_transaksi DESC
+														LIMIT ".$this->uri->segment(2,0).",30
+														";
+								}
+								elseif($berdasarkan == 'PEMILIK')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(C.nik_pelanggan,'') LIKE '%".$cari."%'
+														OR COALESCE(C.no_pelanggan,'') LIKE '%".$cari."%'
+														OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%'
+														)
+														
+														ORDER BY A.tgl_transaksi DESC
+														LIMIT ".$this->uri->segment(2,0).",30
+														";
+								}
+								elseif($berdasarkan == 'APAR')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(D.no_apar,'') LIKE '%".$cari."%'
+														OR COALESCE(D.jenis_apar,'') LIKE '%".$cari."%'
+														OR COALESCE(D.kapasitas,'') LIKE '%".$cari."%'
+														)
+													ORDER BY A.tgl_transaksi DESC
+													LIMIT ".$this->uri->segment(2,0).",30
+													";
+								}
+								else
+								{
+									$query = $query." WHERE 
+														(
+														A.no_apar LIKE '%".$cari."%'
+														OR A.pemilik_apar LIKE '%".$cari."%'
+														OR A.penyimpanan LIKE '%".$cari."%'
+														OR A.lokasi_apar LIKE '%".$cari."%'
+														OR A.desa LIKE '%".$cari."%'
+														OR A.kecamatan LIKE '%".$cari."%'
+														)
+														
+														ORDER BY A.tgl_transaksi DESC
+														LIMIT ".$this->uri->segment(2,0).",30
+														";
+								}
 					$get_list_pembelian = $this->M_general->view_query_general($query);
 					if(!empty($get_list_pembelian))
 					{
@@ -99,22 +145,53 @@ class C_transaksi_pembelian extends CI_Controller
 								LEFT JOIN tb_petugas AS B ON A.id_petugas = B.id_petugas
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan
 								LEFT JOIN tb_apar AS D ON A.id_apar = D.id_apar
-								
-								WHERE 
-										(
-											A.no_apar LIKE '%".$cari."%'
-											OR A.pemilik_apar LIKE '%".$cari."%'
-											OR A.penyimpanan LIKE '%".$cari."%'
-											OR A.lokasi_apar LIKE '%".$cari."%'
-											OR A.desa LIKE '%".$cari."%'
-											OR A.kecamatan LIKE '%".$cari."%'
-											
-											OR COALESCE(B.nama_petugas,'') LIKE '%".$cari."%'
-											OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%'
-											OR COALESCE(D.no_apar,'') LIKE '%".$cari."%'
-										)
-								;
-							";
+								";
+								if($berdasarkan == 'PETUGAS')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(B.nik,'') LIKE '%".$cari."%'
+														OR COALESCE(B.nama_petugas,'') LIKE '%".$cari."%'
+														)
+														
+														";
+								}
+								elseif($berdasarkan == 'PEMILIK')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(C.nik_pelanggan,'') LIKE '%".$cari."%'
+														OR COALESCE(C.no_pelanggan,'') LIKE '%".$cari."%'
+														OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%'
+														)
+														
+														";
+								}
+								elseif($berdasarkan == 'APAR')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(D.no_apar,'') LIKE '%".$cari."%'
+														OR COALESCE(D.jenis_apar,'') LIKE '%".$cari."%'
+														OR COALESCE(D.kapasitas,'') LIKE '%".$cari."%'
+														)
+													
+													";
+								}
+								else
+								{
+									$query = $query." WHERE 
+														(
+														A.no_apar LIKE '%".$cari."%'
+														OR A.pemilik_apar LIKE '%".$cari."%'
+														OR A.penyimpanan LIKE '%".$cari."%'
+														OR A.lokasi_apar LIKE '%".$cari."%'
+														OR A.desa LIKE '%".$cari."%'
+														OR A.kecamatan LIKE '%".$cari."%'
+														)
+														
+														";
+								}
 					$get_jum_pembelian = $this->M_general->view_query_general($query);
 					if(!empty($get_jum_pembelian))
 					{
@@ -267,16 +344,16 @@ class C_transaksi_pembelian extends CI_Controller
 									</td>';
 									
 echo'<input type="hidden" id="get_tr_apar_2_'.$no.'" name="get_tr_apar_2_'.$no.'" value="get_tr_apar_2-'.$no.'" />';
-echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';
-echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
-echo'<input type="hidden" id="jenis_apar_'.$no.'" name="jenis_apar_'.$no.'" value="'.$row->jenis_apar.'" />';
-echo'<input type="hidden" id="kapasitas_'.$no.'" name="kapasitas_'.$no.'" value="'.$row->kapasitas.'" />';
-echo'<input type="hidden" id="merek_'.$no.'" name="merek_'.$no.'" value="'.$row->merek.'" />';
-echo'<input type="hidden" id="ket_apar_'.$no.'" name="ket_apar_'.$no.'" value="'.$row->ket_apar.'" />';
-echo'<input type="hidden" id="tgl_ins_'.$no.'" name="tgl_ins_'.$no.'" value="'.$row->tgl_ins.'" />';
-echo'<input type="hidden" id="tgl_updt_'.$no.'" name="tgl_updt_'.$no.'" value="'.$row->tgl_updt.'" />';
-echo'<input type="hidden" id="user_ins_'.$no.'" name="user_ins_'.$no.'" value="'.$row->user_ins.'" />';
-echo'<input type="hidden" id="user_updt_'.$no.'" name="user_updt_'.$no.'" value="'.$row->user_updt.'" />';
+echo'<input type="hidden" id="id_apar_2_'.$no.'" name="id_apar_2_'.$no.'" value="'.$row->id_apar.'" />';
+echo'<input type="hidden" id="no_apar_2_'.$no.'" name="no_apar_2_'.$no.'" value="'.$row->no_apar.'" />';
+echo'<input type="hidden" id="jenis_apar_2_'.$no.'" name="jenis_apar_2_'.$no.'" value="'.$row->jenis_apar.'" />';
+echo'<input type="hidden" id="kapasitas_2_'.$no.'" name="kapasitas_2_'.$no.'" value="'.$row->kapasitas.'" />';
+echo'<input type="hidden" id="merek_2_'.$no.'" name="merek_2_'.$no.'" value="'.$row->merek.'" />';
+echo'<input type="hidden" id="ket_apar_2_'.$no.'" name="ket_apar_2_'.$no.'" value="'.$row->ket_apar.'" />';
+echo'<input type="hidden" id="tgl_ins_2_'.$no.'" name="tgl_ins_2_'.$no.'" value="'.$row->tgl_ins.'" />';
+echo'<input type="hidden" id="tgl_updt_2_'.$no.'" name="tgl_updt_2_'.$no.'" value="'.$row->tgl_updt.'" />';
+echo'<input type="hidden" id="user_ins_2_'.$no.'" name="user_ins_2_'.$no.'" value="'.$row->user_ins.'" />';
+echo'<input type="hidden" id="user_updt_2_'.$no.'" name="user_updt_2_'.$no.'" value="'.$row->user_updt.'" />';
 									
 								echo'</tr>';
 								$no++;
@@ -393,14 +470,14 @@ echo'<input type="hidden" id="user_updt_'.$no.'" name="user_updt_'.$no.'" value=
 									</td>';
 									
 echo'<input type="hidden" id="get_tr_pelanggan_2_'.$no.'" name="get_tr_pelanggan_2_'.$no.'" value="get_tr_pelanggan_2-'.$no.'" />';
-echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
+echo'<input type="hidden" id="id_pelanggan_2_'.$no.'" name="id_pelanggan_2_'.$no.'" value="'.$row->id_pelanggan.'" />';
 
-echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
-echo'<input type="hidden" id="id_pelanggan_md5_'.$no.'" name="id_pelanggan_md5_'.$no.'" value="'.md5($row->id_pelanggan).'" />';
-echo'<input type="hidden" id="jenis_pelanggan_'.$no.'" name="jenis_pelanggan_'.$no.'" value="'.$row->jenis_pelanggan.'" />';
-echo'<input type="hidden" id="nik_pelanggan_'.$no.'" name="nik_pelanggan_'.$no.'" value="'.$row->nik_pelanggan.'" />';
-echo'<input type="hidden" id="no_pelanggan_'.$no.'" name="no_pelanggan_'.$no.'" value="'.$row->no_pelanggan.'" />';
-echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no.'" value="'.$row->nama_pelanggan.'" />';
+
+echo'<input type="hidden" id="id_pelanggan_md5_2_'.$no.'" name="id_pelanggan_md5_2_'.$no.'" value="'.md5($row->id_pelanggan).'" />';
+echo'<input type="hidden" id="jenis_pelanggan_2_'.$no.'" name="jenis_pelanggan_2_'.$no.'" value="'.$row->jenis_pelanggan.'" />';
+echo'<input type="hidden" id="nik_pelanggan_2_'.$no.'" name="nik_pelanggan_2_'.$no.'" value="'.$row->nik_pelanggan.'" />';
+echo'<input type="hidden" id="no_pelanggan_2_'.$no.'" name="no_pelanggan_2_'.$no.'" value="'.$row->no_pelanggan.'" />';
+echo'<input type="hidden" id="nama_pelanggan_2_'.$no.'" name="nama_pelanggan_2_'.$no.'" value="'.$row->nama_pelanggan.'" />';
 									
 								echo'</tr>';
 								$no++;
@@ -518,10 +595,10 @@ echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no
 									
 echo'<input type="hidden" id="get_tr_petugas_2_'.$no.'" name="get_tr_petugas_2_'.$no.'" value="get_tr_petugas_2-'.$no.'" />';
 
-echo'<input type="hidden" id="id_petugas_'.$no.'" name="id_petugas_'.$no.'" value="'.$row->id_petugas.'" />';
-echo'<input type="hidden" id="id_petugas_md5_'.$no.'" name="id_petugas_md5_'.$no.'" value="'.md5($row->id_petugas).'" />';
-echo'<input type="hidden" id="nik_'.$no.'" name="nik_'.$no.'" value="'.$row->nik.'" />';
-echo'<input type="hidden" id="nama_petugas_'.$no.'" name="nama_petugas_'.$no.'" value="'.$row->nama_petugas.'" />';
+echo'<input type="hidden" id="id_petugas_2_'.$no.'" name="id_petugas_2_'.$no.'" value="'.$row->id_petugas.'" />';
+echo'<input type="hidden" id="id_petugas_md5_2_'.$no.'" name="id_petugas_md5_2_'.$no.'" value="'.md5($row->id_petugas).'" />';
+echo'<input type="hidden" id="nik_2_'.$no.'" name="nik_2_'.$no.'" value="'.$row->nik.'" />';
+echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no.'" value="'.$row->nama_petugas.'" />';
 									
 								echo'</tr>';
 								$no++;
