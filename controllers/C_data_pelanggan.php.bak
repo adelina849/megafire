@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class C_data_petugas extends CI_Controller 
+class C_data_pelanggan extends CI_Controller 
 {
 
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->library(array('form_validation'));
-		$this->load->model(array('M_data_petugas'));
+		$this->load->model(array('M_data_pelanggan'));
 	}
 		
 	public function index()
@@ -31,7 +31,7 @@ class C_data_petugas extends CI_Controller
 					$cari = "";
 				}
 				
-				//1. GET DATA petugas/petugas
+				//1. GET DATA PELANGGAN/PEMILIK
 					$query = "
 								SELECT 
 									* 
@@ -47,33 +47,33 @@ class C_data_petugas extends CI_Controller
 									
 									SUBSTRING_INDEX(A.wil_des,'|',1) AS kode_des,
 									SUBSTRING_INDEX(A.wil_des,'|',-1) AS nama_des
-								FROM tb_petugas AS A
-								WHERE (nik LIKE '%".$cari."%' OR nama_petugas LIKE '%".$cari."%')
+								FROM tb_pelanggan AS A
+								WHERE (nik_pelanggan LIKE '%".$cari."%' OR no_pelanggan LIKE '%".$cari."%' OR nama_pelanggan LIKE '%".$cari."%')
 								ORDER BY tgl_ins DESC
 								LIMIT ".$this->uri->segment(2,0).",50
 								;
 							";
-					$get_data_petugas = $this->M_general->view_query_general($query);
-					if(!empty($get_data_petugas))
+					$get_data_pelanggan = $this->M_general->view_query_general($query);
+					if(!empty($get_data_pelanggan))
 					{
-						$jum_petugas = $get_data_petugas->num_rows();
-						$list_data_petugas = $get_data_petugas;
+						$jum_pelanggan = $get_data_pelanggan->num_rows();
+						$list_data_pelanggan = $get_data_pelanggan;
 					}
 					else
 					{
-						$jum_petugas = 0;
-						$list_data_petugas = false;
+						$jum_pelanggan = 0;
+						$list_data_pelanggan = false;
 					}
-				//1. GET DATA petugas/petugas
+				//1. GET DATA PELANGGAN/PEMILIK
 				
 				
 				$this->load->library('pagination');
 				//$config['first_url'] = base_url().'admin/jabatan?'.http_build_query($_GET);
 				//$config['base_url'] = base_url().'admin/jabatan/';
 				
-				$config['first_url'] = site_url('data-petugas?'.http_build_query($_GET));
-				$config['base_url'] = site_url('data-petugas/');
-				$config['total_rows'] = $jum_petugas;
+				$config['first_url'] = site_url('data-pemilik?'.http_build_query($_GET));
+				$config['base_url'] = site_url('data-pemilik/');
+				$config['total_rows'] = $jum_pelanggan;
 				$config['uri_segment'] = 2;	
 				$config['per_page'] = 30;
 				$config['num_links'] = 2;
@@ -111,14 +111,26 @@ class C_data_petugas extends CI_Controller
 				$this->pagination->initialize($config);
 				$halaman = $this->pagination->create_links();
 				
-				$msgbox_title = " Data Dasar petugas";
+				$msgbox_title = " Data Dasar Pelanggan";
 				
 				//1. GET DATA PROVINSI
 					$query = "SELECT kode,nama FROM wilayah_2020 WHERE length(kode) = 2  GROUP BY kode,nama ORDER BY nama ASC;";
 					$get_data_prov = $this->M_general->view_query_general($query);
 				//1. GET DATA PROVINSI
 				
-				$data = array('page_content'=>'page_data_dasar_petugas','halaman'=>$halaman,'list_data_petugas'=>$list_data_petugas,'msgbox_title' => $msgbox_title,'get_data_prov' => $get_data_prov);
+				//2. GET NO PELANGGAN
+					$get_no_pelanggan = $this->M_data_pelanggan->get_no_pelanggan();
+					if(!empty($get_no_pelanggan))
+					{
+						$get_no_pelanggan = $get_no_pelanggan->id_pelanggan;
+					}
+					else
+					{
+						$get_no_pelanggan = "";
+					}
+				//2. GET NO PELANGGAN
+				
+				$data = array('page_content'=>'page_data_dasar_pelanggan','halaman'=>$halaman,'list_data_pelanggan'=>$list_data_pelanggan,'msgbox_title' => $msgbox_title,'get_data_prov' => $get_data_prov,'get_no_pelanggan' => $get_no_pelanggan);
 				$this->load->view('admin/container',$data);
 			}
 			else
@@ -142,13 +154,15 @@ class C_data_petugas extends CI_Controller
 				if (!empty($_POST['stat_edit']))
 				{	
 					
-					$this->M_data_petugas->ubah
+					$this->M_data_pelanggan->ubah
 					(
 						$_POST['stat_edit'],
-						$_POST['nik'],
-						$_POST['nama_petugas'],
+						$_POST['jenis_pelanggan'],
+						$_POST['nik_pelanggan'],
+						$_POST['no_pelanggan'],
+						$_POST['nama_pelanggan'],
 						$_POST['kelamin'],
-						$_POST['tampat_lahir'],
+						$_POST['tempat_lahir'],
 						$_POST['tgl_lahir'],
 						$_POST['tlp'],
 						$_POST['email'],
@@ -157,22 +171,24 @@ class C_data_petugas extends CI_Controller
 						$_POST['wil_kec'],
 						$_POST['wil_des'],
 						$_POST['alamat'],
-						$_POST['ket_petugas'],
-						$_POST['tempat_tugas'],
+						$_POST['ket_pelanggan'],
+						$_POST['nama_perusahaan'],
 						$_POST['jabatan'],
-						'', //$_POST['user'],
-						'', //$_POST['pass'],
-						'' //$_POST['avatar_url']
+						$_POST['user'],
+						$_POST['pass'],
+						$_POST['avatar']
 					);
 				}
 				else
 				{
-					$this->M_data_petugas->simpan
+					$this->M_data_pelanggan->simpan
 					(
-						$_POST['nik'],
-						$_POST['nama_petugas'],
+						$_POST['jenis_pelanggan'],
+						$_POST['nik_pelanggan'],
+						$_POST['no_pelanggan'],
+						$_POST['nama_pelanggan'],
 						$_POST['kelamin'],
-						$_POST['tampat_lahir'],
+						$_POST['tempat_lahir'],
 						$_POST['tgl_lahir'],
 						$_POST['tlp'],
 						$_POST['email'],
@@ -181,17 +197,17 @@ class C_data_petugas extends CI_Controller
 						$_POST['wil_kec'],
 						$_POST['wil_des'],
 						$_POST['alamat'],
-						$_POST['ket_petugas'],
-						$_POST['tempat_tugas'],
+						$_POST['ket_pelanggan'],
+						$_POST['nama_perusahaan'],
 						$_POST['jabatan'],
 						'', //$_POST['user'],
 						'', //$_POST['pass'],
-						'' //$_POST['avatar_url']
+						'' //$_POST['avatar']
 
 					);
 					
 				}
-				header('Location: '.base_url().'data-petugas');
+				header('Location: '.base_url().'data-pemilik');
 			}
 			else
 			{
@@ -211,10 +227,10 @@ class C_data_petugas extends CI_Controller
 			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
 			if(!empty($cek_ses_login))
 			{
-				$query = "DELETE FROM tb_petugas WHERE MD5(id_petugas) = '".$this->uri->segment(2,0)."';";
+				$query = "DELETE FROM tb_pelanggan WHERE MD5(id_pelanggan) = '".$this->uri->segment(2,0)."';";
 				$this->M_general->exec_query_general($query);
 				
-				header('Location: '.base_url().'data-petugas');
+				header('Location: '.base_url().'data-pemilik');
 			}
 			else
 			{
@@ -235,11 +251,11 @@ class C_data_petugas extends CI_Controller
 			if(!empty($cek_ses_login))
 			{
 				$query = "
-							UPDATE tb_petugas 
+							UPDATE tb_pelanggan 
 								SET 
 									user = '".htmlentities(str_replace("'","",$_POST['user']), ENT_QUOTES, 'UTF-8')."',
-									pass = '".base64_encode(md5(htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')))."'
-							WHERE MD5(id_petugas) = '".htmlentities(str_replace("'","",$_POST['id_petugas']), ENT_QUOTES, 'UTF-8')."';
+									pass = '".htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')."'
+							WHERE MD5(id_pelanggan) = '".htmlentities(str_replace("'","",$_POST['id_pelanggan']), ENT_QUOTES, 'UTF-8')."';
 						";
 				$this->M_general->exec_query_general($query);
 				
@@ -294,7 +310,7 @@ class C_data_petugas extends CI_Controller
 		}
 	}
 	
-	function cek_data_petugas()
+	function cek_data_pelanggan()
 	{
 		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
 		{
@@ -305,13 +321,13 @@ class C_data_petugas extends CI_Controller
 			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
 			if(!empty($cek_ses_login))
 			{
-				$query = "SELECT no_petugas FROM tb_petugas WHERE no_petugas = '".htmlentities(str_replace("'","",$_POST['no_petugas']), ENT_QUOTES, 'UTF-8')."';";
-				$ger_data_petugas = $this->M_general->view_query_general($query);
+				$query = "SELECT no_pelanggan FROM tb_pelanggan WHERE no_pelanggan = '".htmlentities(str_replace("'","",$_POST['no_pelanggan']), ENT_QUOTES, 'UTF-8')."';";
+				$ger_data_pelanggan = $this->M_general->view_query_general($query);
 				
-				if(!empty($ger_data_petugas))
+				if(!empty($ger_data_pelanggan))
 				{
-					$ger_data_petugas = $ger_data_petugas->row();
-					echo $hasil_cek->no_petugas;
+					$ger_data_pelanggan = $ger_data_pelanggan->row();
+					echo $hasil_cek->no_pelanggan;
 				}
 				else
 				{
@@ -345,7 +361,7 @@ class C_data_petugas extends CI_Controller
 					$cari = "";
 				}
 				
-				//1. GET DATA petugas/petugas
+				//1. GET DATA PELANGGAN/PEMILIK
 					$query = "
 								SELECT 
 									* 
@@ -361,27 +377,27 @@ class C_data_petugas extends CI_Controller
 									
 									SUBSTRING_INDEX(A.wil_des,'|',1) AS kode_des,
 									SUBSTRING_INDEX(A.wil_des,'|',-1) AS nama_des
-								FROM tb_petugas AS A
-								WHERE (nik LIKE '%".$cari."%' OR nama_petugas LIKE '%".$cari."%')
+								FROM tb_pelanggan AS A
+								WHERE (nik_pelanggan LIKE '%".$cari."%' OR no_pelanggan LIKE '%".$cari."%' OR nama_pelanggan LIKE '%".$cari."%')
 								ORDER BY tgl_ins DESC
 								LIMIT ".$this->uri->segment(2,0).",50
 								;
 							";
-					$get_data_petugas = $this->M_general->view_query_general($query);
-					if(!empty($get_data_petugas))
+					$get_data_pelanggan = $this->M_general->view_query_general($query);
+					if(!empty($get_data_pelanggan))
 					{
-						$jum_petugas = $get_data_petugas->num_rows();
-						$list_data_petugas = $get_data_petugas;
+						$jum_pelanggan = $get_data_pelanggan->num_rows();
+						$list_data_pelanggan = $get_data_pelanggan;
 					}
 					else
 					{
-						$jum_petugas = 0;
-						$list_data_petugas = false;
+						$jum_pelanggan = 0;
+						$list_data_pelanggan = false;
 					}
-				//1. GET DATA petugas/petugas
+				//1. GET DATA PELANGGAN/PEMILIK
 				
-				$data = array('page_content'=>'excel_data_dasar_petugas','list_data_petugas'=>$list_data_petugas);
-				$this->load->view('admin/excel_data_dasar_petugas.html',$data);
+				$data = array('page_content'=>'excel_data_dasar_pelanggan','list_data_pelanggan'=>$list_data_pelanggan);
+				$this->load->view('admin/excel_data_dasar_pelanggan.html',$data);
 			}
 			else
 			{

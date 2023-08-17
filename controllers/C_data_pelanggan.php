@@ -254,7 +254,7 @@ class C_data_pelanggan extends CI_Controller
 							UPDATE tb_pelanggan 
 								SET 
 									user = '".htmlentities(str_replace("'","",$_POST['user']), ENT_QUOTES, 'UTF-8')."',
-									pass = '".htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')."'
+									pass = '".base64_encode(md5(htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')))."'
 							WHERE MD5(id_pelanggan) = '".htmlentities(str_replace("'","",$_POST['id_pelanggan']), ENT_QUOTES, 'UTF-8')."';
 						";
 				$this->M_general->exec_query_general($query);
