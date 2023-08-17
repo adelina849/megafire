@@ -140,4 +140,7 @@ $route['translate_uri_dashes'] = FALSE;
 		
 		$route['transaksi-pembelian-pemindahan-apar-view-simpan'] = "C_transaksi_pembelian/simpan_pemindahan_apar";
 		$route['transaksi-pembelian-pemindahan-apar-view-simpan/(:any)'] = 'C_transaksi_pembelian/simpan_pemindahan_apar';
+		
+		$route['transaksi-cek-apar'] = "C_transaksi_cek_apar/index";
+		$route['transaksi-cek-apar/(:any)'] = 'C_transaksi_cek_apar/index';
 	//PEMBELIAN

@@ -103,8 +103,8 @@
 					else
 					{
 					*/
-						$('#2_transaksi').attr('class', 'active treeview');
-						$('#21_transaksi_pembelian').attr('class', 'active treeview');
+						$('#1_data_dasar').attr('class', 'active treeview');
+						$('#14_data_dasar_quis').attr('class', 'active treeview');
 					//}
 					
 					$("#idx").change(function()
@@ -182,8 +182,8 @@
 		
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-			<li><a href="#"><i class="fa fa-money"></i> Transaksi</a></li>
-			<li class="active"><i class="fa fa-cart-arrow-down"></i> Pembelian APAR</li>
+			<li><a href="#"><i class="fa fa-desktop"></i> Data Dasar</a></li>
+			<li class="active"><i class="fa fa-list-ol"></i> quis</li>
 			
 		</ol>
 		</section>
@@ -216,50 +216,37 @@
 				
 				
 				<!-- ISI FORM -->
-						<form role="form" action="<?php echo base_url();?>transaksi-pembelian-pemindahan-apar-view-simpan" method="post" class="frm-input">
+						<form role="form" action="<?php echo base_url();?>data-quis-simpan" method="post" class="frm-input">
 						<input type="hidden" name="stat_edit" id="stat_edit"/>
 						<div class="box-body">
 							
+							<center>
+								<h2>
+								<b Style="color:red;text-shadow: 2px 2px #FFFFFF;">
+									<?php echo 'MOHON DI ISI INDEX SECARA BERURUTAN, KARENA AKAN BERPENGARUH PADA PENGISIAN CEK APAR';?>
+								</b>
+								</h2>
+							</center>
+							
 							<div class="form-group">
-							<label for="id_pembelian">NO/ID APAR</label>
-							<input type="text" id="id_pembelian" name="id_pembelian"  maxlength="35" class="required form-control" size="15" onkeyup="this.value = this.value.toUpperCase()" onkeypress="return RestrictSpace()" alt="NO/ID APAR" title="NO/ID APAR" placeholder="*NO/ID APAR" value="<?php echo $get_data_pembelian->id_pembelian;?>" readonly/>
+							<label for="idx">INDEX/NO URUT</label>
+							<input type="hidden" id="cek_idx" name="cek_idx" />
+							<input type="text" id="idx" name="idx"  maxlength="25" class="required form-control" size="15" onkeyup="this.value = this.value.toUpperCase()" onkeypress="return RestrictSpace()" alt="NO quis" title="NO quis" placeholder="*NO quis" value="<?php echo $get_data_quis_idx;?>"/><span id="pesan"></span>
 							</div>
 							
 							<div class="form-group">
-								<label for="lokasi_awal">LOKASI AWAL</label>
-								<input type="text" id="lokasi_awal" name="lokasi_awal"  maxlength="35" class="required form-control" size="15" alt="LOKASI AWAL" title="LOKASI AWAL" placeholder="*LOKASI AWAL" value="<?php echo $get_data_pembelian->lokasi_apar;?>" readonly/>
-							</div>
-							
-							<div class="form-group">
-								<label for="lokasi_pemindahan">LOKASI AKHIR/PEMINDAHAN</label>
-								<input type="text" id="lokasi_pemindahan" name="lokasi_pemindahan"  maxlength="35" class="required form-control" size="15" alt="LOKASI AKHIR/PEMINDAHAN" title="LOKASI AKHIR/PEMINDAHAN" placeholder="*LOKASI AKHIR/PEMINDAHAN" />
-							</div>
-							
-							<div class="form-group">
-								<label for="penyimpanan_awal">PENYIMPANAN AWAL</label>
-								<input type="text" id="penyimpanan_awal" name="penyimpanan_awal"  maxlength="35" class="required form-control" size="15" alt="PENYIMPANAN AWAL" title="PENYIMPANAN AWAL" placeholder="*PENYIMPANAN AWAL" value="<?php echo $get_data_pembelian->penyimpanan;?>" readonly/>
-							</div>
-							
-							<div class="form-group">
-								<label for="penyimpanan_pemindahan">PENYIMPANAN AKHIR/PEMINDAHAN</label>
-								<input type="text" id="penyimpanan_pemindahan" name="penyimpanan_pemindahan"  maxlength="35" class="required form-control" size="15" alt="PENYIMPANAN AKHIR/PEMINDAHAN" title="PENYIMPANAN AKHIR/PEMINDAHAN" placeholder="*PENYIMPANAN AKHIR/PEMINDAHAN"/>
-							</div>
-							
-							<div class="form-group">
-								<label>TANGGAL PINDAH</label>
-								<div class="input-group date">
-								  <div class="input-group-addon">
-									<i class="fa fa-calendar"></i>
-								  </div>
-								  <input name="tanggal_pindah" id="tanggal_pindah" type="text" class=" form-control pull-right settingDate" alt="Tanggal PINDAH" title="Tanggal PINDAH" value="<?php echo date("Y-m-d"); ?>" data-date-format="yyyy-mm-dd">
-								</div>
-								<!-- /.input group -->
-							</div>
-							
-							<div class="form-group">
-                              <label for="alasan">KETERANGAN</label>
-                              <textarea name="alasan" id="alasan" class="required form-control" title="Isikan lengkap tentang keterangan APAR" placeholder="*Isikan lengkap tentang keterangan APAR"></textarea>
+                              <label for="pertanyaan">PERTANYAAN/QUIS</label>
+                              <textarea name="pertanyaan" id="pertanyaan" class="required form-control" title="Isikan lengkap tentang keterangan quis" placeholder="*Isikan lengkap tentang keterangan quis"></textarea>
                             </div>
+							
+							<div class="form-group">
+							  <label for="isBollean">APAKAH PERTANYAAN BERBENTUK BOOLEAN/PILIHAN</label>
+							  <select name="isBollean" id="isBollean" class="required form-control select2" title="Jenis KELAMIN">
+									<option value="">== Pilih Jenis Pertanyaan ==</option>
+									<option value="YA">YA</option>
+									<option value="TIDAK">TIDAK</option>
+							   </select>
+							</div>
 							
 						</div><!-- /.box-body -->
 		
@@ -283,7 +270,7 @@
 							</h3>
 							<div class="pull-right">
 								<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
-								<form action="<?=base_url();?>transaksi-pembelian-pemindahan-apar-view" method="get" class="frm-cari">
+								<form action="<?=base_url();?>data-quis" method="get" class="frm-cari">
 									<table>
 										<tr>
 											<!-- <td>Berdasarkan</td><td>:</td> -->
@@ -301,9 +288,9 @@
 											<td>	
 												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
 											</td>
-											<!-- <td> -->
-												<!-- <a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a> -->
-											<!-- </td> -->
+											<td>
+												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
+											</td>
 										</tr>
 									</table>
 								</form>
@@ -314,7 +301,7 @@
 						
 						<?php
 							//TABLE
-							if(!empty($list_data_pemindahan_apar))
+							if(!empty($list_data_quis))
 								{
 									//echo gethostname();
 									//echo $this->M_gl_pengaturan->getUserIpAddr();
@@ -326,39 +313,34 @@
 										echo '<thead>
 	<tr>';
 													echo '<th width="5%" Style="text-align:center;">NO</th>';
-													echo '<th width="20%" Style="text-align:center;">LOKASI</th>';
-													echo '<th width="20%" Style="text-align:center;">PENYIMPANAN</th>';
-													echo '<th width="15%" Style="text-align:center;">TANGGAL</th>';
-													echo '<th width="30%" Style="text-align:center;">KETERANGAN</th>';
+													echo '<th width="5%" Style="text-align:center;">INDEX</th>';
+													echo '<th width="50%" Style="text-align:center;">PERTANYAAN/QUIS</th>';
+													echo '<th width="30%" Style="text-align:center;">APAKH BOOLEAN/PILIHAN</th>';
 													echo '<th width="10%" Style="text-align:center;">AKSI</th>';
 										echo '</tr>
 	</thead>';
-										$list_result = $list_data_pemindahan_apar->result();
-										$no = 1;
+										$list_result = $list_data_quis->result();
+										$no =$this->uri->segment(2,0)+1;
 										echo '<tbody>';
 										foreach($list_result as $row)
 										{
 											echo'<tr>';
 												echo'<td>'.$no.'</td>';
 												
-												echo '<td>'.$row->lokasi_pemindahan.'</td>';
-												echo '<td>'.$row->penyimpanan_pemindahan.'</td>';
-												echo '<td Style="text-align:center;">'.$row->tanggal_pindah.'</td>';
-												echo '<td Style="text-align:left;">'.$row->alasan.'</td>';
+												echo '<td>'.$row->idx.'</td>';
+												echo '<td>'.$row->pertanyaan.'</td>';
+												echo '<td Style="text-align:center;">'.$row->isBollean.'</td>';
 												
-echo'<input type="hidden" id="id_pemindahan_lokasi_'.$no.'" value="'.$row->id_pemindahan_lokasi.'" />';
-echo'<input type="hidden" id="lokasi_pemindahan_'.$no.'" value="'.$row->lokasi_pemindahan.'" />';
-echo'<input type="hidden" id="penyimpanan_pemindahan_'.$no.'" value="'.$row->penyimpanan_pemindahan.'" />';
-echo'<input type="hidden" id="tanggal_pindah_'.$no.'" value="'.$row->tanggal_pindah.'" />';
-echo'<input type="hidden" id="alasan_'.$no.'" value="'.$row->alasan.'" />';
-
+echo'<input type="hidden" id="idx_'.$no.'" name="idx_'.$no.'" value="'.$row->idx.'" />';			
+echo'<input type="hidden" id="pertanyaan_'.$no.'" name="pertanyaan_'.$no.'" value="'.$row->pertanyaan.'" />';
+echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value="'.$row->isBollean.'" />';
 
 
 												echo'<td>
 												
-	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->lokasi_pemindahan.'" alt = "Ubah Data '.$row->lokasi_pemindahan.'">Edit</a>
+	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->idx.'" alt = "Ubah Data '.$row->idx.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-quis-hapus/'.(md5($row->id_pemindahan_lokasi)).'" title = "Hapus Data '.$row->lokasi_pemindahan.'" alt = "Hapus Data '.$row->lokasi_pemindahan.'">Hapus</a>
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-quis-hapus/'.(md5($row->idx)).'" title = "Hapus Data '.$row->idx.'" alt = "Hapus Data '.$row->idx.'">Hapus</a>
 												</td>';
 												
 											echo'</tr>';
@@ -377,7 +359,7 @@ echo'<input type="hidden" id="alasan_'.$no.'" value="'.$row->alasan.'" />';
 							//TABLE
 						?>
 						<center>
-						<div class="halaman"><?php //echo $halaman;?></div>
+						<div class="halaman"><?php echo $halaman;?></div>
 						</center>
 						</div><!-- /.box-body -->
 					</div><!-- /.box -->
@@ -399,12 +381,15 @@ echo'<input type="hidden" id="alasan_'.$no.'" value="'.$row->alasan.'" />';
 	function edit(id)
 	{
 		
-		$('input[name=stat_edit]').val($('#id_pemindahan_lokasi_'+id).val());
-		$('input[name=lokasi_pemindahan]').val($('#lokasi_pemindahan_'+id).val());
-		$('input[name=penyimpanan_pemindahan]').val($('#penyimpanan_pemindahan_'+id).val());
-		$('input[name=tanggal_pindah]').val($('#tanggal_pindah_'+id).val());
+		$('input[name=stat_edit]').val($('#idx_'+id).val());
+		$('input[name=idx]').val($('#idx_'+id).val());
 		
-		document.getElementById("alasan").value = $('#alasan_'+id).val();
+		//$('input[name=pertanyaan]').val($('#pertanyaan_'+id).val());
+		document.getElementById("pertanyaan").value = $('#pertanyaan_'+id).val();
+		
+		//$('input[name=isBollean]').val($('#isBollean_'+id).val());
+		document.getElementById("isBollean").options.item(0).text = $('#isBollean_'+id).val();
+		document.getElementById("isBollean").options.item(0).value = $('#isBollean_'+id).val();
 		
 		
 		

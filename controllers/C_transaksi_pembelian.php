@@ -50,10 +50,17 @@ class C_transaksi_pembelian extends CI_Controller
 									,COALESCE(D.jenis_apar,'') AS jenis_apar
 									,COALESCE(D.kapasitas,'') AS kapasitas_apar
 									,COALESCE(D.merek,'') AS merek_apar
+									
+									,COALESCE(E.tgl_cek,'') AS tgl_cek
 								FROM tb_pembelian AS A
 								LEFT JOIN tb_petugas AS B ON A.id_petugas = B.id_petugas
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan
 								LEFT JOIN tb_apar AS D ON A.id_apar = D.id_apar
+								LEFT JOIN
+								(
+									SELECT MAX(tgl_cek) AS tgl_cek,id_pembelian 
+									FROM tb_cek_apar GROUP BY id_pembelian
+								) AS E ON A.id_pembelian = E.id_pembelian
 								
 								WHERE 
 										(

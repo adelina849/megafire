@@ -54,6 +54,11 @@ class C_transaksi_pembelian extends CI_Controller
 								LEFT JOIN tb_petugas AS B ON A.id_petugas = B.id_petugas
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan
 								LEFT JOIN tb_apar AS D ON A.id_apar = D.id_apar
+								LEFT JOIN
+								(
+									SELECT MAX(tgl_cek) AS tgl_cek,id_pembelian 
+									FROM tb_cek_apar GROUP BY id_pembelian
+								) AS E ON A.id_pembelian = E.id_pembelian
 								
 								WHERE 
 										(
@@ -809,7 +814,7 @@ echo'<input type="hidden" id="nama_petugas_'.$no.'" name="nama_petugas_'.$no.'" 
 					{
 						$this->M_transaksi_pembelian->simpan_pemindahan_apar
 						(
-							,$_POST['id_pembelian']
+							$_POST['id_pembelian']
 							,$_POST['lokasi_pemindahan']
 							,$_POST['penyimpanan_pemindahan']
 							,$_POST['tanggal_pindah']

@@ -103,8 +103,8 @@
 					else
 					{
 					*/
-						$('#1_data_dasar').attr('class', 'active treeview');
-						$('#14_data_dasar_quis').attr('class', 'active treeview');
+						$('#2_transaksi').attr('class', 'active treeview');
+						$('#21_transaksi_pembelian').attr('class', 'active treeview');
 					//}
 					
 					$("#idx").change(function()
@@ -182,8 +182,8 @@
 		
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-			<li><a href="#"><i class="fa fa-desktop"></i> Data Dasar</a></li>
-			<li class="active"><i class="fa fa-list-ol"></i> quis</li>
+			<li><a href="#"><i class="fa fa-money"></i> Transaksi</a></li>
+			<li class="active"><i class="fa fa-cart-arrow-down"></i> Pembelian APAR</li>
 			
 		</ol>
 		</section>
@@ -200,7 +200,9 @@
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				<h4><?php echo $msgbox_title;?></h4>
 				<p>
-					Halaman ini menampilkan data jenis - jenis quis yang tersedia. Klik tombol "+" untuk menambah data.
+					Halaman ini menampilkan data hasil pengecekan APAR oleh petugas. Admin bisa melakukan penambaha atupun perubahan data langsung.
+					<br/>
+					NB : Dalam 1 Hari petugas hanya bisa melakukan pengecekan 1 kali. Jadi jika dilakukan lebih dari 1 kali maka akan merubah data sebelumnya.
 				</P>
 				<!-- <p style="color:red;"><?php //echo $sum_pesan; ?></p> -->
 			</div>
@@ -216,45 +218,76 @@
 				
 				
 				<!-- ISI FORM -->
-						<form role="form" action="<?php echo base_url();?>data-quis-simpan" method="post" class="frm-input">
+						<!-- <form role="form" action="<?php echo base_url();?>data-quis-simpan" method="post" class="frm-input"> -->
 						<input type="hidden" name="stat_edit" id="stat_edit"/>
+						<input type="hidden" name="id_pembelian" id="id_pembelian" value="<?php echo $get_data_pembelian->id_pembelian;?>"/>
+						<input type="hidden" name="id_petugas" id="id_petugas" value="<?php echo $get_data_pembelian->id_petugas;?>"/>
 						<div class="box-body">
-							
 							<center>
-								<h2>
-								<b Style="color:red;text-shadow: 2px 2px #000000;">
-									<?php echo 'MOHON DI ISI INDEX SECARA BERURUTAN, KARENA AKAN BERPENGARUH PADA PENGISIAN CEK APAR';?>
+								<h1>
+								<b>
+									<?php echo 'PETUGAS PIC : '.strtoupper($get_data_pembelian->nama_petugas);?>
 								</b>
-								</h2>
+								</h1>
 							</center>
-							
 							<div class="form-group">
-							<label for="idx">INDEX/NO URUT</label>
-							<input type="hidden" id="cek_idx" name="cek_idx" />
-							<input type="text" id="idx" name="idx"  maxlength="25" class="required form-control" size="15" onkeyup="this.value = this.value.toUpperCase()" onkeypress="return RestrictSpace()" alt="NO quis" title="NO quis" placeholder="*NO quis" value="<?php echo $get_data_quis_idx;?>"/><span id="pesan"></span>
+								<label>TANGGAL PENGECEKAN</label>
+								<div class="input-group date">
+								  <div class="input-group-addon">
+									<i class="fa fa-calendar"></i>
+								  </div>
+								  <input name="tgl_cek" id="tgl_cek" type="text" class=" form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="<?php echo date("Y-m-d"); ?>" data-date-format="yyyy-mm-dd">
+								</div>
+								<!-- /.input group -->
 							</div>
-							
 							<div class="form-group">
-                              <label for="pertanyaan">PERTANYAAN/QUIS</label>
-                              <textarea name="pertanyaan" id="pertanyaan" class="required form-control" title="Isikan lengkap tentang keterangan quis" placeholder="*Isikan lengkap tentang keterangan quis"></textarea>
+                              <label for="ket_cek_apar">KETERANGAN</label>
+                              <textarea name="ket_cek_apar" id="ket_cek_apar" class="required form-control" title="Isikan lengkap tentang keterangan APAR" placeholder="*Isikan lengkap tentang keterangan APAR"></textarea>
                             </div>
 							
-							<div class="form-group">
-							  <label for="isBollean">APAKAH PERTANYAAN BERBENTUK BOOLEAN/PILIHAN</label>
-							  <select name="isBollean" id="isBollean" class="required form-control select2" title="Jenis KELAMIN">
-									<option value="">== Pilih Jenis Pertanyaan ==</option>
-									<option value="YA">YA</option>
-									<option value="TIDAK">TIDAK</option>
-							   </select>
+							<div class="box box-danger collapsed-box box-solid" Style="padding:2%;">
+							<?php
+								if(!empty($list_query_quis))
+								{
+									$list_result = $list_query_quis->result();
+									foreach($list_result as $row)
+									{
+										if($row->isBollean == 'Y')
+										{
+										?>
+											<div class="form-group">
+											  <label for="<?php echo $row->idx;?>"><?php echo $row->pertanyaan;?></label>
+											  <select name="quis-<?php echo $row->idx;?>" id="quis-<?php echo $row->idx;?>" class="required form-control select2" title="<?php echo $row->pertanyaan;?>" onchange="simpan_quis(this)">
+													<option value="">== Pilih Jawaban ==</option>
+													<option value="Y">YA</option>
+													<option value="N">TIDAK</option>
+											   </select>
+											   <span id="pesan-<?php echo $row->idx;?>"></span>
+											</div>
+										<?php
+										}
+										else
+										{
+										?>
+											<div class="form-group">
+												<label for="<?php echo $row->idx;?>"><?php echo $row->pertanyaan;?></label>
+												<input type="text" id="quis-<?php echo $row->idx;?>" name="quis-<?php echo $row->idx;?>"  maxlength="50" class="required form-control" size="15"  alt="NO quis" title="<?php echo $row->pertanyaan;?>" placeholder="*<?php echo $row->pertanyaan;?>" onchange="simpan_quis(this)"/>
+												<span id="pesan-<?php echo $row->idx;?>"></span>
+											</div>
+										<?php
+										}
+									}
+								}
+							?>
 							</div>
-							
+						
 						</div><!-- /.box-body -->
 		
-						<div class="box-footer">
-							<button type="reset" id="btnbatal" class="btn btn-default">Batal</button>
-							<button type="submit" id="btnsimpan" class="confirm-btn btn btn-success" title="Simpan Data <?php echo $msgbox_title;?> ?">Simpan</button>
-						</div>
-						</form>
+						<!-- <div class="box-footer"> -->
+							<!-- <button type="reset" id="btnbatal" class="btn btn-default">Batal</button> -->
+							<!-- <button type="button" id="btnsimpan" class="confirm-btn btn btn-success" onclick="simpan_quis()" title="Simpan Data <?php echo $msgbox_title;?> ?">Simpan</button> -->
+						<!-- </div> -->
+						<!-- </form> -->
 					<!-- ISI FORM -->
 				
 				
@@ -282,15 +315,14 @@
 												</select>
 											</td> -->
 											<td>
-												<!-- <input type="text" name="cari"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['berdasarkan'])){echo $_GET['cari'];} ?>"/> -->
-												<input type="text" name="cari"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>"/>
+												<input type="hidden" name="cari"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>"/>
 											</td>
-											<td>	
-												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
-											</td>
-											<td>
-												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
-											</td>
+											<!-- <td>	 -->
+												<!-- <button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button> -->
+											<!-- </td> -->
+											<!-- <td> -->
+												<!-- <a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a> -->
+											<!-- </td> -->
 										</tr>
 									</table>
 								</form>
@@ -301,7 +333,7 @@
 						
 						<?php
 							//TABLE
-							if(!empty($list_data_quis))
+							if(!empty($list_data_cek_apar))
 								{
 									//echo gethostname();
 									//echo $this->M_gl_pengaturan->getUserIpAddr();
@@ -313,34 +345,32 @@
 										echo '<thead>
 	<tr>';
 													echo '<th width="5%" Style="text-align:center;">NO</th>';
-													echo '<th width="5%" Style="text-align:center;">INDEX</th>';
-													echo '<th width="50%" Style="text-align:center;">PERTANYAAN/QUIS</th>';
-													echo '<th width="30%" Style="text-align:center;">APAKH BOOLEAN/PILIHAN</th>';
-													echo '<th width="10%" Style="text-align:center;">AKSI</th>';
+													echo '<th width="20%" Style="text-align:center;">TANGGAL</th>';
+													echo '<th width="60%" Style="text-align:center;">KETERANGAN</th>';
+													echo '<th width="15%" Style="text-align:center;">AKSI</th>';
 										echo '</tr>
 	</thead>';
-										$list_result = $list_data_quis->result();
-										$no =$this->uri->segment(2,0)+1;
+										$list_result = $list_data_cek_apar->result();
+										$no = 1;
 										echo '<tbody>';
 										foreach($list_result as $row)
 										{
 											echo'<tr>';
 												echo'<td>'.$no.'</td>';
 												
-												echo '<td>'.$row->idx.'</td>';
-												echo '<td>'.$row->pertanyaan.'</td>';
-												echo '<td Style="text-align:center;">'.$row->isBollean.'</td>';
+												echo '<td>'.$row->tgl_cek.'</td>';
+												echo '<td>'.$row->ket_cek_apar.'</td>';
 												
-echo'<input type="hidden" id="idx_'.$no.'" name="idx_'.$no.'" value="'.$row->idx.'" />';			
-echo'<input type="hidden" id="pertanyaan_'.$no.'" name="pertanyaan_'.$no.'" value="'.$row->pertanyaan.'" />';
-echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value="'.$row->isBollean.'" />';
-
+echo'<input type="hidden" id="tgl_cek_'.$no.'" name="tgl_cek_'.$no.'" value="'.$row->tgl_cek.'" />';			
+echo'<input type="hidden" id="ket_cek_apar_'.$no.'" name="ket_cek_apar_'.$no.'" value="'.$row->ket_cek_apar.'" />';
 
 												echo'<td>
 												
-	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->idx.'" alt = "Ubah Data '.$row->idx.'">Edit</a>
+	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->tgl_cek.'" alt = "Ubah Data '.$row->tgl_cek.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-quis-hapus/'.(md5($row->idx)).'" title = "Hapus Data '.$row->idx.'" alt = "Hapus Data '.$row->idx.'">Hapus</a>
+	<a href="javascript:void(0)" class="btn btn-danger btn-sm btn-block btn-flat" onclick="hapus_cek_apar('.$no.')" title = "Hapus Data '.$row->tgl_cek.'" alt = "Hapus Data '.$row->tgl_cek.'">Hapus</a>
+	
+	<a href="javascript:void(0)" class="btn btn-default btn-sm btn-block btn-flat" onclick="detail_cek_apar('.$no.')" title = "Detail Data '.$row->tgl_cek.'" alt = "Detail Data '.$row->tgl_cek.'" data-toggle="modal" data-target="#myModal_quis">Detail</a>
 												</td>';
 												
 											echo'</tr>';
@@ -359,12 +389,59 @@ echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value=
 							//TABLE
 						?>
 						<center>
-						<div class="halaman"><?php echo $halaman;?></div>
+						<div class="halaman"><?php //echo $halaman;?></div>
 						</center>
 						</div><!-- /.box-body -->
 					</div><!-- /.box -->
 					
 					
+					
+					<!-- Show MOdal - TABLE 1 -->
+						<div class="modal fade" id="myModal_quis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h4 class="modal-title" id="myModalLabel_quis">DETAIL QUISIONER/PENGECEKAN</h4>
+								</div>
+								<div class="modal-body">
+									
+									
+									<!-- ISI BODY -->
+									<div class="box">
+										<div class="box-header">
+										<!-- <h3 class="box-title">TABLE LIST APAR</h3> -->
+											<div class="pull-right">
+												
+													<!-- <table> -->
+														<!-- <tr> -->
+															<!-- <td> -->
+																<!-- <input onkeydown="list_data_apar_enter()" type="text" id="json_cari_apar" name="json_cari_apar"  maxlength="35" class="text form-control" size="35" alt="tlp" title="Cari data" placeholder="...Cari" value="<?php if (!empty($_GET['berdasarkan'])){echo $_GET['json_cari_apar'];} ?>"/> -->
+															<!-- </td> -->
+															<!-- <td> -->
+																<!-- <a href="javascript:void(0)" id="btn_cari_json_apar" class="btn btn-success btn-sm btn-flat btn-block" onclick="list_data_apar()" title = "Cari Dokter" >CARI</a> -->
+															<!-- </td> -->
+														<!-- </tr> -->
+													<!-- </table> -->
+											</div>
+										</div><!-- /.box-header -->
+										<div  id="tb_cari_list_quis" class="box-body">
+											<!-- ISI DENGAN DATA APAR -->
+										</div><!-- /.box-body -->
+									</div><!-- /.box -->
+									<!-- ISI BODY -->
+									
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+									<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+								</div>
+								</div>
+							</div>
+							</div>
+
+					<!-- Show MOdal - TABLE 1-->
 					
 					
 			</div><!-- /.col -->
@@ -376,24 +453,127 @@ echo'<input type="hidden" id="isBollean_'.$no.'" name="isBollean_'.$no.'" value=
 			
 		
 <script type='text/javascript'>
+	function detail_cek_apar(id)
+	{
+		var id_pembelian = $('#id_pembelian').val();
+		var id_petugas = $('#id_petugas').val();
+		var tgl_cek = $('#tgl_cek_'+id).val();
+		var ket_cek_apar = $('#ket_cek_apar_'+id).val();
+		
+		$.ajax({type: "POST", url: "<?php echo base_url();?>C_transaksi_cek_apar/detail_cek_apar/"
+		, data: 
+				{
+					id_pembelian:id_pembelian,
+					id_petugas:id_petugas,
+					tgl_cek:tgl_cek,
+					ket_cek_apar:ket_cek_apar
+				}
+		, cache: false
+		, success:function(data)
+		{ 
+			//if(data==0 || ($("#idx").val() == $("#cek_idx").val()))
+			/*
+			if(data=='BERHASIL')
+			{
+				alert("Data Berhasil Disimpan !");
+				location.reload();
+			}
+			else
+			{
+				alert("GAGAL GENERATE QR CODE");
+			}  
+			*/
+		} 
+		});
+		
+	}
 	
+	function hapus_cek_apar(id)
+	{
+		var tgl_cek = $('#tgl_cek_'+id).val();
+		var ket_cek_apar = $('#ket_cek_apar_'+id).val();
+		var r = confirm("Apakah anda yakin akan menghapus pengecekan apar pada tgl "+ tgl_cek +" ?");
+		if (r == true) 
+		{
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_transaksi_cek_apar/hapus_cek_apar/"
+			, data: 
+					{
+						tgl_cek:tgl_cek,
+						ket_cek_apar:ket_cek_apar
+					}
+			, cache: false
+			, success:function(data)
+			{ 
+				//if(data==0 || ($("#idx").val() == $("#cek_idx").val()))
+				if(data=='BERHASIL')
+				{
+					alert("Data Berhasil Disimpan !");
+					location.reload();
+				}
+				else
+				{
+					alert("GAGAL GENERATE QR CODE");
+				}  
+			} 
+			});
+		}
+	}
+	
+	function simpan_quis(evt)
+	{
+		var arrStrId = evt.id;
+		var arrIdSplit = arrStrId.split("-");
+		
+		
+		var idx = arrIdSplit[1];
+		var id_pembelian = $('#id_pembelian').val();
+		var id_petugas = $('#id_petugas').val();
+		var tgl_cek = $('#tgl_cek').val();
+		var ket_cek_apar = $('#ket_cek_apar').val();
+		var pertanyaan = $('#quis-'+idx).attr('title');
+		var jawaban = $('#quis-'+idx).val();
+		
+		if(ket_cek_apar != '')
+		{
+			$("#pesan-"+idx).html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek ...");
+			
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_transaksi_cek_apar/simpan_cek_apar/"
+			, data: 
+					{
+						id_pembelian:id_pembelian,
+						id_petugas:id_petugas,
+						tgl_cek:tgl_cek,
+						ket_cek_apar:ket_cek_apar,
+						pertanyaan:pertanyaan,
+						jawaban:jawaban
+					}
+			, cache: false
+			, success:function(data)
+			{ 
+				//if(data==0 || ($("#idx").val() == $("#cek_idx").val()))
+				if(data=='BERHASIL')
+				{
+					$("#pesan-"+idx).html('<img src="<?php echo base_url();?>assets/global/true.png">');
+				}
+				else
+				{
+					$("#pesan-"+idx).html('<img src="<?php echo base_url();?>assets/global/salah.png">');
+				}  
+			} 
+			});
+		}
+		
+		
+		//var get_idx = $('#1').attr('title');
+		//alert(get_idx);
+	}
 	
 	function edit(id)
 	{
+		$('input[name=tgl_cek]').val($('#tgl_cek_'+id).val());
+		document.getElementById("ket_cek_apar").value = $('#ket_cek_apar_'+id).val();
 		
-		$('input[name=stat_edit]').val($('#idx_'+id).val());
-		$('input[name=idx]').val($('#idx_'+id).val());
-		
-		//$('input[name=pertanyaan]').val($('#pertanyaan_'+id).val());
-		document.getElementById("pertanyaan").value = $('#pertanyaan_'+id).val();
-		
-		//$('input[name=isBollean]').val($('#isBollean_'+id).val());
-		document.getElementById("isBollean").options.item(0).text = $('#isBollean_'+id).val();
-		document.getElementById("isBollean").options.item(0).value = $('#isBollean_'+id).val();
-		
-		
-		
-		alert("Mode Perubahan Aktif Untuk Data "+ $('#pertanyaan_'+id).val());
+		alert("Mode Perubahan Aktif Untuk Data "+ $('#ket_cek_apar_'+id).val());
 		
 		/*Buka Form*/
 			$('#icon_form').attr('class', 'fa fa-minus');

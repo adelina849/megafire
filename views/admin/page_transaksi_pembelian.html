@@ -352,12 +352,12 @@
 									echo'<table width="100%" id="example2" class="table table-hover hoverTable">';
 										echo '<thead>
 	<tr>';
-													echo '<th width="5%" Style="text-align:center;">NO</th>';
-													echo '<th width="15%" Style="text-align:center;">QR CODE</th>';
-													echo '<th width="20%" Style="text-align:center;">JENIS APAR</th>';
-													echo '<th width="25%" Style="text-align:center;">PEMILIK/PEMBELI</th>';
-													echo '<th width="25%" Style="text-align:center;">PETUGAS</th>';
-													echo '<th width="10%" Style="text-align:center;">AKSI</th>';
+													echo '<th width="5%" Style="text-align:center;border-bottom:1px solid black;background-color:#ffff99;">NO</th>';
+													echo '<th width="15%" Style="text-align:center;border-bottom:1px solid black;background-color:#ffff99;">QR CODE</th>';
+													echo '<th width="20%" Style="text-align:center;border-bottom:1px solid black;background-color:#ffff99;">JENIS APAR</th>';
+													echo '<th width="25%" Style="text-align:center;border-bottom:1px solid black;background-color:#ffff99;">PEMILIK/PEMBELI</th>';
+													echo '<th width="25%" Style="text-align:center;border-bottom:1px solid black;background-color:#ffff99;">PETUGAS</th>';
+													echo '<th width="10%" Style="text-align:center;border-bottom:1px solid black;background-color:#ffff99;">AKSI</th>';
 										echo '</tr>
 	</thead>';
 										$list_result = $list_pembelian->result();
@@ -365,8 +365,8 @@
 										echo '<tbody>';
 										foreach($list_result as $row)
 										{
-											echo'<tr>';
-												echo'<td>'.$no.'</td>';
+											echo'<tr Style="border-bottom:1px solid black;">';
+												echo'<td Style="border-bottom:1px solid black;">'.$no.'</td>';
 												
 												if(!(file_exists("assets/global/images/qrcode/".$row->id_pembelian.".png")))
 												{
@@ -379,7 +379,7 @@
 													$src = base_url()."assets/global/images/qrcode/".$row->id_pembelian.".png";
 												}
 												
-												echo '<td Style="text-align:center;">
+												echo '<td Style="text-align:center;border-bottom:1px solid black;">
 													<TABLE Style="width:100%;padding:1%;text-align:center;">
 														<tr><td Style="width:100%;padding:1%;text-align:center;">
 															<a href="'.$src.'" target="_blank" Style="text-align:center;">
@@ -388,26 +388,27 @@
 														</td></tr>
 														<tr><td Style="width:100%;padding:1%;text-align:center;">'.$row->no_apar.'</td></tr>
 														<tr><td Style="width:100%;padding:1%;text-align:center;"><b>Tgl Beli :</b> '.$row->tgl_beli.'</td></tr>
+														<tr><td Style="width:100%;padding:1%;text-align:center;color:red;"><b>Tgl Cek :</b> '.$row->tgl_cek.'</td></tr>
 													</TABLE>
 												</td>';
-												echo '<td>
+												echo '<td Style="border-bottom:1px solid black;">
 														<b>Jenis :</b> '.$row->jenis_apar.'
 														<br/><b>Merek :</b> '.$row->merek_apar.'
 														<br/><b>Kapasitas :</b> '.$row->kapasitas_apar.'
 													</td>';
-												echo '<td>
+												echo '<td Style="border-bottom:1px solid black;">
 														<b>Nama :</b> '.$row->nama_pelanggan.'
 														<br/><b>Perusahaan :</b> '.$row->nama_perusahaan_pelanggan.'
 														<br/><b>Jabatan :</b> '.$row->jabatan_pelanggan.'
 													</td>';
-												echo '<td>
+												echo '<td Style="border-bottom:1px solid black;">
 														<b>Nama :</b> '.$row->nama_petugas.'
 														<br/><b>Penugasan :</b> '.$row->tempat_tugas_petugas.'
 														<br/><b>Jabatan :</b> '.$row->jabatan_petugas.'
 													</td>';
 													
 
-												echo'<td>
+												echo'<td Style="border-bottom:1px solid black;">
 	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="generate_qr('.$no.')" title = "Ubah Data '.$row->no_apar.'" alt = "Ubah Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Generate QR</a>
 	
 	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_apar.'" alt = "Ubah Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Edit</a>
@@ -418,7 +419,7 @@
 	
 	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-pemindahan-apar-view/'.(md5($row->id_pembelian)).'" title = "Pemindahan APAR '.$row->no_apar.'" alt = "Pemindahan APAR '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Pemindahan</a>
 	
-	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-hapus/'.(($row->id_pembelian)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Hasil Cek APAR</a>
+	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-cek-apar/'.(md5($row->id_pembelian)).'" title = "Hasil Cek APAR '.$row->no_apar.'" alt = "Hasil Cek APAR '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Hasil Cek APAR</a>
 	
 												</td>';
 												
