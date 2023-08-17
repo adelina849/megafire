@@ -670,4 +670,164 @@ echo'<input type="hidden" id="nama_petugas_'.$no.'" name="nama_petugas_'.$no.'" 
 			}
 		}
 	}
+
+
+	function simpan_data_awal()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				$id_pembelian = htmlentities(str_replace("'","",$_POST['id_pembelian']), ENT_QUOTES, 'UTF-8');
+				$pemilik_apar = htmlentities(str_replace("'","",$_POST['pemilik_apar']), ENT_QUOTES, 'UTF-8');
+				$desa = htmlentities(str_replace("'","",$_POST['desa']), ENT_QUOTES, 'UTF-8');
+				$kecamatan = htmlentities(str_replace("'","",$_POST['kecamatan']), ENT_QUOTES, 'UTF-8');
+				$lokasi_apar = htmlentities(str_replace("'","",$_POST['lokasi_apar']), ENT_QUOTES, 'UTF-8');
+				$penyimpanan = htmlentities(str_replace("'","",$_POST['penyimpanan']), ENT_QUOTES, 'UTF-8');
+				
+				$query = "
+						UPDATE tb_pembelian SET
+							pemilik_apar = '".$pemilik_apar."'
+							,desa = '".$desa."'
+							,kecamatan = '".$kecamatan."'
+							,lokasi_apar = '".$lokasi_apar."'
+							,penyimpanan = '".$penyimpanan."'
+						WHERE id_pembelian = '".$id_pembelian."'
+				";
+				$this->M_general->exec_query_general($query);
+				echo'BERHASIL';
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
+	
+	function view_list_pemindahaan_apar()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				if((!empty($_GET['cari'])) && ($_GET['cari']!= "")  )
+				{
+					$cari = str_replace("'","",$_GET['cari']);
+				}
+				else
+				{
+					$cari = "";
+				}
+				
+				//1. CEK APAKAH ADA DATA PEMBELIAN APAR
+				$query_cek_pembelian = "SELECT * FROM tb_pembelian WHERE md5(id_pembelian) = '".$this->uri->segment(2,0)."' ;";
+				$get_data_pembelian = $this->M_general->view_query_general($query_cek_pembelian);
+				if(!empty($get_data_pembelian))
+				{
+					$get_data_pembelian = $get_data_pembelian->row();
+						
+					
+					//2. GET PEMINDAHAAN DATA APAR
+						$query = "
+									SELECT * 
+									FROM tb_pemindahan_lokasi
+									WHERE md5(id_pembelian) = '".$this->uri->segment(2,0)."'
+									ORDER BY tgl_ins DESC
+									;
+								";
+						$get_data_pemindahan_apar = $this->M_general->view_query_general($query);
+						if(!empty($get_data_pemindahan_apar))
+						{
+							$list_data_pemindahan_apar = $get_data_pemindahan_apar;
+						}
+						else
+						{
+							$list_data_pemindahan_apar = false;
+						}
+					//2. GET PEMINDAHAAN DATA APAR
+					
+					
+					
+					$msgbox_title = "LIST PEMINDAHAN APAR ".$get_data_pembelian->id_pembelian;
+					
+					$data = array('page_content'=>'page_transaksi_pemindahan_apar','list_data_pemindahan_apar'=>$list_data_pemindahan_apar,'msgbox_title' => $msgbox_title,'get_data_pembelian' => $get_data_pembelian);
+					$this->load->view('admin/container',$data);
+				}
+				else
+				{
+					header('Location: '.base_url().'transaksi-pembelian');
+				}
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
+	
+	function simpan_pemindahan_apar()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				//1. CEK APAKAH ADA DATA PEMBELIAN APAR
+				$query_cek_pembelian = "SELECT * FROM tb_pembelian WHERE (id_pembelian) = '".$_POST['id_pembelian']."' ;";
+				$get_data_pembelian = $this->M_general->view_query_general($query_cek_pembelian);
+				if(!empty($get_data_pembelian))
+				{
+					$get_data_pembelian = $get_data_pembelian->row();
+					if (!empty($_POST['stat_edit']))
+					{	
+						
+						$this->M_transaksi_pembelian->ubah_pemindahan_apar
+						(
+							$_POST['stat_edit']
+							,$_POST['id_pembelian']
+							,$_POST['lokasi_pemindahan']
+							,$_POST['penyimpanan_pemindahan']
+							,$_POST['tanggal_pindah']
+							,$_POST['alasan']
+						);
+					}
+					else
+					{
+						$this->M_transaksi_pembelian->simpan_pemindahan_apar
+						(
+							$_POST['id_pembelian']
+							,$_POST['lokasi_pemindahan']
+							,$_POST['penyimpanan_pemindahan']
+							,$_POST['tanggal_pindah']
+							,$_POST['alasan']
+						);
+						
+					}
+					header('Location: '.base_url().'transaksi-pembelian-pemindahan-apar-view/'.md5($_POST['id_pembelian']));
+				}
+				else
+				{
+					header('Location: '.base_url().'transaksi-pembelian');
+				}
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
 }

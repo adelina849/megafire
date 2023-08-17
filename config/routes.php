@@ -134,4 +134,10 @@ $route['translate_uri_dashes'] = FALSE;
 		
 		$route['transaksi-pembelian-hapus'] = "C_transaksi_pembelian/hapus";
 		$route['transaksi-pembelian-hapus/(:any)'] = 'C_transaksi_pembelian/hapus';
+		
+		$route['transaksi-pembelian-pemindahan-apar-view'] = "C_transaksi_pembelian/view_list_pemindahaan_apar";
+		$route['transaksi-pembelian-pemindahan-apar-view/(:any)'] = 'C_transaksi_pembelian/view_list_pemindahaan_apar';
+		
+		$route['transaksi-pembelian-pemindahan-apar-view-simpan'] = "C_transaksi_pembelian/simpan_pemindahan_apar";
+		$route['transaksi-pembelian-pemindahan-apar-view-simpan/(:any)'] = 'C_transaksi_pembelian/simpan_pemindahan_apar';
 	//PEMBELIAN

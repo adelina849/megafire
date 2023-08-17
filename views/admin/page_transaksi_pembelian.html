@@ -414,9 +414,11 @@
 	
 	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-hapus/'.(($row->id_pembelian)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Hapus</a>
 	
-	<a href="javascript:void(0)" class="btn btn-default btn-sm btn-block btn-flat" onclick="" title = "Input Data Awal '.$row->no_apar.'" alt = "Input Data Awal '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;" data-toggle="modal" data-target="#myModal_data_awal">Data Awal</a>
+	<a href="javascript:void(0)" class="btn btn-default btn-sm btn-block btn-flat" onclick="view_input_data_awal('.$no.')" title = "Input Data Awal '.$row->no_apar.'" alt = "Input Data Awal '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;" data-toggle="modal" data-target="#myModal_data_awal">Data Awal</a>
 	
-	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-hapus/'.(($row->id_pembelian)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Pemindahan</a>
+	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-pemindahan-apar-view/'.(md5($row->id_pembelian)).'" title = "Pemindahan APAR '.$row->no_apar.'" alt = "Pemindahan APAR '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Pemindahan</a>
+	
+	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian-hapus/'.(($row->id_pembelian)).'" title = "Hapus Data '.$row->no_apar.'" alt = "Hapus Data '.$row->no_apar.'" Style="box-shadow: 1px 2px #888888;">Hasil Cek APAR</a>
 	
 												</td>';
 												
@@ -646,79 +648,87 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 												<!-- <form class="form-horizontal"> -->
 												
 												
-												<form role="form" action="<?php echo base_url();?>gl-profile-simpan" method="post" class="form-horizontal frm-input" enctype="multipart/form-data">
-												
-												
-													<input type="hidden" name="prof_id_akun" id="prof_id_akun" value="<?php echo $this->session->userdata('ses_gbl_id_akun');?>"/>
+												<form role="form" action="#" method="post" class="form-horizontal frm-input">
 												
 													<div class="form-group">
-														<label for="prof_nik" class="col-sm-3 control-label">NIK</label>
+														<label for="id_pembelian_4" class="col-sm-3 control-label">ID/NO APAR</label>
 														<div class="col-sm-9">
-															<input type="text" id="prof_nik" name="prof_nik"  maxlength="35" class="required form-control" size="35" alt="NIK" title="NIK" placeholder="*NIK" value="<?php echo $this->session->userdata('ses_gbl_nik_akun'); ?>"/>
-														</div>
-													</div>
-													<div class="form-group">
-														<label for="prof_nama_pegawai" class="col-sm-3 control-label">Nama Pegawai</label>
-														<div class="col-sm-9">
-															<input type="text" id="prof_nama_pegawai" name="prof_nama_pegawai"  maxlength="35" class="required form-control" size="35" alt="Nama Pegawai" title="Nama Pegawai" placeholder="*Nama Pegawai" value="<?php echo $this->session->userdata('ses_gbl_nama_akun'); ?>"/>
+															<input type="text" id="id_pembelian_4" name="id_pembelian_4"  maxlength="35" class="required form-control" size="35" alt="ID/NO APAR" title="ID/NO APAR" placeholder="*ID/NO APAR" readonly/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label for="prof_kelamin" class="col-sm-3 control-label">Jenis Kelamin</label>
-														<div class="col-sm-9">
-															<select name="prof_kelamin" id="prof_kelamin" class="required form-control select2" title="Jenis KELAMIN">
-																<option value="<?php echo $this->session->userdata('ses_gbl_kelamin_akun'); ?>"><?php echo $this->session->userdata('ses_gbl_kelamin_akun'); ?></option>
-																<option value="PRIA">PRIA</option>
-																<option value="WANITA">WANITA</option>
-															</select>
-														</div>
-													</div>
-													
-													<div class="form-group">
-														<label for="prof_tampat_lahir" class="col-sm-3 control-label">Tempat Lahir</label>
-														<div class="col-sm-9">
-														<input type="text" class="form-control" name="prof_tampat_lahir" id="prof_tampat_lahir" placeholder="*Tempat Lahir" value="<?php echo $this->session->userdata('ses_gbl_tempat_lahir_akun');?>">
-														</div>
-													</div>
-													
-													<div class="form-group">
-														<label class="col-sm-3 control-label">Tanggal Lahir</label>
+														<label class="col-sm-3 control-label">TGL PEMBELIAN</label>
 														<div class="col-sm-9">
 															<div class="input-group date">
 															  <div class="input-group-addon">
 																<i class="fa fa-calendar"></i>
 															  </div>
-															  <input name="prof_tgl_lahir" id="prof_tgl_lahir" type="text" class="required form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="<?php echo $this->session->userdata('ses_gbl_tgl_lahir_akun');?>" data-date-format="yyyy-mm-dd">
+															  <input name="tgl_beli_4" id="tgl_beli_4" type="text" class="required form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="" data-date-format="yyyy-mm-dd" disabled="true"/>
 															</div>
 														</div>
 														<!-- /.input group -->
 													</div>
 													
-													
 													<div class="form-group">
-													  <label class="col-sm-3 control-label" for="prof_tlp">No Telpon/Hp</label>
+														<label for="pemilik_apar_4" class="col-sm-3 control-label">PEMILIK APAR</label>
 														<div class="col-sm-9">
-															<input type="text" id="prof_tlp" name="prof_tlp"  maxlength="25" onkeypress="return isNumberKey(event)" class="required form-control" size="35" alt="No Telpon/Hp" title="No Telpon/Hp" placeholder="*No Telpon/Hp" value="<?php echo $this->session->userdata('ses_gbl_tlp_akun');?>"/>
-														</div>
-													</div>
-													
-													<div class="form-group">
-													  <input type="hidden" id="prof_cek_email" name="prof_cek_email" />
-													  <label class="col-sm-3 control-label" for="prof_email">Email</label>
-														<div class="col-sm-9">
-															<input type="text" id="prof_email" name="prof_email"  maxlength="35" class="email form-control" size="35" alt="Email Harus Valid" title="Email Harus Valid" placeholder="Email Harus Valid"  value="<?php echo $this->session->userdata('ses_gbl_email_akun');?>"/> <span id="prof_pesan2"></span>
+															<input type="text" id="pemilik_apar_4" name="pemilik_apar_4"  maxlength="35" class="required form-control" size="35" alt="PEMILIK APAR" title="PEMILIK APAR" placeholder="*PEMILIK APAR"/>
 														</div>
 													</div>
 													
 													
 													<div class="form-group">
-													  <label class="col-sm-3 control-label" for="prof_alamat">Alamat Lengkap</label>
+														<label for="desa_4" class="col-sm-3 control-label">DESA</label>
 														<div class="col-sm-9">
-															<textarea name="prof_alamat" id="prof_alamat" class="required form-control" title="Isi dengan alamat lengkap beserta RT dan RW" placeholder="*Isi dengan alamat lengkap beserta RT dan RW"><?php echo $this->session->userdata('ses_gbl_alamat_akun');?></textarea>
+															<input type="text" id="desa_4" name="desa_4"  maxlength="35" class="required form-control" size="35" alt="DESA" title="DESA" placeholder="*DESA"/>
 														</div>
 													</div>
-												
+													
+													<div class="form-group">
+														<label for="kecamatan_4" class="col-sm-3 control-label">KECAMATAN</label>
+														<div class="col-sm-9">
+															<input type="text" id="kecamatan_4" name="kecamatan_4"  maxlength="35" class="required form-control" size="35" alt="KECAMATAN" title="KECAMATAN" placeholder="*KECAMATAN"/>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="merek_4" class="col-sm-3 control-label">MEREK</label>
+														<div class="col-sm-9">
+															<input type="text" id="merek_4" name="merek_4"  maxlength="35" class="required form-control" size="35" alt="MEREK" title="MEREK" placeholder="*MEREK" readonly/>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="kapasitas_4" class="col-sm-3 control-label">KAPASITAS</label>
+														<div class="col-sm-9">
+															<input type="text" id="kapasitas_4" name="kapasitas_4"  maxlength="35" class="required form-control" size="35" alt="KAPASITAS" title="KAPASITAS" placeholder="*KAPASITAS" readonly/>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="jenis_apar_4" class="col-sm-3 control-label">JENIS APAR</label>
+														<div class="col-sm-9">
+															<input type="text" id="jenis_apar_4" name="jenis_apar_4"  maxlength="35" class="required form-control" size="35" alt="JENIS APAR" title="JENIS APAR" placeholder="*JENIS APAR" readonly/>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="lokasi_apar_4" class="col-sm-3 control-label">LOKASI APAR</label>
+														<div class="col-sm-9">
+															<input type="text" id="lokasi_apar_4" name="lokasi_apar_4"  maxlength="35" class="required form-control" size="35" alt="LOKASI APAR" title="LOKASI APAR" placeholder="*LOKASI APAR"/>
+														</div>
+													</div>
+													
+													<div class="form-group">
+														<label for="penyimpanan_4" class="col-sm-3 control-label">PENYIMPANAN APAR</label>
+														<div class="col-sm-9">
+															<input type="text" id="penyimpanan_4" name="penyimpanan_4"  maxlength="35" class="required form-control" size="35" alt="PENYIMPANAN APAR" title="PENYIMPANAN APAR" placeholder="*PENYIMPANAN APAR"/>
+														</div>
+													</div>
+													
+													
+													
 											  </div>
 											  
 											 
@@ -732,9 +742,10 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-									<button type="button" class="btn btn-primary">Simpan</button>
+									<button type="button" class="btn btn-primary"onclick="simpan_input_data_awal()">Simpan</button>
 								</div>
 								</div>
+										</form>
 							</div>
 							</div>
 
@@ -750,6 +761,69 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 			
 		
 <script type='text/javascript'>
+
+	function simpan_input_data_awal()
+	{
+		
+		//alert( $("#pemilik_apar_4").val() );
+		//alert( $("#id_pembelian_4").val() );
+	
+		var id_pembelian = $("#id_pembelian_4").val();
+		var pemilik_apar = $("#pemilik_apar_4").val();
+		var desa = $("#desa_4").val();
+		var kecamatan = $("#kecamatan_4").val();
+		var lokasi_apar = $("#lokasi_apar_4").val();
+		var penyimpanan = $("#penyimpanan_4").val();
+		
+		//alert(pemilik_apar);
+		var r = confirm("Apakah anda yakin akan menyimpan data awal "+ id_pembelian +" ?");
+		if (r == true) 
+		{
+			$.ajax(
+			{
+				type: "POST"
+				, url: "<?php echo base_url();?>C_transaksi_pembelian/simpan_data_awal/"
+				, data: 
+						{
+							id_pembelian:id_pembelian
+							,pemilik_apar:pemilik_apar
+							,desa:desa
+							,kecamatan:kecamatan
+							,lokasi_apar:lokasi_apar
+							,penyimpanan:penyimpanan
+						}
+				, cache: false
+				, success:function(data)
+			{
+				if(data!=0)
+				{
+					alert("Data Berhasil Disimpan !");
+					location.reload();
+				} 
+				else
+				{
+					alert("GAGAL GENERATE QR CODE");
+				}
+			}
+			});
+		}
+	
+	}
+
+	function view_input_data_awal(no)
+	{
+		$('input[name=id_pembelian_4]').val($('#id_pembelian_'+no).val());
+		$('input[name=tgl_beli_4]').val($('#tgl_beli_'+no).val());
+		$('input[name=pemilik_apar_4]').val($('#pemilik_apar_'+no).val());
+		$('input[name=desa_4]').val($('#desa_'+no).val());
+		$('input[name=kecamatan_4]').val($('#kecamatan_'+no).val());
+		$('input[name=merek_4]').val($('#merek_apar_'+no).val());
+		$('input[name=kapasitas_4]').val($('#kapasitas_apar_'+no).val());
+		$('input[name=jenis_apar_4]').val($('#jenis_apar_'+no).val());
+		$('input[name=lokasi_apar_4]').val($('#lokasi_apar_'+no).val());
+		$('input[name=penyimpanan_4]').val($('#penyimpanan_'+no).val());
+	}
+	
 	function edit(id)
 	{
 		
