@@ -171,7 +171,7 @@ class C_transaksi_pembelian extends CI_Controller
 				$this->pagination->initialize($config);
 				$halaman = $this->pagination->create_links();
 				
-				$msgbox_title = " Data Pembelian APAR (Termasuk Pembeli dan Petugas)";
+				$msgbox_title = " Transaksi Penjualan APAR (Termasuk Pembeli/Pemilik dan Petugas)";
 				
 				//3. GET NO TRANSAKSI APAR
 					$get_no_tr_apar = $this->M_transaksi_pembelian->get_no_transaksi_apar();

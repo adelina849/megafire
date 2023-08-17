@@ -50,6 +50,8 @@ class C_transaksi_pembelian extends CI_Controller
 									,COALESCE(D.jenis_apar,'') AS jenis_apar
 									,COALESCE(D.kapasitas,'') AS kapasitas_apar
 									,COALESCE(D.merek,'') AS merek_apar
+									
+									,COALESCE(E.tgl_cek,'') AS tgl_cek
 								FROM tb_pembelian AS A
 								LEFT JOIN tb_petugas AS B ON A.id_petugas = B.id_petugas
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan

@@ -388,7 +388,7 @@
 														</td></tr>
 														<tr><td Style="width:100%;padding:1%;text-align:center;">'.$row->no_apar.'</td></tr>
 														<tr><td Style="width:100%;padding:1%;text-align:center;"><b>Tgl Beli :</b> '.$row->tgl_beli.'</td></tr>
-														<tr><td Style="width:100%;padding:1%;text-align:center;"><b>Tgl Cek :</b> '.$row->tgl_cek.'</td></tr>
+														<tr><td Style="width:100%;padding:1%;text-align:center;color:red;"><b>Tgl Cek :</b> '.$row->tgl_cek.'</td></tr>
 													</TABLE>
 												</td>';
 												echo '<td Style="border-bottom:1px solid black;">
