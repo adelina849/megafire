@@ -146,6 +146,6 @@ $route['translate_uri_dashes'] = FALSE;
 	//PEMBELIAN
 	
 	//LAPORAN
-		$route['laporan-data-apar'] = "C_laporan_all/index";
-		$route['laporan-data-apar/(:any)'] = 'C_laporan_all/index';
+		$route['laporan-data-apar'] = "C_transaksi_pembelian/index";
+		$route['laporan-data-apar/(:any)'] = 'C_transaksi_pembelian/index';
 	//LAPORAN

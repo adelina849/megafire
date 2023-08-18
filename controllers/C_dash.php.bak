@@ -91,7 +91,7 @@ class C_dash extends CI_Controller
 				//5. GRAFIK PENJUALAN
 				
 				
-				$data = array('page_content' => 'page_dashboard','get_data_apar' => $get_data_apar,'get_data_pemilik' => $get_data_pemilik,'get_data_petugas' => $get_data_petugas,'get_data_quis' => $get_data_quis,'get_grafik_penjualan' =>$get_grafik_penjualan);
+				$data = array('page_content' => 'page_dashboard','get_data_apar' => $get_data_apar,'get_data_pemilik' => $get_data_pemilik,'get_data_petugas' => $get_data_petugas,'get_data_quis' => $get_data_quis);
 				$this->load->view('admin/container',$data);
 			}
 			else

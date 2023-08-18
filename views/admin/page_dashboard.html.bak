@@ -397,25 +397,21 @@
 			<!-- COLOM INFO -->
 			
 			<!-- GRAFIK -->
-			
-			
-				<div class="col-md-12">
-					<div class="box box-primary">
-						<div class="box-header with-border">
+				<!-- <div class="col-md-12"> -->
+					<!-- <div class="box box-primary"> -->
+						<!-- <div class="box-header with-border"> -->
 
-						  <div class="box-tools pull-right">
-							<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-							</button>
-							<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-						  </div>
-						</div>
-						<div class="box-body">
-							<div id="id_tampilkan_grafik" style="height:350px;"></div>	
-						</div>
-					</div>
-				</div>
-				
-				
+						  <!-- <div class="box-tools pull-right"> -->
+							<!-- <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i> -->
+							<!-- </button> -->
+							<!-- <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button> -->
+						  <!-- </div> -->
+						<!-- </div> -->
+						<!-- <div class="box-body"> -->
+							<!-- <div id="id_tampilkan_grafik" style="height:350px;"></div>	 -->
+						<!-- </div> -->
+					<!-- </div> -->
+				<!-- </div> -->
 			<!-- GRAFIK -->
           </div><!-- /.row -->
           <!-- Main row -->
