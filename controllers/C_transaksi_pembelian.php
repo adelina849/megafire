@@ -7,6 +7,7 @@ class C_transaksi_pembelian extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		//$this->load->library(array('form_validation','Fpdf'));
 		$this->load->library(array('form_validation'));
 		$this->load->model(array('M_transaksi_pembelian'));
 	}
@@ -755,6 +756,41 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 		}
 	}
 
+	function view_data_awal()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				$id_pembelian = htmlentities(str_replace("'","",$_POST['id_pembelian']), ENT_QUOTES, 'UTF-8');
+				
+				//1. CEK DATA PEMBELIAN
+					
+				//1. CEK DATA PEMBELIAN
+				
+				$query = "
+						UPDATE tb_pembelian SET
+							pemilik_apar = '".$pemilik_apar."'
+							,desa = '".$desa."'
+							,kecamatan = '".$kecamatan."'
+							,lokasi_apar = '".$lokasi_apar."'
+							,penyimpanan = '".$penyimpanan."'
+						WHERE id_pembelian = '".$id_pembelian."'
+				";
+				$this->M_general->exec_query_general($query);
+				echo'BERHASIL';
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
 
 	function simpan_data_awal()
 	{
@@ -907,6 +943,167 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 				{
 					header('Location: '.base_url().'transaksi-pembelian');
 				}
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
+	
+	function cetak_qrcode()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				if((!empty($_GET['cari'])) && ($_GET['cari']!= "")  )
+				{
+					$cari = str_replace("'","",$_GET['cari']);
+				}
+				else
+				{
+					$cari = "";
+				}
+				
+				if((!empty($_GET['berdasarkan'])) && ($_GET['berdasarkan']!= "")  )
+				{
+					$berdasarkan = str_replace("'","",$_GET['berdasarkan']);
+				}
+				else
+				{
+					$berdasarkan = "";
+				}
+				
+				//1. LIST DATA APAR
+					$query = "
+								SELECT
+									A.*
+									,COALESCE(B.nik,'') AS nik_petugas
+									,COALESCE(B.nama_petugas,'') AS nama_petugas
+									,COALESCE(B.jabatan,'') AS jabatan_petugas
+									,COALESCE(B.tempat_tugas,'') AS tempat_tugas_petugas
+									
+									,COALESCE(C.nik_pelanggan,'') AS nik_pelanggan
+									,COALESCE(C.no_pelanggan,'') AS no_pelanggan
+									,COALESCE(C.nama_pelanggan,'') AS nama_pelanggan
+									,COALESCE(C.nama_perusahaan,'') AS nama_perusahaan_pelanggan
+									,COALESCE(C.jabatan,'') AS jabatan_pelanggan
+									
+									,COALESCE(D.no_apar,'') AS no_apar_ori
+									,COALESCE(D.jenis_apar,'') AS jenis_apar
+									,COALESCE(D.kapasitas,'') AS kapasitas_apar
+									,COALESCE(D.merek,'') AS merek_apar
+									
+									,COALESCE(E.tgl_cek,'') AS tgl_cek
+								FROM tb_pembelian AS A
+								LEFT JOIN tb_petugas AS B ON A.id_petugas = B.id_petugas
+								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan
+								LEFT JOIN tb_apar AS D ON A.id_apar = D.id_apar
+								LEFT JOIN
+								(
+									SELECT MAX(tgl_cek) AS tgl_cek,id_pembelian 
+									FROM tb_cek_apar GROUP BY id_pembelian
+								) AS E ON A.id_pembelian = E.id_pembelian
+								";
+								
+								
+								if($berdasarkan == 'PETUGAS')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(B.nik,'') LIKE '%".$cari."%'
+														OR COALESCE(B.nama_petugas,'') LIKE '%".$cari."%'
+														)
+														
+														ORDER BY A.tgl_transaksi DESC
+														LIMIT ".$this->uri->segment(2,0).",30
+														";
+								}
+								elseif($berdasarkan == 'PEMILIK')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(C.nik_pelanggan,'') LIKE '%".$cari."%'
+														OR COALESCE(C.no_pelanggan,'') LIKE '%".$cari."%'
+														OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%'
+														)
+														
+														ORDER BY A.tgl_transaksi DESC
+														LIMIT ".$this->uri->segment(2,0).",30
+														";
+								}
+								elseif($berdasarkan == 'APAR')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(D.no_apar,'') LIKE '%".$cari."%'
+														OR COALESCE(D.jenis_apar,'') LIKE '%".$cari."%'
+														OR COALESCE(D.kapasitas,'') LIKE '%".$cari."%'
+														)
+													ORDER BY A.tgl_transaksi DESC
+													LIMIT ".$this->uri->segment(2,0).",30
+													";
+								}
+								else
+								{
+									$query = $query." WHERE 
+														(
+														A.no_apar LIKE '%".$cari."%'
+														OR A.pemilik_apar LIKE '%".$cari."%'
+														OR A.penyimpanan LIKE '%".$cari."%'
+														OR A.lokasi_apar LIKE '%".$cari."%'
+														OR A.desa LIKE '%".$cari."%'
+														OR A.kecamatan LIKE '%".$cari."%'
+														)
+														
+														ORDER BY A.tgl_transaksi DESC
+														LIMIT ".$this->uri->segment(2,0).",30
+														";
+								}
+					$get_list_pembelian = $this->M_general->view_query_general($query);
+					if(!empty($get_list_pembelian))
+					{
+						$list_pembelian = $get_list_pembelian;
+					}
+					else
+					{
+						$list_pembelian = false;
+					}
+				//1. LIST DATA APAR
+				/*
+				if(!empty($list_pembelian))
+				{
+					
+					$list_result = $list_pembelian->result();
+					$no = $this->uri->segment(2,0)+1;
+					foreach($list_result as $row)
+					{
+						if(!(file_exists("assets/global/images/qrcode/".$row->id_pembelian.".png")))
+						{
+							//$src = base_url().'assets/global/karyawan/loading.gif';
+							$src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3UZvZSXvWFIWFY7JZr7v8qrXdx3VlPReve_WcIgI1wg&s";
+						}
+						else
+						{
+							//$src = base_url().'assets/global/karyawan/'.$row->avatar;
+							$src = base_url()."assets/global/images/qrcode/".$row->id_pembelian.".png";
+						}
+						
+						echo'<img id="IMG_'.$no.'"  width="100px" height="100px" style="border:1px solid #C8C8C8;float:center;" src="'.$src.'" />';
+						echo'<br/>';
+					}
+				}
+				*/
+				
+				$data = array('page_content'=>'cetak_qr','list_pembelian'=>$list_pembelian);
+				$this->load->view('admin/cetak_qr.html',$data);
+				
 			}
 			else
 			{

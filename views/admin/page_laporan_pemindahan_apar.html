@@ -106,50 +106,8 @@
 					{
 					*/
 						$('#3_laporan').attr('class', 'active treeview');
-						$('#31_laporan_apar').attr('class', 'active treeview');
+						$('#32_laporan_pemidahan_apar').attr('class', 'active treeview');
 					//}
-					
-					$("#idx").change(function()
-                    {  
-                
-                        var idx = $("#idx").val();
-                        $("#pesan").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek <?php echo $msgbox_title;?> ...");
-                
-                        if(idx =='')
-                        {
-                          $("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> Kolom Tidak Boleh Kosong');
-                          $("#idx").css('border', '3px #C33 solid');
-                        }
-						else
-						{
-							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_quis/cek_idx_quis/"
-							, data: 
-									{
-										idx:idx
-									}
-							, cache: false
-							, success:function(data)
-							{ 
-								if(data==0 || ($("#idx").val() == $("#cek_idx").val()))
-								//if(data==0)
-								  {
-									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/true.png">');
-									$("#idx").css('border', '3px #090 solid');
-									$("#btnsimpan").attr("disabled", false);
-								}
-								  else
-								  {
-									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> No/Kode <?php echo $msgbox_title;?> Telah Digunakan, Tombol Save Terkunci');
-									//$("#pesan").html(data); 
-									$("#idx").css('border', '3px #C33 solid');
-									$("#btnsimpan").attr("disabled", true);
-								  }
-								  
-							} 
-							});
-						}
-                    });
-					
 				});
 			</script>
 			
@@ -185,7 +143,7 @@
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 			<li><a href="#"><i class="fa fa-book"></i> Laporan</a></li>
-			<li class="active"><i class="fa fa-fire-extinguisher"></i> APAR</li>
+			<li class="active"><i class="fa fa-fire-extinguisher"></i> Pemindahan APAR</li>
 			
 		</ol>
 		</section>
@@ -214,7 +172,7 @@
 							</h3>
 							<div class="pull-right">
 								<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
-								<form action="<?=base_url();?>laporan-data-apar" method="get" class="frm-cari">
+								<form action="<?=base_url();?>laporan-data-pemindahan-apar" method="get" class="frm-cari">
 									<table>
 										<tr>
 											<!-- <td>Berdasarkan</td><td>:</td> -->
@@ -291,23 +249,18 @@
 									//echo str_replace("f","849",$nama);
 									//echo'<table width="100%" id="example2" class="table table-hover hoverTable">';
 									echo'<table width="100%" id="example2" class="table table-hover" style="border: 1px black solid;">';
-										echo'<tr><td colspan="14" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN DATA APAR</td></tr>';
-										echo'<tr><td colspan="14" Style="font-weight:bold;text-align:center;border: 0px black solid;">PERIODE '.$dari.' Sampai '.$sampai.'</td></tr>';
+										echo'<tr><td colspan="9" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN PEMINDAHAN APAR</td></tr>';
+										echo'<tr><td colspan="9" Style="font-weight:bold;text-align:center;border: 0px black solid;">PERIODE '.$dari.' Sampai '.$sampai.'</td></tr>';
 										echo '<tr>';
 													echo '<th style="border: 1px black solid;background-color:#ffff99;">NO URUT</th>';
 													echo '<th style="border: 1px black solid;background-color:#ffff99;">ID APAR</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">PEMILIK</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">DESA</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">KECAMATAN</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">MEREK</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">LOKASI</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">PENYIMPANAN</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">KAPASITAS</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">JENIS APAR</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">TGL EXP</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">STATUS EXP</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">STATUS CEK</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">WILAYAH</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">LOKASI AWAL</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">PENYIMPANAN AWAL</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">LOKASI PINDAH</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">PENYIMPANAN PINDAH</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">PETUGAS</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">ALASAN</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">TANGGAL</th>';
 										echo '</tr>';
 										$list_result = $list_laporan_apar->result();
 										$no = 1;
@@ -318,20 +271,13 @@
 												echo'<td style="border: 1px black solid;">'.$no.'</td>';
 												
 												echo '<td style="border: 1px black solid;">'.$row->id_apar.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->pemilik_apar.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->desa.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->kecamatan.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->merek_apar.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->lokasi_apar.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->penyimpanan.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->kapasitas.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->jenis_apar.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->tgl_exp.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->sts_exp.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->sts_cek.'</td>';
-												echo '<td style="border: 1px black solid;"></td>';
-
-												
+												echo '<td style="border: 1px black solid;">'.$row->lokasi_awal.'</td>';
+												echo '<td style="border: 1px black solid;">'.$row->penyimpanan_awal.'</td>';
+												echo '<td style="border: 1px black solid;">'.$row->lokasi_pemindahan.'</td>';
+												echo '<td style="border: 1px black solid;">'.$row->penyimpanan_pemindahan.'</td>';
+												echo '<td style="border: 1px black solid;">'.$row->petugas.'</td>';
+												echo '<td style="border: 1px black solid;">'.$row->alasan.'</td>';
+												echo '<td style="border: 1px black solid;">'.$row->tanggal_pindah.'</td>';
 											echo'</tr>';
 											$no++;
 										}

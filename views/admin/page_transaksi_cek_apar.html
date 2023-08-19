@@ -283,10 +283,10 @@
 						
 						</div><!-- /.box-body -->
 		
-						<!-- <div class="box-footer"> -->
-							<!-- <button type="reset" id="btnbatal" class="btn btn-default">Batal</button> -->
-							<!-- <button type="button" id="btnsimpan" class="confirm-btn btn btn-success" onclick="simpan_quis()" title="Simpan Data <?php echo $msgbox_title;?> ?">Simpan</button> -->
-						<!-- </div> -->
+						<div class="box-footer">
+							<button type="reset" id="btnbatal" class="btn btn-default">Batal</button>
+							<button type="button" id="btnsimpan" class="confirm-btn btn btn-success" onclick="btn_simpan_click()" title="Simpan Data <?php echo $msgbox_title;?> ?">Simpan</button>
+						</div>
 						<!-- </form> -->
 					<!-- ISI FORM -->
 				
@@ -453,6 +453,11 @@ echo'<input type="hidden" id="ket_cek_apar_'.$no.'" name="ket_cek_apar_'.$no.'" 
 			
 		
 <script type='text/javascript'>
+	function btn_simpan_click()
+	{
+		location.reload();
+	}
+	
 	function detail_cek_apar(id)
 	{
 		var id_pembelian = $('#id_pembelian').val();
@@ -573,7 +578,10 @@ echo'<input type="hidden" id="ket_cek_apar_'.$no.'" name="ket_cek_apar_'.$no.'" 
 	function edit(id)
 	{
 		$('input[name=tgl_cek]').val($('#tgl_cek_'+id).val());
+		$('#tgl_cek').attr("disabled", true);
+		
 		document.getElementById("ket_cek_apar").value = $('#ket_cek_apar_'+id).val();
+		$('#ket_cek_apar').attr("disabled", true);
 		
 		alert("Mode Perubahan Aktif Untuk Data "+ $('#ket_cek_apar_'+id).val());
 		

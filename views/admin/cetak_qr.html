@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<!-- @page { size: auto;  margin: 0mm; } -->
+		<style>
+			@page { size: auto; margin-top:0mm;margin-bottom:0mm; }	
+		</style>
+	</head>
+	<body onload="window.print();" style="font-family:calibri;font-size:13px;font-weight:bold;margin:-1px;">
+		<center>
+		<?php
+			if(!empty($list_pembelian))
+			{
+				
+				$list_result = $list_pembelian->result();
+				$no = $this->uri->segment(2,0)+1;
+				foreach($list_result as $row)
+				{
+					if(!(file_exists("assets/global/images/qrcode/".$row->id_pembelian.".png")))
+					{
+						//$src = base_url().'assets/global/karyawan/loading.gif';
+						$src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3UZvZSXvWFIWFY7JZr7v8qrXdx3VlPReve_WcIgI1wg&s";
+					}
+					else
+					{
+						//$src = base_url().'assets/global/karyawan/'.$row->avatar;
+						$src = base_url()."assets/global/images/qrcode/".$row->id_pembelian.".png";
+					}
+					
+					echo'<img id="IMG_'.$no.'"  width="100px" height="100px" style="border:1px solid #C8C8C8;float:center;" src="'.$src.'" />';
+					echo'<br/>';
+					echo $row->id_pembelian;
+					echo'<br/>';
+				}
+			}
+		?>
+		</center>
+	</body>
+</html>

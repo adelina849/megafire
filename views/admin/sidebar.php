@@ -273,9 +273,9 @@
 				  <ul class="treeview-menu">
 						<li id="31_laporan_apar"><a href="<?php echo base_url();?>laporan-data-apar"><i class="fa fa-folder-open"></i> Lap. Data APAR </a></li>
 						
-						<li id="41_pengaturan_Operasional_konvSatuan"><a href="<?php echo base_url();?>gl-admin-satuan-konversi"><i class="fa fa-folder-open"></i> Lap. Pemindahan APAR </a></li>
+						<li id="32_laporan_pemidahan_apar"><a href="<?php echo base_url();?>laporan-data-pemindahan-apar"><i class="fa fa-folder-open"></i> Lap. Pemindahan APAR </a></li>
 						
-						<li id="41_pengaturan_Operasional_konvSatuan"><a href="<?php echo base_url();?>gl-admin-satuan-konversi"><i class="fa fa-folder-open"></i> Lap. Pengecekan APAR </a></li>
+						<li id="33_laporan_pengecekan_apar"><a href="<?php echo base_url();?>laporan-data-pengecekan-apar"><i class="fa fa-folder-open"></i> Lap. Pengecekan APAR </a></li>
 				  </ul>
 				</li>
 			<!-- LAPORAN -->

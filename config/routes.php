@@ -129,6 +129,9 @@ $route['translate_uri_dashes'] = FALSE;
 		$route['transaksi-pembelian'] = "C_transaksi_pembelian/index";
 		$route['transaksi-pembelian/(:any)'] = 'C_transaksi_pembelian/index';
 		
+		$route['transaksi-pembelian-cetak-qr'] = "C_transaksi_pembelian/cetak_qrcode";
+		$route['transaksi-pembelian-cetak-qr/(:any)'] = 'C_transaksi_pembelian/cetak_qrcode';
+		
 		$route['transaksi-pembelian-simpan'] = "C_transaksi_pembelian/simpan";
 		$route['transaksi-pembelian-simpan/(:any)'] = 'C_transaksi_pembelian/simpan';
 		
@@ -148,4 +151,10 @@ $route['translate_uri_dashes'] = FALSE;
 	//LAPORAN
 		$route['laporan-data-apar'] = "C_laporan_all/index";
 		$route['laporan-data-apar/(:any)'] = 'C_laporan_all/index';
+		
+		$route['laporan-data-pemindahan-apar'] = "C_laporan_all/lap_pemindahan_apar";
+		$route['laporan-data-pemindahan-apar/(:any)'] = 'C_laporan_all/lap_pemindahan_apar';
+		
+		$route['laporan-data-pengecekan-apar'] = "C_laporan_all/lap_pengecekan_apar";
+		$route['laporan-data-pengecekan-apar/(:any)'] = 'C_laporan_all/lap_pengecekan_apar';
 	//LAPORAN

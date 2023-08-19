@@ -90,6 +90,8 @@
 				var htmlobjek;
 				$(document).ready(function()
 				{	
+					$('body').attr('class', 'skin-red sidebar-collapse sidebar-mini');
+					
 					//var isStyle = '<?php echo $this->session->userdata('ses_gnl_temaadmin');?>';
 					//alert(isStyle);
 					
@@ -104,49 +106,8 @@
 					{
 					*/
 						$('#3_laporan').attr('class', 'active treeview');
-						$('#31_laporan_apar').attr('class', 'active treeview');
+						$('#33_laporan_pengecekan_apar').attr('class', 'active treeview');
 					//}
-					
-					$("#idx").change(function()
-                    {  
-                
-                        var idx = $("#idx").val();
-                        $("#pesan").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek <?php echo $msgbox_title;?> ...");
-                
-                        if(idx =='')
-                        {
-                          $("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> Kolom Tidak Boleh Kosong');
-                          $("#idx").css('border', '3px #C33 solid');
-                        }
-						else
-						{
-							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_quis/cek_idx_quis/"
-							, data: 
-									{
-										idx:idx
-									}
-							, cache: false
-							, success:function(data)
-							{ 
-								if(data==0 || ($("#idx").val() == $("#cek_idx").val()))
-								//if(data==0)
-								  {
-									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/true.png">');
-									$("#idx").css('border', '3px #090 solid');
-									$("#btnsimpan").attr("disabled", false);
-								}
-								  else
-								  {
-									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> No/Kode <?php echo $msgbox_title;?> Telah Digunakan, Tombol Save Terkunci');
-									//$("#pesan").html(data); 
-									$("#idx").css('border', '3px #C33 solid');
-									$("#btnsimpan").attr("disabled", true);
-								  }
-								  
-							} 
-							});
-						}
-                    });
 					
 				});
 			</script>
@@ -183,7 +144,7 @@
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 			<li><a href="#"><i class="fa fa-book"></i> Laporan</a></li>
-			<li class="active"><i class="fa fa-fire-extinguisher"></i> APAR</li>
+			<li class="active"><i class="fa fa-fire-extinguisher"></i> Pengecekan APAR</li>
 			
 		</ol>
 		</section>
@@ -212,7 +173,7 @@
 							</h3>
 							<div class="pull-right">
 								<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
-								<form action="<?=base_url();?>data-quis" method="get" class="frm-cari">
+								<form action="<?=base_url();?>laporan-data-pengecekan-apar" method="get" class="frm-cari">
 									<table>
 										<tr>
 											<!-- <td>Berdasarkan</td><td>:</td> -->
@@ -266,7 +227,7 @@
 											<td>
 												<div class="form-group">
 													<label></label>
-													<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
+													<button type="button" class="btn btn-warning btn-block btn-flat" onclick="tableToExcel('example2', 'W3C Excel Table')"><i class="fa-sharp fa-solid fa-file-excel"></i>EXCEL</button>
 												</div>
 											</td>
 										</tr>
@@ -279,62 +240,78 @@
 						
 						<?php
 							//TABLE
-							if(!empty($list_laporan_apar))
+							if(!empty($list_lap_cek_apar))
 								{
-									//echo gethostname();
-									//echo $this->M_gl_pengaturan->getUserIpAddr();
-									//$sts_query = strpos(base_url(),"localhost");
-									//echo $sts_query;
-									//$nama = "Mulyana Yusuf";
-									//echo str_replace("f","849",$nama);
-									//echo'<table width="100%" id="example2" class="table table-hover hoverTable">';
-									echo'<table width="100%" id="example2" class="table table-hover style="border: 1px black solid;">';
-										echo '<thead>
-	<tr>';
-													echo '<th style="border: 1px black solid;">NO URUT</th>';
-													echo '<th style="border: 1px black solid;">ID APAR</th>';
-													echo '<th style="border: 1px black solid;">PEMILIK</th>';
-													echo '<th style="border: 1px black solid;">DESA</th>';
-													echo '<th style="border: 1px black solid;">KECAMATAN</th>';
-													echo '<th style="border: 1px black solid;">MEREK</th>';
-													echo '<th style="border: 1px black solid;">LOKASI</th>';
-													echo '<th style="border: 1px black solid;">PENYIMPANAN</th>';
-													echo '<th style="border: 1px black solid;">KAPASITAS</th>';
-													echo '<th style="border: 1px black solid;">JENIS APAR</th>';
-													echo '<th style="border: 1px black solid;">TGL EXP</th>';
-													echo '<th style="border: 1px black solid;">STATUS EXP</th>';
-													echo '<th style="border: 1px black solid;">STATUS CEK</th>';
-													echo '<th style="border: 1px black solid;">WILAYAH</th>';
-										echo '</tr>
-	</thead>';
-										$list_result = $list_laporan_apar->result();
+									$col = 8 + $list_quis->num_rows() + 4;
+									echo'<table width="100%" id="example2" class="table table-hover" style="border: 1px black solid;">';
+										echo'<tr><td colspan="'.$col.'" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN PEMINDAHAN APAR</td></tr>';
+										echo'<tr><td colspan="'.$col.'" Style="font-weight:bold;text-align:center;border: 0px black solid;">PERIODE '.$dari.' Sampai '.$sampai.'</td></tr>';
+										echo '<tr>';
+
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">NO URUT</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">ID APAR</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">LOKASI</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">PENYIMPANAN</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">KAPASITAS</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">JENIS</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">PEMILIK</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">MEREK</th>';
+													
+													if(!empty($list_quis))
+													{
+														$list_result = $list_quis->result();
+														foreach($list_result as $row_q)
+														{
+															echo '<th style="border: 1px black solid;background-color:#ffff99;">'.$row_q->pertanyaan.'</th>';
+														}
+													}
+													
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">KETERANGAN</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">TANGGAL</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">PEMERIKSA</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;">WILAYAH</th>';
+													
+										echo '</tr>';
+										//$list_result = $list_lap_cek_apar->result();
+										//$list_result = $list_satuan_konversi->result_array();
+										$list_result = $list_lap_cek_apar->result_array();
 										$no = 1;
-										echo '<tbody>';
+										//echo '<tbody>';
 										foreach($list_result as $row)
 										{
 											echo'<tr>';
-												echo'<td>'.$no.'</td>';
+												echo'<td style="border: 1px black solid;">'.$no.'</td>';
 												
-												echo '<td>'.$row->id_apar.'</td>';
-												echo '<td>'.$row->pemilik_apar.'</td>';
-												echo '<td>'.$row->desa.'</td>';
-												echo '<td>'.$row->kecamatan.'</td>';
-												echo '<td>'.$row->merek_apar.'</td>';
-												echo '<td>'.$row->lokasi_apar.'</td>';
-												echo '<td>'.$row->penyimpanan.'</td>';
-												echo '<td>'.$row->kapasitas.'</td>';
-												echo '<td>'.$row->jenis_apar.'</td>';
-												echo '<td>'.$row->tgl_exp.'</td>';
-												echo '<td>'.$row->sts_exp.'</td>';
-												echo '<td>'.$row->sts_cek.'</td>';
-												echo '<td></td>';
-
+												echo '<td style="border: 1px black solid;">'.$row['id_apar'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['lokasi'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['penyimpanan'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['kapasitas'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['jenis'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['pemilik_apar'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['merek'].'</td>';
+												
+												if(!empty($list_quis))
+												{
+													$list_result = $list_quis->result();
+													$no_j = 1;
+													foreach($list_result as $row_q)
+													{
+														echo '<td style="border: 1px black solid;">
+															'.$row['F'.$row_q->idx.''].'</td>';
+														$no_j++;
+													}
+												}
+												
+												echo '<td style="border: 1px black solid;">'.$row['ket_cek_apar'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['tgl_cek'].'</td>';
+												echo '<td style="border: 1px black solid;">'.$row['nama_petugas'].'</td>';
+												echo '<td style="border: 1px black solid;"></td>';
 												
 											echo'</tr>';
 											$no++;
 										}
 										
-										echo '</tbody>';
+										//echo '</tbody>';
 									echo'</table>';
 								}
 								else
@@ -361,9 +338,32 @@
 	</div><!-- /.content-wrapper -->
 			
 			
-		
+<script type="text/javascript">
+var tableToExcel = (function() 
+{
+	var uri = 'data:application/vnd.ms-excel;base64,'
+	, template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+
+	, base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+	, format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+
+	return function(table, name) 
+	{
+		if (!table.nodeType) table = document.getElementById(table)
+		var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+		window.location.href = uri + base64(format(template, ctx))
+	}
+})();
+</script>
+
 <script type='text/javascript'>
-	
+	$("#btnexcel").click(function(e) 
+	{   
+		
+		window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#container_excel').html())); // content is the id of the DIV element  
+		e.preventDefault();   
+		
+	});
 	
 	function edit(id)
 	{

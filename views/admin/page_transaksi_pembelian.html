@@ -331,9 +331,9 @@
 											<td>	
 												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
 											</td>
-											<!-- <td> -->
-												<!-- <a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-quis-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a> -->
-											<!-- </td> -->
+											<td>
+												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>transaksi-pembelian-cetak-qr/<?php echo $this->uri->segment(2,0);?>?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>&berdasarkan=<?php if (!empty($_GET['berdasarkan'])){echo $_GET['berdasarkan'];} ?>" title = "Print Excel" alt = "Print Excel">CETAK QR</a>
+											</td>
 										</tr>
 									</table>
 								</form>
@@ -364,10 +364,38 @@
 										echo '</tr>
 	</thead>';
 										$list_result = $list_pembelian->result();
-										$no =$this->uri->segment(2,0)+1;
+										$no = $this->uri->segment(2,0)+1;
 										echo '<tbody>';
 										foreach($list_result as $row)
 										{
+											
+echo'<input type="hidden" id="no_'.$no.'" name="no_'.$no.'" value="'.$no.'" />';
+echo'<input type="hidden" id="id_pembelian_'.$no.'" name="id_pembelian_'.$no.'" value="'.$row->id_pembelian.'" />';
+echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
+echo'<input type="hidden" id="tgl_beli_'.$no.'" name="tgl_beli_'.$no.'" value="'.$row->tgl_beli.'" />';
+echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';
+echo'<input type="hidden" id="merek_apar_'.$no.'" name="merek_apar_'.$no.'" value="'.$row->merek_apar.'" />';
+echo'<input type="hidden" id="jenis_apar_'.$no.'" name="jenis_apar_'.$no.'" value="'.$row->jenis_apar.'" />';
+echo'<input type="hidden" id="kapasitas_apar_'.$no.'" name="kapasitas_apar_'.$no.'" value="'.$row->kapasitas_apar.'" />';
+echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
+echo'<input type="hidden" id="no_pelanggan_'.$no.'" name="no_pelanggan_'.$no.'" value="'.$row->no_pelanggan.'" />';
+echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no.'" value="'.$row->nama_pelanggan.'" />';
+echo'<input type="hidden" id="id_petugas_'.$no.'" name="id_petugas_'.$no.'" value="'.$row->id_petugas.'" />';
+echo'<input type="hidden" id="nama_petugas_'.$no.'" name="nama_petugas_'.$no.'" value="'.$row->nama_petugas.'" />';
+echo'<input type="hidden" id="nik_petugas_'.$no.'" name="nik_petugas_'.$no.'" value="'.$row->nik_petugas.'" />';
+
+
+echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
+echo'<input type="hidden" id="pemilik_apar_'.$no.'" name="pemilik_apar_'.$no.'" value="'.$row->pemilik_apar.'" />';
+echo'<input type="hidden" id="desa_'.$no.'" name="desa_'.$no.'" value="'.$row->desa.'" />';
+echo'<input type="hidden" id="kecamatan_'.$no.'" name="kecamatan_'.$no.'" value="'.$row->kecamatan.'" />';
+echo'<input type="hidden" id="lokasi_apar_'.$no.'" name="lokasi_apar_'.$no.'" value="'.$row->lokasi_apar.'" />';
+echo'<input type="hidden" id="penyimpanan_'.$no.'" name="penyimpanan_'.$no.'" value="'.$row->penyimpanan.'" />';
+echo'<input type="hidden" id="longi_'.$no.'" name="longi_'.$no.'" value="'.$row->longi.'" />';
+echo'<input type="hidden" id="lati_'.$no.'" name="lati_'.$no.'" value="'.$row->lati.'" />';
+echo'<input type="hidden" id="tgl_transaksi_'.$no.'" name="tgl_transaksi_'.$no.'" value="'.$row->tgl_transaksi.'" />';
+echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" value="'.$row->tgl_update.'" />';
+
 											echo'<tr Style="border-bottom:1px solid black;">';
 												echo'<td Style="border-bottom:1px solid black;">'.$no.'</td>';
 												
@@ -408,6 +436,11 @@
 														<b>Nama :</b> '.$row->nama_petugas.'
 														<br/><b>Penugasan :</b> '.$row->tempat_tugas_petugas.'
 														<br/><b>Jabatan :</b> '.$row->jabatan_petugas.'
+														
+														<!--
+														<br/>
+														<input type="text" id="id_pembelian_'.$no.'" name="id_pembelian_'.$no.'" value="'.$row->id_pembelian.'" />
+														-->
 													</td>';
 													
 
@@ -428,35 +461,6 @@
 												
 											echo'</tr>';
 											
-											
-											
-echo'<input type="hidden" id="id_pembelian_'.$no.'" name="id_pembelian_'.$no.'" value="'.$row->id_pembelian.'" />';
-echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
-echo'<input type="hidden" id="tgl_beli_'.$no.'" name="tgl_beli_'.$no.'" value="'.$row->tgl_beli.'" />';
-echo'<input type="hidden" id="id_apar_'.$no.'" name="id_apar_'.$no.'" value="'.$row->id_apar.'" />';
-echo'<input type="hidden" id="merek_apar_'.$no.'" name="merek_apar_'.$no.'" value="'.$row->merek_apar.'" />';
-echo'<input type="hidden" id="jenis_apar_'.$no.'" name="jenis_apar_'.$no.'" value="'.$row->jenis_apar.'" />';
-echo'<input type="hidden" id="kapasitas_apar_'.$no.'" name="kapasitas_apar_'.$no.'" value="'.$row->kapasitas_apar.'" />';
-echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
-echo'<input type="hidden" id="no_pelanggan_'.$no.'" name="no_pelanggan_'.$no.'" value="'.$row->no_pelanggan.'" />';
-echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no.'" value="'.$row->nama_pelanggan.'" />';
-echo'<input type="hidden" id="id_petugas_'.$no.'" name="id_petugas_'.$no.'" value="'.$row->id_petugas.'" />';
-echo'<input type="hidden" id="nama_petugas_'.$no.'" name="nama_petugas_'.$no.'" value="'.$row->nama_petugas.'" />';
-echo'<input type="hidden" id="nik_petugas_'.$no.'" name="nik_petugas_'.$no.'" value="'.$row->nik_petugas.'" />';
-
-
-echo'<input type="hidden" id="no_apar_'.$no.'" name="no_apar_'.$no.'" value="'.$row->no_apar.'" />';
-echo'<input type="hidden" id="pemilik_apar_'.$no.'" name="pemilik_apar_'.$no.'" value="'.$row->pemilik_apar.'" />';
-echo'<input type="hidden" id="desa_'.$no.'" name="desa_'.$no.'" value="'.$row->desa.'" />';
-echo'<input type="hidden" id="kecamatan_'.$no.'" name="kecamatan_'.$no.'" value="'.$row->kecamatan.'" />';
-echo'<input type="hidden" id="lokasi_apar_'.$no.'" name="lokasi_apar_'.$no.'" value="'.$row->lokasi_apar.'" />';
-echo'<input type="hidden" id="penyimpanan_'.$no.'" name="penyimpanan_'.$no.'" value="'.$row->penyimpanan.'" />';
-echo'<input type="hidden" id="longi_'.$no.'" name="longi_'.$no.'" value="'.$row->longi.'" />';
-echo'<input type="hidden" id="lati_'.$no.'" name="lati_'.$no.'" value="'.$row->lati.'" />';
-echo'<input type="hidden" id="tgl_transaksi_'.$no.'" name="tgl_transaksi_'.$no.'" value="'.$row->tgl_transaksi.'" />';
-echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" value="'.$row->tgl_update.'" />';
-
-
 											$no++;
 										}
 										
@@ -639,7 +643,7 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 							<div class="modal-dialog">
 								<div class="modal-content">
 								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<button type="button" id="close_DA" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 									<h4 class="modal-title" id="myModalLabel_data_awal">INPUT DATA AWAL APAR</h4>
 								</div>
 								<div class="modal-body">
@@ -652,12 +656,16 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 												<!-- <form class="form-horizontal"> -->
 												
 												
-												<form role="form" action="#" method="post" class="form-horizontal frm-input">
-												
+												<!-- <form role="form" action="#" method="post" class="form-horizontal frm-input"> -->
+												<!-- <form class="form-horizontal frm-input"> -->
+												<div class="form-horizontal frm-input">
+													
+													<input type="hidden" id="no_DA" name="no_DA" />
+													
 													<div class="form-group">
-														<label for="id_pembelian_4" class="col-sm-3 control-label">ID/NO APAR</label>
+														<label for="id_pembelian_DA" class="col-sm-3 control-label">ID/NO APAR</label>
 														<div class="col-sm-9">
-															<input type="text" id="id_pembelian_4" name="id_pembelian_4"  maxlength="35" class="required form-control" size="35" alt="ID/NO APAR" title="ID/NO APAR" placeholder="*ID/NO APAR" readonly/>
+															<input type="text" id="id_pembelian_DA" name="id_pembelian_DA"  maxlength="35" class="required form-control" size="35" alt="ID/NO APAR" title="ID/NO APAR" placeholder="*ID/NO APAR" readonly/>
 														</div>
 													</div>
 													
@@ -668,66 +676,66 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 															  <div class="input-group-addon">
 																<i class="fa fa-calendar"></i>
 															  </div>
-															  <input name="tgl_beli_4" id="tgl_beli_4" type="text" class="required form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="" data-date-format="yyyy-mm-dd" disabled="true"/>
+															  <input name="tgl_beli_DA" id="tgl_beli_DA" type="text" class="required form-control pull-right settingDate" alt="Tanggal Lahir" title="Tanggal Lahir" value="" data-date-format="yyyy-mm-dd" disabled="true"/>
 															</div>
 														</div>
 														<!-- /.input group -->
 													</div>
 													
 													<div class="form-group">
-														<label for="pemilik_apar_4" class="col-sm-3 control-label">PEMILIK APAR</label>
+														<label for="pemilik_apar_DA" class="col-sm-3 control-label">PEMILIK APAR</label>
 														<div class="col-sm-9">
-															<input type="text" id="pemilik_apar_4" name="pemilik_apar_4"  maxlength="35" class="required form-control" size="35" alt="PEMILIK APAR" title="PEMILIK APAR" placeholder="*PEMILIK APAR"/>
+															<input type="text" id="pemilik_apar_DA" name="pemilik_apar_DA"  maxlength="35" class="form-control" size="35" alt="PEMILIK APAR" title="PEMILIK APAR" placeholder="*PEMILIK APAR"/>
 														</div>
 													</div>
 													
 													
 													<div class="form-group">
-														<label for="desa_4" class="col-sm-3 control-label">DESA</label>
+														<label for="desa_DA" class="col-sm-3 control-label">DESA</label>
 														<div class="col-sm-9">
-															<input type="text" id="desa_4" name="desa_4"  maxlength="35" class="required form-control" size="35" alt="DESA" title="DESA" placeholder="*DESA"/>
+															<input type="text" id="desa_DA" name="desa_DA"  maxlength="35" class="form-control" size="35" alt="DESA" title="DESA" placeholder="*DESA"/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label for="kecamatan_4" class="col-sm-3 control-label">KECAMATAN</label>
+														<label for="kecamatan_DA" class="col-sm-3 control-label">KECAMATAN</label>
 														<div class="col-sm-9">
-															<input type="text" id="kecamatan_4" name="kecamatan_4"  maxlength="35" class="required form-control" size="35" alt="KECAMATAN" title="KECAMATAN" placeholder="*KECAMATAN"/>
+															<input type="text" id="kecamatan_DA" name="kecamatan_DA"  maxlength="35" class="form-control" size="35" alt="KECAMATAN" title="KECAMATAN" placeholder="*KECAMATAN"/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label for="merek_4" class="col-sm-3 control-label">MEREK</label>
+														<label for="merek_DA" class="col-sm-3 control-label">MEREK</label>
 														<div class="col-sm-9">
-															<input type="text" id="merek_4" name="merek_4"  maxlength="35" class="required form-control" size="35" alt="MEREK" title="MEREK" placeholder="*MEREK" readonly/>
+															<input type="text" id="merek_DA" name="merek_DA"  maxlength="35" class="required form-control" size="35" alt="MEREK" title="MEREK" placeholder="*MEREK" readonly/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label for="kapasitas_4" class="col-sm-3 control-label">KAPASITAS</label>
+														<label for="kapasitas_DA" class="col-sm-3 control-label">KAPASITAS</label>
 														<div class="col-sm-9">
-															<input type="text" id="kapasitas_4" name="kapasitas_4"  maxlength="35" class="required form-control" size="35" alt="KAPASITAS" title="KAPASITAS" placeholder="*KAPASITAS" readonly/>
+															<input type="text" id="kapasitas_DA" name="kapasitas_DA"  maxlength="35" class="required form-control" size="35" alt="KAPASITAS" title="KAPASITAS" placeholder="*KAPASITAS" readonly/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label for="jenis_apar_4" class="col-sm-3 control-label">JENIS APAR</label>
+														<label for="jenis_apar_DA" class="col-sm-3 control-label">JENIS APAR</label>
 														<div class="col-sm-9">
-															<input type="text" id="jenis_apar_4" name="jenis_apar_4"  maxlength="35" class="required form-control" size="35" alt="JENIS APAR" title="JENIS APAR" placeholder="*JENIS APAR" readonly/>
+															<input type="text" id="jenis_apar_DA" name="jenis_apar_DA"  maxlength="35" class="required form-control" size="35" alt="JENIS APAR" title="JENIS APAR" placeholder="*JENIS APAR" readonly/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label for="lokasi_apar_4" class="col-sm-3 control-label">LOKASI APAR</label>
+														<label for="lokasi_apar_DA" class="col-sm-3 control-label">LOKASI APAR</label>
 														<div class="col-sm-9">
-															<input type="text" id="lokasi_apar_4" name="lokasi_apar_4"  maxlength="35" class="required form-control" size="35" alt="LOKASI APAR" title="LOKASI APAR" placeholder="*LOKASI APAR"/>
+															<input type="text" id="lokasi_apar_DA" name="lokasi_apar_DA"  maxlength="35" class="form-control" size="35" alt="LOKASI APAR" title="LOKASI APAR" placeholder="*LOKASI APAR"/>
 														</div>
 													</div>
 													
 													<div class="form-group">
-														<label for="penyimpanan_4" class="col-sm-3 control-label">PENYIMPANAN APAR</label>
+														<label for="penyimpanan_DA" class="col-sm-3 control-label">PENYIMPANAN APAR</label>
 														<div class="col-sm-9">
-															<input type="text" id="penyimpanan_4" name="penyimpanan_4"  maxlength="35" class="required form-control" size="35" alt="PENYIMPANAN APAR" title="PENYIMPANAN APAR" placeholder="*PENYIMPANAN APAR"/>
+															<input type="text" id="penyimpanan_DA" name="penyimpanan_DA"  maxlength="35" class="form-control" size="35" alt="PENYIMPANAN APAR" title="PENYIMPANAN APAR" placeholder="*PENYIMPANAN APAR"/>
 														</div>
 													</div>
 													
@@ -735,7 +743,7 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 													
 											  </div>
 											  
-											 
+											</div>
 										
 										
 									<!--</div> -->
@@ -744,12 +752,13 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 									
 									</div>
 								</div>
-								<div class="modal-footer">
+								<div class="modal-footer" Style="padding:2%;">
+									
 									<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
 									<button type="button" class="btn btn-primary"onclick="simpan_input_data_awal()">Simpan</button>
 								</div>
 								</div>
-										</form>
+										<!-- </form> -->
 							</div>
 							</div>
 
@@ -769,15 +778,16 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 	function simpan_input_data_awal()
 	{
 		
-		//alert( $("#pemilik_apar_4").val() );
-		//alert( $("#id_pembelian_4").val() );
+		//alert( $("#pemilik_apar_DA").val() );
+		//alert( $("#id_pembelian_DA").val() );
 	
-		var id_pembelian = $("#id_pembelian_4").val();
-		var pemilik_apar = $("#pemilik_apar_4").val();
-		var desa = $("#desa_4").val();
-		var kecamatan = $("#kecamatan_4").val();
-		var lokasi_apar = $("#lokasi_apar_4").val();
-		var penyimpanan = $("#penyimpanan_4").val();
+		var id_pembelian = $("#id_pembelian_DA").val();
+		var pemilik_apar = $("#pemilik_apar_DA").val();
+		var desa = $("#desa_DA").val();
+		var kecamatan = $("#kecamatan_DA").val();
+		var lokasi_apar = $("#lokasi_apar_DA").val();
+		var penyimpanan = $("#penyimpanan_DA").val();
+		var no = $("#no_DA").val();
 		
 		//alert(pemilik_apar);
 		var r = confirm("Apakah anda yakin akan menyimpan data awal "+ id_pembelian +" ?");
@@ -802,7 +812,15 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 				if(data!=0)
 				{
 					alert("Data Berhasil Disimpan !");
-					location.reload();
+					//location.reload();
+					
+					$('#pemilik_apar_'+no).val(pemilik_apar);
+					$('#desa_'+no).val(desa);
+					$('#kecamatan_'+no).val(kecamatan);
+					$('#lokasi_apar_'+no).val(lokasi_apar);
+					$('#penyimpanan_'+no).val(penyimpanan);
+					
+					$('#close_DA').click();
 				} 
 				else
 				{
@@ -816,16 +834,17 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 
 	function view_input_data_awal(no)
 	{
-		$('input[name=id_pembelian_4]').val($('#id_pembelian_'+no).val());
-		$('input[name=tgl_beli_4]').val($('#tgl_beli_'+no).val());
-		$('input[name=pemilik_apar_4]').val($('#pemilik_apar_'+no).val());
-		$('input[name=desa_4]').val($('#desa_'+no).val());
-		$('input[name=kecamatan_4]').val($('#kecamatan_'+no).val());
-		$('input[name=merek_4]').val($('#merek_apar_'+no).val());
-		$('input[name=kapasitas_4]').val($('#kapasitas_apar_'+no).val());
-		$('input[name=jenis_apar_4]').val($('#jenis_apar_'+no).val());
-		$('input[name=lokasi_apar_4]').val($('#lokasi_apar_'+no).val());
-		$('input[name=penyimpanan_4]').val($('#penyimpanan_'+no).val());
+		$('input[name=no_DA]').val(no);
+		$('input[name=id_pembelian_DA]').val($('#id_pembelian_'+no).val());
+		$('input[name=tgl_beli_DA]').val($('#tgl_beli_'+no).val());
+		$('input[name=pemilik_apar_DA]').val($('#pemilik_apar_'+no).val());
+		$('input[name=desa_DA]').val($('#desa_'+no).val());
+		$('input[name=kecamatan_DA]').val($('#kecamatan_'+no).val());
+		$('input[name=merek_DA]').val($('#merek_apar_'+no).val());
+		$('input[name=kapasitas_DA]').val($('#kapasitas_apar_'+no).val());
+		$('input[name=jenis_apar_DA]').val($('#jenis_apar_'+no).val());
+		$('input[name=lokasi_apar_DA]').val($('#lokasi_apar_'+no).val());
+		$('input[name=penyimpanan_DA]').val($('#penyimpanan_'+no).val());
 	}
 	
 	function edit(id)
@@ -1192,3 +1211,4 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
       });
     </script>
 	
+
