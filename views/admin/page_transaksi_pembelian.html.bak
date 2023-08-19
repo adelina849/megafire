@@ -234,7 +234,7 @@
 						<video id="preview" style="width:100%; z-index:999;" controls></video>
 						<br/>
 						<div class="has-feedback">
-							<input type="text" class="form-control input-sm" id="scan" placeholder="Scan/Ketik QR Code" onchange="scan_qr(this)" readonly/>
+							<input type="text" class="form-control input-sm" id="scan" placeholder="Scan/Ketik QR Code" onchange="scan_qr(this)">
 							<span class="glyphicon glyphicon-search form-control-feedback"></span>
 						</div>
 					</div>
