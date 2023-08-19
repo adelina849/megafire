@@ -745,6 +745,12 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 				$query = "DELETE FROM tb_pembelian WHERE (id_pembelian) = '".$this->uri->segment(2,0)."';";
 				$this->M_general->exec_query_general($query);
 				
+				$query = "DELETE FROM tb_cek_apar WHERE (id_pembelian) = '".$this->uri->segment(2,0)."';";
+				$this->M_general->exec_query_general($query);
+				
+				$query = "DELETE FROM tb_pemindahan_lokasi WHERE (id_pembelian) = '".$this->uri->segment(2,0)."';";
+				$this->M_general->exec_query_general($query);
+				
 				@unlink('./assets/global/images/qrcode/'.$this->uri->segment(2,0).'.png');
 				
 				header('Location: '.base_url().'transaksi-pembelian');
