@@ -249,7 +249,18 @@
 									//echo str_replace("f","849",$nama);
 									//echo'<table width="100%" id="example2" class="table table-hover hoverTable">';
 									echo'<table width="100%" id="example2" class="table table-hover" style="border: 1px black solid;">';
-										echo'<tr><td colspan="9" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN PEMINDAHAN APAR</td></tr>';
+										
+										if(strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'PEMILIK')
+										{	
+											echo'<tr><td colspan="9" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN PEMINDAHAN APAR '.strtoupper($this->session->userdata('ses_gbl_nama_akun')).'</td></tr>';
+										}
+										else
+										{
+											echo'<tr><td colspan="9" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN PEMINDAHAN APAR</td></tr>';
+										}
+										
+										
+										
 										echo'<tr><td colspan="9" Style="font-weight:bold;text-align:center;border: 0px black solid;">PERIODE '.$dari.' Sampai '.$sampai.'</td></tr>';
 										echo '<tr>';
 													echo '<th style="border: 1px black solid;background-color:#ffff99;">NO URUT</th>';

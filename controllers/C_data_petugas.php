@@ -238,8 +238,37 @@ class C_data_petugas extends CI_Controller
 							UPDATE tb_petugas 
 								SET 
 									user = '".htmlentities(str_replace("'","",$_POST['user']), ENT_QUOTES, 'UTF-8')."',
-									pass = '".base64_encode(md5(htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')))."'
+									pass = '".base64_encode(md5(htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')))."',
+									pass_ori = '".htmlentities(str_replace("'","",$_POST['pass']), ENT_QUOTES, 'UTF-8')."'
 							WHERE MD5(id_petugas) = '".htmlentities(str_replace("'","",$_POST['id_petugas']), ENT_QUOTES, 'UTF-8')."';
+						";
+				$this->M_general->exec_query_general($query);
+				
+				echo'BERHASIL';
+			}
+			else
+			{
+				header('Location: '.base_url());
+			}
+		}
+	}
+	
+	function isVerifikasi()
+	{
+		if(($this->session->userdata('ses_gbl_user_akun') == null) or ($this->session->userdata('ses_gbl_pass_enc_akun') == null))
+		{
+			header('Location: '.base_url());
+		}
+		else
+		{
+			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
+			if(!empty($cek_ses_login))
+			{
+				$query = "
+							UPDATE tb_petugas
+								SET 
+									isverif = CASE WHEN isverif = '0' THEN '1' ELSE '0' END
+							WHERE MD5(id_petugas) = '".htmlentities(str_replace("'","",$_POST['id_petugas_md5']), ENT_QUOTES, 'UTF-8')."';
 						";
 				$this->M_general->exec_query_general($query);
 				

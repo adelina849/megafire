@@ -291,7 +291,16 @@
 									//echo str_replace("f","849",$nama);
 									//echo'<table width="100%" id="example2" class="table table-hover hoverTable">';
 									echo'<table width="100%" id="example2" class="table table-hover" style="border: 1px black solid;">';
-										echo'<tr><td colspan="14" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN DATA APAR</td></tr>';
+										
+										if(strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'PEMILIK')
+										{
+											echo'<tr><td colspan="14" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN DATA APAR '.strtoupper($this->session->userdata('ses_gbl_nama_akun')).'</td></tr>';
+										}
+										else
+										{
+											echo'<tr><td colspan="14" Style="font-weight:bold;text-align:center;border: 0px black solid;">LAPORAN DATA APAR</td></tr>';
+										}
+										
 										echo'<tr><td colspan="14" Style="font-weight:bold;text-align:center;border: 0px black solid;">PERIODE '.$dari.' Sampai '.$sampai.'</td></tr>';
 										echo '<tr>';
 													echo '<th style="border: 1px black solid;background-color:#ffff99;">NO URUT</th>';
@@ -326,7 +335,16 @@
 												echo '<td style="border: 1px black solid;">'.$row->penyimpanan.'</td>';
 												echo '<td style="border: 1px black solid;">'.$row->kapasitas.'</td>';
 												echo '<td style="border: 1px black solid;">'.$row->jenis_apar.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->tgl_exp.'</td>';
+												
+												if($row->selisih_exp <= 7)
+												{
+													echo '<td style="border: 1px black solid;background-color:red;color:white;">'.$row->tgl_exp.'</td>';
+												}
+												else
+												{
+													echo '<td style="border: 1px black solid;">'.$row->tgl_exp.'</td>';
+												}
+												
 												echo '<td style="border: 1px black solid;">'.$row->sts_exp.'</td>';
 												echo '<td style="border: 1px black solid;">'.$row->sts_cek.'</td>';
 												echo '<td style="border: 1px black solid;"></td>';

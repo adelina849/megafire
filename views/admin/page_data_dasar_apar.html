@@ -239,7 +239,7 @@
 							
 							<div class="form-group">
 								<label for="merek">MEREK</label>
-								<input type="text" id="merek" name="merek"  maxlength="150" onkeypress="return isNumberKey(event)" class="required form-control" size="35" alt="Merek APAR" value="MEGAFIRE" title="Merek APAR" placeholder="*Merek APAR" readonly/>
+								<input type="text" id="merek" name="merek"  maxlength="150" class="required form-control" size="35" alt="Merek APAR" value="MEGAFIRE" title="Merek APAR" placeholder="*Merek APAR"/>
 							</div>
 							
 							<div class="form-group">
@@ -313,9 +313,10 @@
 	<tr>';
 													echo '<th width="5%" Style="text-align:center;">NO</th>';
 													echo '<th width="10%" Style="text-align:center;">NO APAR</th>';
-													echo '<th width="10%" Style="text-align:center;">JENIS</th>';
+													echo '<th width="5%" Style="text-align:center;">JENIS</th>';
+													echo '<th width="10%" Style="text-align:center;">MEREK</th>';
 													echo '<th width="10%" Style="text-align:center;">KAPASITAS</th>';
-													echo '<th width="30%" Style="text-align:center;">KETERANGAN</th>';
+													echo '<th width="25%" Style="text-align:center;">KETERANGAN</th>';
 													echo '<th width="25%" Style="text-align:center;">INPUT</th>';
 													echo '<th width="10%" Style="text-align:center;">AKSI</th>';
 										echo '</tr>
@@ -330,6 +331,7 @@
 												
 												echo '<td>'.$row->no_apar.'</td>';
 												echo '<td>'.$row->jenis_apar.'</td>';
+												echo '<td>'.$row->merek.'</td>';
 												echo '<td>'.$row->kapasitas.' Kg</td>';
 												echo '<td>'.$row->ket_apar.'</td>';
 												echo '<td>

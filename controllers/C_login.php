@@ -61,6 +61,7 @@ class C_login extends CI_Controller
 					'ses_gbl_email_akun' => $get_login->email,
 					'ses_gbl_tlp_akun' => $get_login->tlp,
 					'ses_gbl_alamat_akun' => $get_login->alamat,
+					'ses_gbl_jenis_akun' => $get_login->jenis_akun,
 					'ses_gbl_user_akun' => $get_login->user,
 					'ses_gbl_pass_ori_akun' => $pass,
 					'ses_gbl_pass_enc_akun' => $get_login->pass,
@@ -75,7 +76,56 @@ class C_login extends CI_Controller
 			}
 			else
 			{
-				header('Location: '.base_url());
+				//2. CEK DATA PEMILIK
+				$query_get_akun = "SELECT * FROM tb_pelanggan WHERE user = '".$user."' AND pass = '".$pass_enc."';";
+				$get_akun = $this->M_general->view_query_general($query_get_akun);
+				if(!empty($get_akun))
+				{
+					$get_login = $get_akun->row();
+					echo'ADA AKUN PMILIK';
+					
+					//2. Get Data kantor/tentang
+					$get_ttg = $this->M_general->get_data_kantor();
+					
+					//3. Set session
+					$user = array(
+						'ses_gbl_id_tentang' => $get_ttg->id_tentang,
+						'ses_gbl_nama_aplikasi' => $get_ttg->nama_aplikasi,
+						'ses_gbl_judul_aplikasi' => $get_ttg->judul_aplikasi,
+						'ses_gbl_ket_aplikasi' => $get_ttg->keterangan,
+						'ses_gbl_tlp_aplikasi' => $get_ttg->tlp,
+						'ses_gbl_email_aplikasi' => $get_ttg->email,
+						'ses_gbl_web_aplikasi' => $get_ttg->web,
+						'ses_gbl_url_video_aplikasi' => $get_ttg->url_video,
+						'ses_gbl_alamat_aplikasi' => $get_ttg->alamat,
+						'ses_gbl_versi_app' => $get_ttg->versi_app,
+						
+						'ses_gbl_id_akun' => $get_login->id_pelanggan,
+						'ses_gbl_nik_akun' => $get_login->nik_pelanggan,
+						'ses_gbl_nama_akun' => $get_login->nama_pelanggan,
+						'ses_gbl_kelamin_akun' => $get_login->kelamin,
+						'ses_gbl_tempat_lahir_akun' => $get_login->tempat_lahir,
+						'ses_gbl_tgl_lahir_akun' => $get_login->tgl_lahir,
+						'ses_gbl_email_akun' => $get_login->email,
+						'ses_gbl_tlp_akun' => $get_login->tlp,
+						'ses_gbl_alamat_akun' => $get_login->alamat,
+						'ses_gbl_jenis_akun' => 'PEMILIK',
+						'ses_gbl_user_akun' => $get_login->user,
+						'ses_gbl_pass_ori_akun' => $pass,
+						'ses_gbl_pass_enc_akun' => $get_login->pass,
+					);
+					$this->session->set_userdata($user);
+					//3. Set session
+					
+					//4. Redirect
+					//echo'BERHASIL MASUK';
+					header('Location: '.base_url('dashboard-admin'));
+					//4. Redirect
+				}
+				else
+				{
+					header('Location: '.base_url());
+				}
 			}
 		}
 		else

@@ -20,9 +20,11 @@ class C_dash extends CI_Controller
 		}
 		else
 		{
+			/*
 			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
 			if(!empty($cek_ses_login))
 			{
+			*/
 				//1. DATA APAR
 					$query_get_data_apar = "SELECT COUNT(id_apar) AS CNT_APAR FROM tb_apar;";
 					$get_data_apar = $this->M_general->view_query_general($query_get_data_apar);
@@ -93,11 +95,13 @@ class C_dash extends CI_Controller
 				
 				$data = array('page_content' => 'page_dashboard','get_data_apar' => $get_data_apar,'get_data_pemilik' => $get_data_pemilik,'get_data_petugas' => $get_data_petugas,'get_data_quis' => $get_data_quis,'get_grafik_penjualan' =>$get_grafik_penjualan);
 				$this->load->view('admin/container',$data);
+			/*
 			}
 			else
 			{
 				header('Location: '.base_url());
 			}
+			*/
 		}
 	}
 	

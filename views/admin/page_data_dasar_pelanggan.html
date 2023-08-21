@@ -446,10 +446,23 @@
 															<br/><b>Tempat Lahir : </b> '.$row->tempat_lahir.'
 															<br/><b>Tgl Lahir : </b> '.$row->tgl_lahir.'
 														</td>';
+														
+												if($row->isverif == '1')
+												{
+													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')" checked> Verifikasi';
+												}
+												else
+												{
+													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')"> Verifikasi';
+												}
+														
 												echo '<td>
 															<b>Telp/Hp : </b> '.$row->tlp.'
 															<br/><b>Email : </b> '.$row->email.'
 															<br/><b>Alamat :</b> '.$row->nama_prov.' '.$row->nama_kabkot.' '.$row->nama_kec.' '.$row->nama_des.' '.$row->alamat.'
+															<hr/>
+															<br/><b>Verifikasi :</b> &nbsp 
+															'.$isVerif.'
 														</td>';
 												
 												echo '<td>
@@ -458,7 +471,10 @@
 														<br/><b>Akun :</b> 
 														<br/><input type="text" id="user_'.$no.'" value="'.$row->user.'"/>
 														<br/><b>Password :</b> 
-														<br/><input type="password" id="pass_'.$no.'" value="password"/>
+														<br/><input type="password" id="pass_'.$no.'" value="'.$row->pass_ori.'"/>
+														<br/>
+														<input type="checkbox" id="show_pass_'.$no.'" class="form-checkbox" onclick="show_pass('.$no.')"> Show password
+														<br/>
 														<br/><b>Konfirm Password :</b> 
 														<br/><input type="password" id="pass2_'.$no.'" value="password"/>
 													</td>';
@@ -485,6 +501,8 @@ echo'<input type="hidden" id="jabatan_'.$no.'" name="jabatan_'.$no.'" value="'.$
 echo'<input type="hidden" id="ket_pelanggan_'.$no.'" name="ket_pelanggan_'.$no.'" value="'.$row->ket_pelanggan.'" />';
 echo'<input type="hidden" id="user_'.$no.'" name="user_'.$no.'" value="'.$row->user.'" />';
 echo'<input type="hidden" id="pass_'.$no.'" name="pass_'.$no.'" value="'.$row->pass.'" />';
+echo'<input type="hidden" id="pass_ori_'.$no.'" name="pass_ori_'.$no.'" value="'.$row->pass_ori.'" />';
+
 echo'<input type="hidden" id="avatar_'.$no.'" name="avatar_'.$no.'" value="'.$row->avatar.'" />';
 echo'<input type="hidden" id="tgl_ins_'.$no.'" name="tgl_ins_'.$no.'" value="'.$row->tgl_ins.'" />';
 echo'<input type="hidden" id="tgl_updt_'.$no.'" name="tgl_updt_'.$no.'" value="'.$row->tgl_updt.'" />';
@@ -549,6 +567,52 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 			
 		
 <script type='text/javascript'>
+	function isVerify(no)
+	{
+		var id_pelanggan = $('#id_pelanggan_'+no).val();
+		var id_pelanggan_md5 = $('#id_pelanggan_md5_'+no).val();
+		var nama_pemilik = $('#nama_pelanggan_'+no).val();
+		var user = $('#user_'+no).val();
+		
+		var r = confirm("Apakah anda yakin akan memferivikasi akun untuk "+nama_pemilik+" dengan nama akun *"+user+"* ?");
+		if (r == true) 
+		{
+			//alert("2.Proses Ajax");
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/isVerifikasi/"
+			, data: 
+					{
+						id_pelanggan_md5:id_pelanggan_md5
+					}
+			, cache: false
+			, success:function(data)
+			{ 
+				if(data==0)
+				//if(data==0)
+				{
+					$('#isVerify_'+no).css('border', '3px #C33 solid');
+					
+				}
+				else
+				{
+					$('#isVerify_'+no).css('border', '3px #090 solid');
+				}
+				  
+			} 
+			});
+		}
+		
+	}
+	
+	function show_pass(no)
+	{
+		
+		if($("#show_pass_"+no).is(':checked')){
+			$('#pass_'+no).attr('type','text');
+		}else{
+			$('#pass_'+no).attr('type','password');
+		}
+	}
+	
 	function ubah_akun(id)
 	{
 		var id_pelanggan = $('#id_pelanggan_md5_'+id).val();

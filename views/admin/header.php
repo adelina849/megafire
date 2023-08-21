@@ -90,6 +90,7 @@
 						<?php //echo 'JUAL STOCK 0 : '.$this->session->userdata('ses_gnl_isJualStock0'); ;?>
 						<?php echo $this->session->userdata('ses_gbl_nama_akun');?>
 					  <br><?php //echo 'ADMIN APLIKASI';?>
+					  <small><?php echo $this->session->userdata('ses_gbl_jenis_akun');?></small>
                       <small><?php echo $this->session->userdata('ses_gbl_alamat_akun');?></small>
 					  <br>
                     </p>

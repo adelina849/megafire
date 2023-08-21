@@ -295,8 +295,14 @@
 						</div>
 						
 						<?php
-							
-							echo'<a href="'.base_url().'data-apar" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							if(
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'ADMIN'
+								or 
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'SUPER ADMIN'
+							)
+							{
+								echo'<a href="'.base_url().'data-apar" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							}
 						?>
 						<!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
 					</div>
@@ -326,7 +332,14 @@
 						</div>
 						
 						<?php
-							echo'<a href="'.base_url().'data-pemilik" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							if(
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'ADMIN'
+								or 
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'SUPER ADMIN'
+							)
+							{
+								echo'<a href="'.base_url().'data-pemilik" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							}
 						?>
 						<!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
 					</div>
@@ -356,7 +369,14 @@
 						</div>
 						
 						<?php
-							echo'<a href="'.base_url().'data-petugas" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							if(
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'ADMIN'
+								or 
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'SUPER ADMIN'
+							)
+							{
+								echo'<a href="'.base_url().'data-petugas" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							}
 						?>
 						<!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
 					</div>
@@ -386,7 +406,14 @@
 						</div>
 						
 						<?php
-							echo'<a href="'.base_url().'data-quis" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							if(
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'ADMIN'
+								or 
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'SUPER ADMIN'
+							)
+							{
+								echo'<a href="'.base_url().'data-quis" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>';
+							}
 						?>
 						<!-- <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a> -->
 					</div>

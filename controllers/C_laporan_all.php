@@ -19,9 +19,11 @@ class C_laporan_all extends CI_Controller
 		}
 		else
 		{
+			/*
 			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
 			if(!empty($cek_ses_login))
 			{
+			*/
 				if((!empty($_GET['dari'])) && ($_GET['dari']!= "")  )
 				{
 					$dari = $_GET['dari'];
@@ -43,6 +45,15 @@ class C_laporan_all extends CI_Controller
 					$cari = "";
 				}
 				
+				if(strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'PEMILIK')
+				{
+					$cari_pemilik = "AND A.id_pelanggan = '".$this->session->userdata('ses_gbl_id_akun')."' ";
+				}
+				else
+				{
+					$cari_pemilik = "";
+				}
+				
 				//1. GET DATA APAR
 					$query = "
 								SELECT
@@ -56,6 +67,9 @@ class C_laporan_all extends CI_Controller
 									,COALESCE(B.kapasitas,'') AS kapasitas
 									,COALESCE(B.jenis_apar,'') AS jenis_apar,A.tgl_beli,DATE_ADD(A.tgl_beli, INTERVAL 1 YEAR) AS tgl_exp
 									,DATEDIFF(DATE(NOW()),A.tgl_beli) AS selisih
+									,DATEDIFF( DATE_ADD(A.tgl_beli, INTERVAL 1 YEAR) 
+														,DATE(NOW())
+											) AS selisih_exp
 									,CASE WHEN DATE(NOW()) >= DATE_ADD(A.tgl_beli, INTERVAL 1 YEAR)  THEN
 										'SUDAH EXPIRED'
 									ELSE
@@ -67,6 +81,7 @@ class C_laporan_all extends CI_Controller
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan
 								LEFT JOIN (SELECT id_pembelian FROM tb_cek_apar GROUP BY id_pembelian) AS D ON A.id_pembelian = D.id_pembelian
 								WHERE DATE(A.tgl_beli) BETWEEN '".$dari."' AND '".$sampai."'
+								".$cari_pemilik."
 								AND (A.pemilik_apar LIKE '%".$cari."%' OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%')
 								ORDER BY A.tgl_beli DESC
 								;
@@ -86,11 +101,13 @@ class C_laporan_all extends CI_Controller
 				
 				$data = array('page_content'=>'page_laporan_apar','list_laporan_apar'=>$list_laporan_apar,'msgbox_title' => $msgbox_title,'dari' => $dari,'sampai' => $sampai);
 				$this->load->view('admin/container',$data);
+			/*
 			}
 			else
 			{
 				header('Location: '.base_url());
 			}
+			*/
 		}
 	}
 	
@@ -102,9 +119,11 @@ class C_laporan_all extends CI_Controller
 		}
 		else
 		{
+			/*
 			$cek_ses_login = $this->M_general->get_akun($this->session->userdata('ses_gbl_user_akun'),$this->session->userdata('ses_gbl_pass_enc_akun'));
 			if(!empty($cek_ses_login))
 			{
+			*/
 				if((!empty($_GET['dari'])) && ($_GET['dari']!= "")  )
 				{
 					$dari = $_GET['dari'];
@@ -124,6 +143,15 @@ class C_laporan_all extends CI_Controller
 				else
 				{
 					$cari = "";
+				}
+				
+				if(strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'PEMILIK')
+				{
+					$cari_pemilik = "AND B.id_pelanggan = '".$this->session->userdata('ses_gbl_id_akun')."' ";
+				}
+				else
+				{
+					$cari_pemilik = "";
 				}
 				
 				//1. GET DATA APAR
@@ -145,6 +173,7 @@ class C_laporan_all extends CI_Controller
 								LEFT JOIN tb_pembelian AS B ON A.id_pembelian = B.id_pembelian
 								LEFT JOIN tb_petugas AS C ON B.id_petugas = C.id_petugas
 								WHERE DATE(A.tanggal_pindah) BETWEEN '".$dari."' AND '".$sampai."'
+								".$cari_pemilik."
 								AND (COALESCE(B.id_pembelian,'') LIKE '%".$cari."%' OR A.lokasi_pemindahan LIKE '%".$cari."%' OR A.penyimpanan_pemindahan LIKE '%".$cari."%')
 								ORDER BY A.tanggal_pindah DESC
 								;
@@ -160,15 +189,18 @@ class C_laporan_all extends CI_Controller
 					}
 				//1. GET DATA APAR
 				
+				
 				$msgbox_title = 'Laporan Perpindahan Lokasi APAR';
 				
 				$data = array('page_content'=>'page_laporan_pemindahan_apar','list_laporan_apar'=>$list_laporan_apar,'msgbox_title' => $msgbox_title,'dari' => $dari,'sampai' => $sampai);
 				$this->load->view('admin/container',$data);
+			/*
 			}
 			else
 			{
 				header('Location: '.base_url());
 			}
+			*/
 		}
 	}
 	

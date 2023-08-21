@@ -235,8 +235,24 @@
             
             
                 <!-- Buka | Untuk Sidebar-->
-                   <?php 
-						$this->load->view('admin/sidebar');
+                   <?php
+						if(
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'KABID'
+								or 
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'KASATPOLPP'
+							)
+						{
+							$this->load->view('admin/sidebar_kabid_kasat');
+						}
+						elseif(strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'PEMILIK')
+						{
+							$this->load->view('admin/sidebar_pemilik');
+						}
+						else
+						{
+							$this->load->view('admin/sidebar');
+						}
+						
                    ?> 
                 <!-- Tutup | Untuk Sidebar -->
                 
