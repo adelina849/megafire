@@ -217,7 +217,14 @@
 					  <!-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> -->
 						<!-- <hr> -->
 						<?php
-							echo'<button class="btn btn-primary btn-block" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModalKantor">Ubah Data Kantor</button>';
+							if(
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'ADMIN'
+								or 
+								strtoupper($this->session->userdata('ses_gbl_jenis_akun')) == 'SUPER ADMIN'
+							)
+							{
+								echo'<button class="btn btn-primary btn-block" type="button" title="Cari Dokter" data-toggle="modal" data-target="#myModalKantor">Ubah Data Kantor</button>';
+							}
 						?>
 					</div>
 					<!-- /.box-body -->

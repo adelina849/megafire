@@ -181,6 +181,10 @@
 				{
 					echo'<p style="color:red;">Pastikan anda bukan robot dengan ceklist kolom di atas.</p>';
 				}
+				elseif((!empty($_GET['from'])) && ($_GET['from']== "none")  )
+				{
+					echo'<p style="color:red;">Pengguna tidak ditemukan atau belum diverifikasi oleh admin.</p>';
+				}
 			?>
 			
 			<div class="col-xs-12" style="display:none;">

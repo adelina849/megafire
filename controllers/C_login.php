@@ -77,7 +77,7 @@ class C_login extends CI_Controller
 			else
 			{
 				//2. CEK DATA PEMILIK
-				$query_get_akun = "SELECT * FROM tb_pelanggan WHERE user = '".$user."' AND pass = '".$pass_enc."';";
+				$query_get_akun = "SELECT * FROM tb_pelanggan WHERE user = '".$user."' AND pass = '".$pass_enc."' AND  isverif = '1';";
 				$get_akun = $this->M_general->view_query_general($query_get_akun);
 				if(!empty($get_akun))
 				{
@@ -124,7 +124,7 @@ class C_login extends CI_Controller
 				}
 				else
 				{
-					header('Location: '.base_url());
+					header('Location: '.base_url().'?from=none');
 				}
 			}
 		}
