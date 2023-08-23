@@ -266,10 +266,12 @@ class C_login extends CI_Controller
 						$get_data_apar_hasil_scan = false;
 					}
 				//1. GET DATA APAR
+			//echo $query;
 			
 			$data = array('data_apar'=>$data_apar,'get_data_apar_hasil_scan' => $get_data_apar_hasil_scan);
 			clearstatcache();
 			$this->load->view('admin/public_get_info_apar_scan.html',$data);
+			
 			
 		}
 		else

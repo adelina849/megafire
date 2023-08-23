@@ -57,7 +57,7 @@ class C_laporan_all extends CI_Controller
 				//1. GET DATA APAR
 					$query = "
 								SELECT
-									A.id_apar
+									A.id_pembelian AS id_apar
 									,CASE WHEN A.pemilik_apar = '' THEN
 										COALESCE(C.nama_pelanggan,'')
 									ELSE
@@ -79,7 +79,7 @@ class C_laporan_all extends CI_Controller
 								FROM tb_pembelian AS A
 								LEFT JOIN tb_apar AS B ON A.id_apar = B.id_apar
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan
-								LEFT JOIN (SELECT id_pembelian FROM tb_cek_apar GROUP BY id_pembelian) AS D ON A.id_pembelian = D.id_pembelian
+								LEFT JOIN (SELECT id_pembelian,tgl_cek FROM tb_cek_apar GROUP BY id_pembelian,tgl_cek) AS D ON A.id_pembelian = D.id_pembelian AND D.tgl_cek = (SELECT MAX(tgl_cek) AS tgl_cek FROM tb_cek_apar WHERE id_pembelian = A.id_pembelian)
 								WHERE DATE(A.tgl_beli) BETWEEN '".$dari."' AND '".$sampai."'
 								".$cari_pemilik."
 								AND (A.pemilik_apar LIKE '%".$cari."%' OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%')
