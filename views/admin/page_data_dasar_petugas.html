@@ -434,11 +434,20 @@
 												
 												if($row->isverif == '1')
 												{
-													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')" checked> Verifikasi';
+													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')" checked> Terverifikasi';
 												}
 												else
 												{
-													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')"> Verifikasi';
+													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')"> Terverifikasi';
+												}
+												
+												if($row->isVerif_email == '1')
+												{
+													$isVerif_email = '<input type="checkbox" id="isVerif_email_'.$no.'" class="form-checkbox" disabled = "true" checked> Terverifikasi (Oleh User)';
+												}
+												else
+												{
+													$isVerif_email = '<input type="checkbox" id="isVerif_email_'.$no.'" class="form-checkbox" disabled = "true"> Terverifikasi (Oleh User)';
 												}
 												
 												echo '<td>
@@ -446,7 +455,10 @@
 															<br/><b>Email : </b> '.$row->email.'
 															<br/><b>Alamat :</b> '.$row->nama_prov.' '.$row->nama_kabkot.' '.$row->nama_kec.' '.$row->nama_des.' '.$row->alamat.'
 															<hr/>
-															<b>Verifikasi :</b> &nbsp 
+															<b>Verifikasi Email :</b> &nbsp 
+															'.$isVerif_email.'
+															<br/>
+															<b>Verifikasi Akun &nbsp:</b> &nbsp 
 															'.$isVerif.'
 														</td>';
 												

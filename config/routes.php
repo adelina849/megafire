@@ -59,6 +59,12 @@ $route['translate_uri_dashes'] = FALSE;
 		
 		$route['logout'] = "C_login/logout";
 		$route['logout/(:any)'] = 'C_login/logout';
+		
+		$route['verifikasi-email-pemilik'] = "C_login/is_verifikasi_email_pemilik";
+		$route['verifikasi-email-pemilik/(:any)'] = 'C_login/is_verifikasi_email_pemilik';
+		
+		$route['verifikasi-email-petugas'] = "C_login/is_verifikasi_email_petugas";
+		$route['verifikasi-email-petugas/(:any)'] = 'C_login/is_verifikasi_email_petugas';
 	//LOGIN
 	
 	//DASHBOARD

@@ -162,4 +162,58 @@ class C_login extends CI_Controller
 		
 		header('Location: '.base_url());
 	}
+	
+	function is_verifikasi_email_pemilik()
+	{
+		$id_pemilik = $this->uri->segment(2,0);
+		$query = "SELECT * FROM tb_pelanggan WHERE MD5(id_pelanggan) = '".$id_pemilik."' ";
+		$get_akun = $this->M_general->view_query_general($query);
+		if(!empty($get_akun))
+		{
+			$get_login = $get_akun->row();
+			
+			$query_update = "UPDATE tb_pelanggan SET isVerif_email = '1' WHERE MD5(id_pelanggan) = '".$id_pemilik."'; ";
+			$this->M_general->exec_query_general($query_update);
+			
+			echo'
+					<center>
+					<b style="color:green;">.:AKUN PEMILIK:.<br/>SELAMAT '.$get_login->nama_pelanggan.' </b>
+					<br/>- Email anda : <b>'.$get_login->email.'</b> Telah Terverifikasi. 
+					<br/>- Pastikan Admin telah melakukan verifikasi terhadap akun anda agar bisa melakukan proses login di aplikasi andorid
+					</center>
+					';
+		}
+		else
+		{
+			echo'<h1 style="color:red;">URL TIDAK VALID !</h1>';
+		}
+		
+	}
+	
+	function is_verifikasi_email_petugas()
+	{
+		$id_petugas = $this->uri->segment(2,0);
+		$query = "SELECT * FROM tb_petugas WHERE MD5(id_petugas) = '".$id_petugas."' ";
+		$get_akun = $this->M_general->view_query_general($query);
+		if(!empty($get_akun))
+		{
+			$get_login = $get_akun->row();
+			
+			$query_update = "UPDATE tb_petugas SET isVerif_email = '1' WHERE MD5(id_petugas) = '".$id_petugas."'; ";
+			$this->M_general->exec_query_general($query_update);
+			
+			echo'
+					<center>
+					<b style="color:green;">.:AKUN PETUGAS:.<br/>SELAMAT '.$get_login->nama_petugas.' </b>
+					<br/>- Email anda : <b>'.$get_login->email.'</b> Telah Terverifikasi. 
+					<br/>- Pastikan Admin telah melakukan verifikasi terhadap akun anda agar bisa melakukan proses login di aplikasi andorid
+					</center>
+					';
+		}
+		else
+		{
+			echo'<h1 style="color:red;">URL TIDAK VALID !</h1>';
+		}
+		
+	}
 }
