@@ -65,6 +65,9 @@ $route['translate_uri_dashes'] = FALSE;
 		
 		$route['verifikasi-email-petugas'] = "C_login/is_verifikasi_email_petugas";
 		$route['verifikasi-email-petugas/(:any)'] = 'C_login/is_verifikasi_email_petugas';
+		
+		$route['get-data-apar-scan'] = "C_login/get_data_apar_scan";
+		$route['get-data-apar-scan/(:any)'] = 'C_login/get_data_apar_scan';
 	//LOGIN
 	
 	//DASHBOARD

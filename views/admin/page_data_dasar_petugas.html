@@ -235,7 +235,7 @@
 							
 							<div class="form-group">
 							  <label for="kelamin">JENIS KELAMIN</label>
-							  <select name="kelamin" id="kelamin" class="required form-control select2" title="Jenis KELAMIN">
+							  <select name="kelamin" id="kelamin" class="required form-control" title="Jenis KELAMIN">
 									<option value="">== Pilih Jenis Kelamin ==</option>
 									<option value="PRIA">PRIA</option>
 									<option value="WANITA">WANITA</option>
@@ -280,7 +280,7 @@
 							
 							<div class="form-group">
                               <label for="wil_prov">PROVINSI</label>
-                              <select name="wil_prov" id="wil_prov" class="required form-control select2" title="Provinsi" onchange="get_kabkot(this)">
+                              <select name="wil_prov" id="wil_prov" class="required form-control select2" title="Provinsi" onchange="get_kabkot(this)" style="width:100%;" width="100%">
 								<!-- <option value="">== Pilih Provinsi ==</option> -->
 								<?php
 									if(!empty($get_data_prov))
@@ -298,7 +298,7 @@
 							
 							<div class="form-group">
                               <label for="wil_kabkot">KABUPATEN/KOTA</label>
-                              <select name="wil_kabkot" id="wil_kabkot" class="required form-control select2" title="Kabupaten/Kota"  onchange="get_kec(this)">
+                              <select name="wil_kabkot" id="wil_kabkot" class="required form-control select2" title="Kabupaten/Kota"  onchange="get_kec(this)" style="width:100%;" width="100%">
 								<option value="">== Pilih Kabupaten/Kota ==</option>
 								<?php
 									/*
@@ -321,14 +321,14 @@
 							<div class="form-group">
 								<label for="wil_kec">KECAMATAN</label>
 								<span style="float:right;" id="notif_pesan_paket" style="color:red;"></span>
-								<select name="wil_kec" id="wil_kec" class="required form-control select2" title="Kecamatan" onchange="get_desa(this)">
+								<select name="wil_kec" id="wil_kec" class="required form-control select2" title="Kecamatan" onchange="get_desa(this)" style="width:100%;" width="100%">
 									<option value="">== Pilih Kecamatan ==</option>
 								</select>
 							</div>
 							
 							<div class="form-group">
 								<label for="wil_des">DESA</label>
-								<select name="wil_des" id="wil_des" class="required form-control select2" title="Desa">
+								<select name="wil_des" id="wil_des" class="required form-control select2" title="Desa" style="width:100%;" width="100%">
 									<option value="">== Pilih Desa ==</option>
 								</select>
 							</div>
@@ -471,7 +471,7 @@
 														<input type="checkbox" id="show_pass_'.$no.'" class="form-checkbox" onclick="show_pass('.$no.')"> Show password
 														<br/>
 														<br/><b>Konfirm Password :</b> 
-														<br/><input type="password" id="pass2_'.$no.'" value="password"/>
+														<br/><input type="password" id="pass2_'.$no.'" value="'.$row->pass_ori.'"/>
 													</td>';
 												
 echo'<input type="hidden" id="id_petugas_'.$no.'" name="id_petugas_'.$no.'" value="'.$row->id_petugas.'" />';
@@ -599,8 +599,10 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		
 		if($("#show_pass_"+no).is(':checked')){
 			$('#pass_'+no).attr('type','text');
+			$('#pass2_'+no).attr('type','text');
 		}else{
 			$('#pass_'+no).attr('type','password');
+			$('#pass2_'+no).attr('type','password');
 		}
 	}
 	
@@ -751,7 +753,11 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		$('input[name=nik]').val($('#nik_'+id).val());
 		$('input[name=nama_petugas]').val($('#nama_petugas_'+id).val());
 		$('input[name=nama_petugas]').val($('#nama_petugas_'+id).val());
-		$('input[name=kelamin_]').val($('#kelamin'+id).val());
+		
+		//$('input[name=kelamin_]').val($('#kelamin'+id).val());
+		document.getElementById("kelamin").options.item(0).text = $('#kelamin_'+id).val();
+		document.getElementById("kelamin").options.item(0).value = $('#kelamin_'+id).val();
+		
 		$('input[name=tampat_lahir]').val($('#tampat_lahir_'+id).val());
 		$('input[name=tgl_lahir]').val($('#tgl_lahir_'+id).val());
 		$('input[name=tlp]').val($('#tlp_'+id).val());
@@ -760,16 +766,19 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		$('input[name=tempat_tugas]').val($('#tempat_tugas_'+id).val());
 		$('input[name=jabatan]').val($('#jabatan_'+id).val());
 		
-		
+		$('#wil_prov').attr('class', 'required form-control');
 		document.getElementById("wil_prov").options.item(0).text = $('#nama_prov_'+id).val();
 		document.getElementById("wil_prov").options.item(0).value = $('#kode_prov_'+id).val()+'|'+$('#nama_prov_'+id).val();
 		
+		$('#wil_kabkot').attr('class', 'required form-control');
 		document.getElementById("wil_kabkot").options.item(0).text = $('#nama_kabkot_'+id).val();
 		document.getElementById("wil_kabkot").options.item(0).value = $('#kode_kabkot_'+id).val()+'|'+$('#nama_kabkot_'+id).val();
 		
+		$('#wil_kec').attr('class', 'required form-control');
 		document.getElementById("wil_kec").options.item(0).text = $('#nama_kec_'+id).val();
 		document.getElementById("wil_kec").options.item(0).value = $('#kode_kec_'+id).val()+'|'+$('#nama_kec_'+id).val();
 		
+		$('#wil_des').attr('class', 'required form-control');
 		document.getElementById("wil_des").options.item(0).text = $('#nama_des_'+id).val();
 		document.getElementById("wil_des").options.item(0).value = $('#kode_des_'+id).val()+'|'+$('#nama_des_'+id).val();
 		
@@ -889,6 +898,9 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 	
 	<!-- bootstrap datepicker -->
 	<script src="<?=base_url();?>/assets/adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+	
+	<!-- Select2 -->
+	<script src="<?=base_url();?>/assets/adminlte/plugins/select2/select2.full.min.js"></script>
     
     <script>
       $(function () {
@@ -899,7 +911,7 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		
 		
         //Initialize Select2 Elements
-        //$(".select2").select2();
+        $(".select2").select2();
 
         //Datemask yyyy-mm-dd
         $(".datemask_mysql").inputmask("yyyy-mm-dd", {"placeholder": "yyyy-mm-dd"});

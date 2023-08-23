@@ -37,6 +37,18 @@
         <script src="<?php echo base_url();?>assets/adminlte/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 		
 		<script type='text/javascript'>
+			function show_pass_profile()
+			{
+				
+				if($("#txt_show_pass_profile").is(':checked')){
+					$('#prof_pass').attr('type','text');
+					$('#prof_pass2').attr('type','text');
+				}else{
+					$('#prof_pass').attr('type','password');
+					$('#prof_pass2').attr('type','password');
+				}
+			}
+	
 			function ubah_data_profile_akun()
 			{
 				var id_akun = $("#prof_id_akun").val();
@@ -393,7 +405,11 @@
 															<label for="prof_pass" class="col-sm-3 control-label">PASSWORD</label>
 															<div class="col-sm-9">
 															<input type="password" class="required form-control" name="prof_pass" id="prof_pass" placeholder="*Jangan diisi jika tidak ingin merubah"  value="<?php echo $this->session->userdata('ses_gbl_pass_ori_akun');?>">
+															
+															<input type="checkbox" id="txt_show_pass_profile" class="form-checkbox" onclick="show_pass_profile()"> Show password
+															
 															</div>
+															
 														</div>
 														
 														<div class="form-group" style="color:red;">

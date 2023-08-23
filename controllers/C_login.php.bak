@@ -254,6 +254,7 @@ class C_login extends CI_Controller
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan
 								LEFT JOIN (SELECT id_pembelian FROM tb_cek_apar GROUP BY id_pembelian) AS D ON A.id_pembelian = D.id_pembelian
 								WHERE md5(A.id_pembelian) = '".$id_pembelian."'
+								ORDER BY A.tgl_beli DESC
 								;
 							";
 					$get_data_apar_hasil_scan = $this->M_general->view_query_general($query);

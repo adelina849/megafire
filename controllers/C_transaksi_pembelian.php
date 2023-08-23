@@ -668,9 +668,13 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 						$config['white']        = array(70,130,180); // array, default is array(0,0,0)
 						$this->ciqrcode->initialize($config);
 				 
-						$image_name= $_POST['no_apar'].'.png'; //buat name dari qr code sesuai dengan nim
+						//$image_name= $_POST['no_apar'].'.png'; //buat name dari qr code sesuai dengan nim
+						//$image_name= base_url().'get-data-apar-scan/'.md5($_POST['no_apar']).'.png'; //buat name dari qr code sesuai dengan nim
+						$image_name= md5($_POST['no_apar']).'.png'; //buat name dari qr code sesuai dengan nim
 				 
-						$params['data'] = $_POST['no_apar']; //data yang akan di jadikan QR CODE
+						//$params['data'] = $_POST['no_apar']; //data yang akan di jadikan QR CODE
+						$params['data'] = base_url().'get-data-apar-scan/'.md5($_POST['no_apar']); //data yang akan di jadikan QR CODE
+						
 						$params['level'] = 'H'; //H=High
 						$params['size'] = 10;
 						$params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
@@ -711,9 +715,12 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 					$config['white']        = array(70,130,180); // array, default is array(0,0,0)
 					$this->ciqrcode->initialize($config);
 			 
-					$image_name= $id_pembelian.'.png'; //buat name dari qr code sesuai dengan nim
+					//$image_name= $id_pembelian.'.png'; //buat name dari qr code sesuai dengan nim
+					//$image_name= base_url().'get-data-apar-scan/'.md5($id_pembelian).'.png'; //buat name dari qr code sesuai dengan nim
+					$image_name= md5($id_pembelian).'.png'; //buat name dari qr code sesuai dengan nim
 			 
-					$params['data'] = $id_pembelian; //data yang akan di jadikan QR CODE
+					//$params['data'] = $id_pembelian; //data yang akan di jadikan QR CODE
+					$params['data'] = base_url().'get-data-apar-scan/'.md5($id_pembelian); //data yang akan di jadikan QR CODE
 					$params['level'] = 'H'; //H=High
 					$params['size'] = 10;
 					$params['savename'] = FCPATH.$config['imagedir'].$image_name; //simpan image QR CODE ke folder assets/images/
