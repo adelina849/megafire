@@ -120,7 +120,7 @@
 				<input type="password" name="pass" id="pass" class="form-control" placeholder="Password" class="required form-control">
 				<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 			</div>
-			<!-- <input type="checkbox" id="show_pass_ss" class="form-checkbox" onclick="show_pass_ss()"> Show password -->
+			<input type="checkbox" id="show_pass_ss" class="form-checkbox" onclick="show_pass_ss()"> Show password
           <?php
                 /*
 				if (!empty($captcha_img))

@@ -194,7 +194,7 @@
 						<div class="form-group">
 							<label for="alamat" class="col-sm-4 control-label">KABUPATEN</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="KABUPATEN Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->kabupaten; ?>" class="required form-control" disabled="true">
+								<input type="text" class="form-control" placeholder="Kecamatan Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->kabupaten; ?>" class="required form-control" disabled="true">
 								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 							</div>
 						</div>

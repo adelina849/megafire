@@ -423,13 +423,16 @@
 												echo'<td>'.$no.'</td>';
 												
 												echo '<td>
-															<b>NIK : </b> '.$row->nik.'
+															<b>No Petugas : </b> '.$row->id_petugas.'
+															<br/><b>NIK : </b> '.$row->nik.'
 															<br/><b>Nama Lengkap : </b> '.$row->nama_petugas.'
 															<br/><b>Jenis Kelamin : </b> '.$row->kelamin.'
 															<br/><b>Perusahaan/Instansi : </b> '.$row->tempat_tugas.'
 															<br/><b>Jabatan : </b> '.$row->jabatan.'
 															<br/><b>Tempat Lahir : </b> '.$row->tampat_lahir.'
 															<br/><b>Tgl Lahir : </b> '.$row->tgl_lahir.'
+															
+															<hr/><font Style="color:red;"><b>Jumlah APAR : </b> '.$row->CNT.' Buah</font>
 														</td>';
 												
 												if($row->isverif == '1')
@@ -518,11 +521,11 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 												
 	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->nama_petugas.'" alt = "Ubah Data '.$row->nama_petugas.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-petugas-hapus/'.(md5($row->id_petugas)).'" title = "Hapus Data '.$row->nama_petugas.'" alt = "Hapus Data '.$row->nama_petugas.'">Hapus</a>
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-petugas-hapus/'.(md5($row->id_petugas)).'" title = "Apakah Anda Yakin akan menghapus data petugas '.$row->nama_petugas.' ?" alt = "Apakah Anda Yakin akan menghapus data petugas '.$row->nama_petugas.' ?">Hapus</a>
 	
 	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun petugas '.$row->nama_petugas.'" alt = "Klik untuk simpan akun petugas '.$row->nama_petugas.'">Simpan Akun</a>
 	
-	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian?berdasarkan=PETUGAS&cari='.$row->nik.'" title = "Hasil Cek APAR '.$row->nama_petugas.'" alt = "Hasil Cek APAR '.$row->nama_petugas.'" Style="box-shadow: 1px 2px #888888;">DETAIL</a>
+	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian?berdasarkan=PETUGAS&cari='.$row->id_petugas.'" title = "Detail APAR '.$row->nama_petugas.' yang harus di tangani" alt = "Detail APAR '.$row->nama_petugas.' yang harus di tangani" Style="box-shadow: 1px 2px #888888;">Detail</a>
 												</td>';
 												
 											echo'</tr>';

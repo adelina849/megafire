@@ -78,7 +78,8 @@ class C_transaksi_pembelian extends CI_Controller
 								{
 									$query = $query." WHERE 
 														(
-														COALESCE(B.nik,'') LIKE '%".$cari."%'
+														COALESCE(B.id_petugas,'') LIKE '%".$cari."%'
+														OR COALESCE(B.nik,'') LIKE '%".$cari."%'
 														OR COALESCE(B.nama_petugas,'') LIKE '%".$cari."%'
 														)
 														
@@ -90,9 +91,21 @@ class C_transaksi_pembelian extends CI_Controller
 								{
 									$query = $query." WHERE 
 														(
-														COALESCE(C.nik_pelanggan,'') LIKE '%".$cari."%'
+														COALESCE(C.id_pelanggan,'') LIKE '%".$cari."%'
+														OR COALESCE(C.nik_pelanggan,'') LIKE '%".$cari."%'
 														OR COALESCE(C.no_pelanggan,'') LIKE '%".$cari."%'
 														OR COALESCE(C.nama_pelanggan,'') LIKE '%".$cari."%'
+														)
+														
+														ORDER BY A.tgl_transaksi DESC
+														LIMIT ".$this->uri->segment(2,0).",30
+														";
+								}
+								elseif($berdasarkan == 'PEMBELIAN')
+								{
+									$query = $query." WHERE 
+														(
+														COALESCE(A.id_pembelian,'') LIKE '%".$cari."%'
 														)
 														
 														ORDER BY A.tgl_transaksi DESC
@@ -820,6 +833,7 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 				$pemilik_apar = htmlentities(str_replace("'","",$_POST['pemilik_apar']), ENT_QUOTES, 'UTF-8');
 				$desa = htmlentities(str_replace("'","",$_POST['desa']), ENT_QUOTES, 'UTF-8');
 				$kecamatan = htmlentities(str_replace("'","",$_POST['kecamatan']), ENT_QUOTES, 'UTF-8');
+				$kabupaten = htmlentities(str_replace("'","",$_POST['kabupaten']), ENT_QUOTES, 'UTF-8');
 				$lokasi_apar = htmlentities(str_replace("'","",$_POST['lokasi_apar']), ENT_QUOTES, 'UTF-8');
 				$penyimpanan = htmlentities(str_replace("'","",$_POST['penyimpanan']), ENT_QUOTES, 'UTF-8');
 				
@@ -828,6 +842,7 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 							pemilik_apar = '".$pemilik_apar."'
 							,desa = '".$desa."'
 							,kecamatan = '".$kecamatan."'
+							,kabupaten = '".$kabupaten."'
 							,lokasi_apar = '".$lokasi_apar."'
 							,penyimpanan = '".$penyimpanan."'
 						WHERE id_pembelian = '".$id_pembelian."'
@@ -1014,6 +1029,7 @@ echo'<input type="hidden" id="nama_petugas_2_'.$no.'" name="nama_petugas_2_'.$no
 									,COALESCE(D.merek,'') AS merek_apar
 									
 									,COALESCE(E.tgl_cek,'') AS tgl_cek
+									,DATE_ADD(A.tgl_beli, INTERVAL 1 YEAR) AS tgl_exp
 								FROM tb_pembelian AS A
 								LEFT JOIN tb_petugas AS B ON A.id_petugas = B.id_petugas
 								LEFT JOIN tb_pelanggan AS C ON A.id_pelanggan = C.id_pelanggan

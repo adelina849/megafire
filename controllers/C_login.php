@@ -230,13 +230,13 @@ class C_login extends CI_Controller
 			//1. GET DATA APAR
 					$query = "
 								SELECT
-									A.id_apar
+									A.id_pembelian AS id_apar
 									,CASE WHEN A.pemilik_apar = '' THEN
 										COALESCE(C.nama_pelanggan,'')
 									ELSE
 										A.pemilik_apar
 									END AS pemilik_apar
-									,A.desa,A.kecamatan,COALESCE(B.merek,'') AS merek_apar,A.lokasi_apar,A.penyimpanan
+									,A.desa,A.kecamatan,A.kabupaten,COALESCE(B.merek,'') AS merek_apar,A.lokasi_apar,A.penyimpanan
 									,COALESCE(B.kapasitas,'') AS kapasitas
 									,COALESCE(B.jenis_apar,'') AS jenis_apar,A.tgl_beli,DATE_ADD(A.tgl_beli, INTERVAL 1 YEAR) AS tgl_exp
 									,DATEDIFF(DATE(NOW()),A.tgl_beli) AS selisih

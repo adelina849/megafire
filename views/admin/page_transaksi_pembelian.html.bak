@@ -845,13 +845,6 @@ echo'<input type="hidden" id="tgl_update_'.$no.'" name="tgl_update_'.$no.'" valu
 													</div>
 													
 													<div class="form-group">
-														<label for="kabupaten_DA" class="col-sm-3 control-label">KABUPATEN</label>
-														<div class="col-sm-9">
-															<input type="text" id="kabupaten_DA" name="kabupaten_DA"  maxlength="35" class="form-control" size="35" alt="KABUPATEN" title="KABUPATEN" placeholder="*KABUPATEN"/>
-														</div>
-													</div>
-													
-													<div class="form-group">
 														<label for="merek_DA" class="col-sm-3 control-label">MEREK</label>
 														<div class="col-sm-9">
 															<input type="text" id="merek_DA" name="merek_DA"  maxlength="35" class="required form-control" size="35" alt="MEREK" title="MEREK" placeholder="*MEREK" readonly/>

@@ -34,7 +34,7 @@ class C_data_petugas extends CI_Controller
 				//1. GET DATA petugas/petugas
 					$query = "
 								SELECT 
-									* 
+									A.* 
 									,
 									SUBSTRING_INDEX(A.wil_prov,'|',1) AS kode_prov,
 									SUBSTRING_INDEX(A.wil_prov,'|',-1) AS nama_prov,
@@ -46,8 +46,11 @@ class C_data_petugas extends CI_Controller
 									SUBSTRING_INDEX(A.wil_kec,'|',-1) AS nama_kec,
 									
 									SUBSTRING_INDEX(A.wil_des,'|',1) AS kode_des,
-									SUBSTRING_INDEX(A.wil_des,'|',-1) AS nama_des
+									SUBSTRING_INDEX(A.wil_des,'|',-1) AS nama_des,
+									
+									 COALESCE(B.CNT,0) AS CNT
 								FROM tb_petugas AS A
+								LEFT JOIN (SELECT id_petugas,COUNT(id_pembelian) AS CNT FROM tb_pembelian GROUP BY id_petugas) AS B ON A.id_petugas = B.id_petugas
 								WHERE (nik LIKE '%".$cari."%' OR nama_petugas LIKE '%".$cari."%')
 								ORDER BY tgl_ins DESC
 								LIMIT ".$this->uri->segment(2,0).",50

@@ -542,7 +542,7 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 												
 	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_pelanggan.'" alt = "Ubah Data '.$row->no_pelanggan.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-pemilik-hapus/'.(md5($row->id_pelanggan)).'" title = "Apakah Anda Yakin akan menghapus data pelanggan '.$row->nama_pelanggan.' ?" alt = "Apakah Anda Yakin akan menghapus data pelanggan '.$row->nama_pelanggan.' ?">Hapus</a>
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-pemilik-hapus/'.(md5($row->id_pelanggan)).'" title = "Hapus Data '.$row->no_pelanggan.'" alt = "Hapus Data '.$row->no_pelanggan.'">Hapus</a>
 	
 	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'" alt = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'">Simpan Akun</a>
 	

@@ -104,42 +104,42 @@
 					{
 					*/
 						$('#1_data_dasar').attr('class', 'active treeview');
-						$('#12_data_dasar_pemilik').attr('class', 'active treeview');
+						$('#13_data_dasar_petugas').attr('class', 'active treeview');
 					//}
 					
-					$("#no_pelanggan").change(function()
+					$("#nama_petugas").change(function()
                     {  
                 
-                        var no_pelanggan = $("#no_pelanggan").val();
+                        var nama_petugas = $("#nama_petugas").val();
                         $("#pesan").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Cek <?php echo $msgbox_title;?> ...");
                 
-                        if(no_pelanggan =='')
+                        if(nama_petugas =='')
                         {
                           $("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> Kolom Tidak Boleh Kosong');
-                          $("#no_pelanggan").css('border', '3px #C33 solid');
+                          $("#nama_petugas").css('border', '3px #C33 solid');
                         }
 						else
 						{
-							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/cek_data_pelanggan/"
+							$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_petugas/cek_data_petugas/"
 							, data: 
 									{
-										no_pelanggan:no_pelanggan
+										nama_petugas:nama_petugas
 									}
 							, cache: false
 							, success:function(data)
 							{ 
-								if(data==0 || ($("#no_pelanggan").val() == $("#cek_no_pelanggan").val()))
+								if(data==0 || ($("#nama_petugas").val() == $("#cek_nama_petugas").val()))
 								//if(data==0)
 								  {
 									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/true.png">');
-									$("#no_pelanggan").css('border', '3px #090 solid');
+									$("#nama_petugas").css('border', '3px #090 solid');
 									$("#btnsimpan").attr("disabled", false);
 								}
 								  else
 								  {
 									$("#pesan").html('<img src="<?php echo base_url();?>assets/global/salah.png"> No/Kode <?php echo $msgbox_title;?> Telah Digunakan, Tombol Save Terkunci');
 									//$("#pesan").html(data); 
-									$("#no_pelanggan").css('border', '3px #C33 solid');
+									$("#nama_petugas").css('border', '3px #C33 solid');
 									$("#btnsimpan").attr("disabled", true);
 								  }
 								  
@@ -183,7 +183,7 @@
 		<ol class="breadcrumb">
 			<li><a href="<?php echo base_url()?>gl-admin"><i class="fa fa-dashboard"></i> Dashboard</a></li>
 			<li><a href="#"><i class="fa fa-desktop"></i> Data Dasar</a></li>
-			<li class="active"><i class="fa fa-user"></i> Pemilik</li>
+			<li class="active"><i class="fa fa-users"></i> Petugas</li>
 			
 		</ol>
 		</section>
@@ -200,7 +200,7 @@
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 				<h4><?php echo $msgbox_title;?></h4>
 				<p>
-					Halaman ini menampilkan data pelanggan yang tersedia. Klik tombol "+" untuk menambah data.
+					Halaman ini menampilkan data petugas yang tersedia. Klik tombol "+" untuk menambah data.
 				</P>
 				<!-- <p style="color:red;"><?php //echo $sum_pesan; ?></p> -->
 			</div>
@@ -216,35 +216,21 @@
 				
 				
 				<!-- ISI FORM -->
-						<form role="form" action="<?php echo base_url();?>data-pemilik-simpan" method="post" class="frm-input">
+						<form role="form" action="<?php echo base_url();?>data-petugas-simpan" method="post" class="frm-input">
 						<input type="hidden" name="stat_edit" id="stat_edit"/>
-						<input type="hidden" name="id_pelanggan" id="id_pelanggan"/>
+						<input type="hidden" name="id_petugas" id="id_petugas"/>
 						<div class="box-body">
 							
-							<div class="form-group">
-							  <label for="jenis_pelanggan">JENIS PEMILIK</label>
-							  <select name="jenis_pelanggan" id="jenis_pelanggan" class="required form-control" title="Jenis Pemilik">
-									<option value="">== Pilih Jenis Pemilik ==</option>
-									<option value="DINAS">DINAS</option>
-									<option value="PERUSAHAAN">PERUSAHAAN</option>
-									<option value="PERORANGAN">PERORANGAN</option>
-							   </select>
-							</div>
 							
 							<div class="form-group">
-								<label for="nik_pelanggan">NIK</label>
-								<input type="text" id="nik_pelanggan" name="nik_pelanggan"  maxlength="25" class=" form-control" size="35" alt="NIK " title="NIK " placeholder="*NIK " onkeypress="return isNumberKey(event)"/>
+								<label for="nik">NIK</label>
+								<input type="text" id="nik" name="nik"  maxlength="25" class=" form-control" size="35" alt="NIK " title="NIK " placeholder="*NIK " onkeypress="return isNumberKey(event)"/>
 							</div>
 							
-							<div class="form-group">
-								<label for="no_pelanggan">NO/KODE PEMILIK</label>
-								<input type="hidden" id="cek_no_pelanggan" name="cek_no_pelanggan" />
-								<input type="text" id="no_pelanggan" name="no_pelanggan"  maxlength="15" class="required form-control" size="15" alt="No/Kode" title="No/Kode" placeholder="*No/Kode adalah no unik yang diberikan sebagai penanda atau identitas bagi tersebut, No ini bersifat unik atau tidak ada yang sama." value="<?php echo $get_no_pelanggan; ?>" /><span id="pesan"></span>
-							</div>
 							
 							<div class="form-group">
-								<label for="nama_pelanggan">NAMA LENGKAP</label>
-								<input type="text" id="nama_pelanggan" name="nama_pelanggan"  maxlength="35" class="required form-control" size="35" alt="Nama Lengkap" title="Nama Lengkap" placeholder="*Nama Lengkap" />
+								<label for="nama_petugas">NAMA LENGKAP</label>
+								<input type="text" id="nama_petugas" name="nama_petugas"  maxlength="35" class="required form-control" size="35" alt="Nama Lengkap" title="Nama Lengkap" placeholder="*Nama Lengkap" />
 							</div>
 							
 							<div class="form-group">
@@ -257,8 +243,8 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="nama_perusahaan">NAMA PERUSAHAAN/INSTANSI/LEMBAGA</label>
-								<input type="text" id="nama_perusahaan" name="nama_perusahaan"  maxlength="35" class="form-control" size="35" alt="Nama PERUSAHAAN/INSTANSI/LEMBAGA" title="Nama PERUSAHAAN/INSTANSI/LEMBAGA" placeholder="*Nama PERUSAHAAN/INSTANSI/LEMBAGA" />
+								<label for="tempat_tugas">TEMPAT TUGAS</label>
+								<input type="text" id="tempat_tugas" name="tempat_tugas"  maxlength="35" class="form-control" size="35" alt="Nama PERUSAHAAN/INSTANSI/LEMBAGA" title="Nama PERUSAHAAN/INSTANSI/LEMBAGA" placeholder="*Nama PERUSAHAAN/INSTANSI/LEMBAGA" />
 							</div>
 							
 							<div class="form-group">
@@ -267,8 +253,8 @@
 							</div>
 							
 							<div class="form-group">
-								<label for="tempat_lahir">TEMPAT LAHIR</label>
-								<input type="text" id="tempat_lahir" name="tempat_lahir"  maxlength="35" class="required form-control" size="35" alt="Tempat Lahir" title="Tempat Lahir" placeholder="*Tempat Lahir" />
+								<label for="tampat_lahir">TEMPAT LAHIR</label>
+								<input type="text" id="tampat_lahir" name="tampat_lahir"  maxlength="35" class="required form-control" size="35" alt="Tempat Lahir" title="Tempat Lahir" placeholder="*Tempat Lahir" />
 							</div>
 							
 							<div class="form-group">
@@ -295,7 +281,6 @@
 							<div class="form-group">
                               <label for="wil_prov">PROVINSI</label>
                               <select name="wil_prov" id="wil_prov" class="required form-control select2" title="Provinsi" onchange="get_kabkot(this)" style="width:100%;" width="100%">
-							  
 								<!-- <option value="">== Pilih Provinsi ==</option> -->
 								<?php
 									if(!empty($get_data_prov))
@@ -343,7 +328,7 @@
 							
 							<div class="form-group">
 								<label for="wil_des">DESA</label>
-								<select name="wil_des" id="wil_des" class="required form-control select2" title="Desa"style="width:100%;" width="100%">
+								<select name="wil_des" id="wil_des" class="required form-control select2" title="Desa" style="width:100%;" width="100%">
 									<option value="">== Pilih Desa ==</option>
 								</select>
 							</div>
@@ -354,8 +339,8 @@
                             </div>
 							
 							<div class="form-group">
-                              <label for="ket_pelanggan">KETERANGAN</label>
-                              <textarea name="ket_pelanggan" id="ket_pelanggan" class="required form-control" title="Isikan lengkap tentang keterangan Pelanggan" placeholder="*Isikan lengkap tentang keterangan Pelanggan"></textarea>
+                              <label for="ket_petugas">KETERANGAN</label>
+                              <textarea name="ket_petugas" id="ket_petugas" class="required form-control" title="Isikan lengkap tentang keterangan petugas" placeholder="*Isikan lengkap tentang keterangan petugas"></textarea>
                             </div>
 							
 						</div><!-- /.box-body -->
@@ -380,7 +365,7 @@
 							</h3>
 							<div class="pull-right">
 								<!-- <form action="<?=base_url();?>admin/pendaftaran-klinik-cari" method="post" class="frm-cari"> -->
-								<form action="<?=base_url();?>data-pemilik" method="get" class="frm-cari">
+								<form action="<?=base_url();?>data-petugas" method="get" class="frm-cari">
 									<table>
 										<tr>
 											<!-- <td>Berdasarkan</td><td>:</td> -->
@@ -399,7 +384,7 @@
 												<button type="submit" id="btnsimpan" class="btn btn-success btn-block btn-flat" title="Pencarian Data <?php echo $msgbox_title;?> ?">CARI</button>
 											</td>
 											<td>
-												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-pemilik-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
+												<a class="btn btn-warning btn-block btn-flat" target="_blank" href="<?php echo base_url();?>data-petugas-excel?cari=<?php if (!empty($_GET['cari'])){echo $_GET['cari'];} ?>" title = "Print Excel" alt = "Print Excel">EXCEL</a>
 											</td>
 										</tr>
 									</table>
@@ -411,7 +396,7 @@
 						
 						<?php
 							//TABLE
-							if(!empty($list_data_pelanggan))
+							if(!empty($list_data_petugas))
 								{
 									//echo gethostname();
 									//echo $this->M_gl_pengaturan->getUserIpAddr();
@@ -429,7 +414,7 @@
 													echo '<th width="10%" Style="text-align:center;">AKSI</th>';
 										echo '</tr>
 	</thead>';
-										$list_result = $list_data_pelanggan->result();
+										$list_result = $list_data_petugas->result();
 										$no =$this->uri->segment(2,0)+1;
 										echo '<tbody>';
 										foreach($list_result as $row)
@@ -438,25 +423,25 @@
 												echo'<td>'.$no.'</td>';
 												
 												echo '<td>
-															<b>NO Pelanggan : </b> '.$row->no_pelanggan.'
-															<br/><b>NIK : </b> '.$row->nik_pelanggan.'
-															<br/><b>Nama Lengkap : </b> '.$row->nama_pelanggan.'
+															<b>No Petugas : </b> '.$row->id_petugas.'
+															<br/><b>NIK : </b> '.$row->nik.'
+															<br/><b>Nama Lengkap : </b> '.$row->nama_petugas.'
 															<br/><b>Jenis Kelamin : </b> '.$row->kelamin.'
-															<br/><b>Perusahaan/Instansi : </b> '.$row->nama_perusahaan.'
+															<br/><b>Perusahaan/Instansi : </b> '.$row->tempat_tugas.'
 															<br/><b>Jabatan : </b> '.$row->jabatan.'
-															<br/><b>Tempat Lahir : </b> '.$row->tempat_lahir.'
+															<br/><b>Tempat Lahir : </b> '.$row->tampat_lahir.'
 															<br/><b>Tgl Lahir : </b> '.$row->tgl_lahir.'
 															
 															<hr/><font Style="color:red;"><b>Jumlah APAR : </b> '.$row->CNT.' Buah</font>
 														</td>';
-														
+												
 												if($row->isverif == '1')
 												{
-													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')" checked> Verifikasi';
+													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')" checked> Terverifikasi';
 												}
 												else
 												{
-													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')"> Verifikasi';
+													$isVerif = '<input type="checkbox" id="isVerify_'.$no.'" class="form-checkbox" onclick="isVerify('.$no.')"> Terverifikasi';
 												}
 												
 												if($row->isVerif_email == '1')
@@ -481,9 +466,7 @@
 														</td>';
 												
 												echo '<td>
-														<b>Jenis Pemilik :</b> '.$row->jenis_pelanggan.'
-														<br/>
-														<br/><b>Akun :</b> 
+														<b>Akun :</b> 
 														<br/><input type="text" id="user_'.$no.'" value="'.$row->user.'"/>
 														<br/><b>Password :</b> 
 														<br/><input type="password" id="pass_'.$no.'" value="'.$row->pass_ori.'"/>
@@ -494,31 +477,27 @@
 														<br/><input type="password" id="pass2_'.$no.'" value="'.$row->pass_ori.'"/>
 													</td>';
 												
-echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
+echo'<input type="hidden" id="id_petugas_'.$no.'" name="id_petugas_'.$no.'" value="'.$row->id_petugas.'" />';
 
-echo'<input type="hidden" id="id_pelanggan_'.$no.'" name="id_pelanggan_'.$no.'" value="'.$row->id_pelanggan.'" />';
-echo'<input type="hidden" id="id_pelanggan_md5_'.$no.'" name="id_pelanggan_md5_'.$no.'" value="'.md5($row->id_pelanggan).'" />';
-echo'<input type="hidden" id="jenis_pelanggan_'.$no.'" name="jenis_pelanggan_'.$no.'" value="'.$row->jenis_pelanggan.'" />';
-echo'<input type="hidden" id="nik_pelanggan_'.$no.'" name="nik_pelanggan_'.$no.'" value="'.$row->nik_pelanggan.'" />';
-echo'<input type="hidden" id="no_pelanggan_'.$no.'" name="no_pelanggan_'.$no.'" value="'.$row->no_pelanggan.'" />';
-echo'<input type="hidden" id="nama_pelanggan_'.$no.'" name="nama_pelanggan_'.$no.'" value="'.$row->nama_pelanggan.'" />';
+echo'<input type="hidden" id="id_petugas_'.$no.'" name="id_petugas_'.$no.'" value="'.$row->id_petugas.'" />';
+echo'<input type="hidden" id="id_petugas_md5_'.$no.'" name="id_petugas_md5_'.$no.'" value="'.md5($row->id_petugas).'" />';
+echo'<input type="hidden" id="nik_'.$no.'" name="nik_'.$no.'" value="'.$row->nik.'" />';
+echo'<input type="hidden" id="nama_petugas_'.$no.'" name="nama_petugas_'.$no.'" value="'.$row->nama_petugas.'" />';
 echo'<input type="hidden" id="kelamin_'.$no.'" name="kelamin_'.$no.'" value="'.$row->kelamin.'" />';
-echo'<input type="hidden" id="tempat_lahir_'.$no.'" name="tempat_lahir_'.$no.'" value="'.$row->tempat_lahir.'" />';
+echo'<input type="hidden" id="tampat_lahir_'.$no.'" name="tampat_lahir_'.$no.'" value="'.$row->tampat_lahir.'" />';
 echo'<input type="hidden" id="tgl_lahir_'.$no.'" name="tgl_lahir_'.$no.'" value="'.$row->tgl_lahir.'" />';
 echo'<input type="hidden" id="tlp_'.$no.'" name="tlp_'.$no.'" value="'.$row->tlp.'" />';
 echo'<input type="hidden" id="email_'.$no.'" name="email_'.$no.'" value="'.$row->email.'" />';
 
 echo'<input type="hidden" id="alamat_'.$no.'" name="alamat_'.$no.'" value="'.$row->alamat.'" />';
 
-echo'<input type="hidden" id="nama_perusahaan_'.$no.'" name="nama_perusahaan_'.$no.'" value="'.$row->nama_perusahaan.'" />';
+echo'<input type="hidden" id="tempat_tugas_'.$no.'" name="tempat_tugas_'.$no.'" value="'.$row->tempat_tugas.'" />';
 echo'<input type="hidden" id="jabatan_'.$no.'" name="jabatan_'.$no.'" value="'.$row->jabatan.'" />';
 
-echo'<input type="hidden" id="ket_pelanggan_'.$no.'" name="ket_pelanggan_'.$no.'" value="'.$row->ket_pelanggan.'" />';
+echo'<input type="hidden" id="ket_petugas_'.$no.'" name="ket_petugas_'.$no.'" value="'.$row->ket_petugas.'" />';
 echo'<input type="hidden" id="user_'.$no.'" name="user_'.$no.'" value="'.$row->user.'" />';
 echo'<input type="hidden" id="pass_'.$no.'" name="pass_'.$no.'" value="'.$row->pass.'" />';
-echo'<input type="hidden" id="pass_ori_'.$no.'" name="pass_ori_'.$no.'" value="'.$row->pass_ori.'" />';
-
-echo'<input type="hidden" id="avatar_'.$no.'" name="avatar_'.$no.'" value="'.$row->avatar.'" />';
+echo'<input type="hidden" id="avatar_url_'.$no.'" name="avatar_url_'.$no.'" value="'.$row->avatar_url.'" />';
 echo'<input type="hidden" id="tgl_ins_'.$no.'" name="tgl_ins_'.$no.'" value="'.$row->tgl_ins.'" />';
 echo'<input type="hidden" id="tgl_updt_'.$no.'" name="tgl_updt_'.$no.'" value="'.$row->tgl_updt.'" />';
 echo'<input type="hidden" id="user_ins_'.$no.'" name="user_ins_'.$no.'" value="'.$row->user_ins.'" />';
@@ -540,13 +519,13 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 
 												echo'<td>
 												
-	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->no_pelanggan.'" alt = "Ubah Data '.$row->no_pelanggan.'">Edit</a>
+	<a href="javascript:void(0)" class="btn btn-warning btn-sm btn-block btn-flat" onclick="edit('.$no.')" title = "Ubah Data '.$row->nama_petugas.'" alt = "Ubah Data '.$row->nama_petugas.'">Edit</a>
 	
-	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-pemilik-hapus/'.(md5($row->id_pelanggan)).'" title = "Apakah Anda Yakin akan menghapus data pelanggan '.$row->nama_pelanggan.' ?" alt = "Apakah Anda Yakin akan menghapus data pelanggan '.$row->nama_pelanggan.' ?">Hapus</a>
+	<a class="confirm-btn btn btn-danger btn-sm  btn-block btn-flat" href="'.base_url().'data-petugas-hapus/'.(md5($row->id_petugas)).'" title = "Hapus Data '.$row->nama_petugas.'" alt = "Hapus Data '.$row->nama_petugas.'">Hapus</a>
 	
-	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'" alt = "Klik untuk simpan akun pemilik '.$row->nama_pelanggan.'">Simpan Akun</a>
+	<a href="javascript:void(0)" class="btn btn-success btn-sm btn-block btn-flat" onclick="ubah_akun('.$no.')" title = "Klik untuk simpan akun petugas '.$row->nama_petugas.'" alt = "Klik untuk simpan akun petugas '.$row->nama_petugas.'">Simpan Akun</a>
 	
-	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian?berdasarkan=PEMILIK&cari='.$row->id_pelanggan.'" title = "Detail APAR yang dimiliki oleh '.$row->nama_pelanggan.'" alt = "Detail APAR yang dimiliki oleh '.$row->nama_pelanggan.'" Style="box-shadow: 1px 2px #888888;">DETAIL</a>
+	<a class="confirm-btn btn btn-default btn-sm  btn-block btn-flat" href="'.base_url().'transaksi-pembelian?berdasarkan=PETUGAS&cari='.$row->id_petugas.'" title = "Detail APAR '.$row->nama_petugas.' yang harus di tangani" alt = "Detail APAR '.$row->nama_petugas.' yang harus di tangani" Style="box-shadow: 1px 2px #888888;">Detail</a>
 												</td>';
 												
 											echo'</tr>';
@@ -584,19 +563,19 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 <script type='text/javascript'>
 	function isVerify(no)
 	{
-		var id_pelanggan = $('#id_pelanggan_'+no).val();
-		var id_pelanggan_md5 = $('#id_pelanggan_md5_'+no).val();
-		var nama_pemilik = $('#nama_pelanggan_'+no).val();
+		var id_petugas = $('#id_petugas_'+no).val();
+		var id_petugas_md5 = $('#id_petugas_md5_'+no).val();
+		var nama_petugas = $('#nama_petugas_'+no).val();
 		var user = $('#user_'+no).val();
 		
-		var r = confirm("Apakah anda yakin akan memferivikasi akun untuk "+nama_pemilik+" dengan nama akun *"+user+"* ?");
+		var r = confirm("Apakah anda yakin akan memferivikasi akun untuk "+nama_petugas+" dengan nama akun *"+user+"* ?");
 		if (r == true) 
 		{
 			//alert("2.Proses Ajax");
-			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/isVerifikasi/"
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_petugas/isVerifikasi/"
 			, data: 
 					{
-						id_pelanggan_md5:id_pelanggan_md5
+						id_petugas_md5:id_petugas_md5
 					}
 			, cache: false
 			, success:function(data)
@@ -632,23 +611,23 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 	
 	function ubah_akun(id)
 	{
-		var id_pelanggan = $('#id_pelanggan_md5_'+id).val();
-		var nama_pemilik = $('#nama_pelanggan_'+id).val();
+		var id_petugas = $('#id_petugas_md5_'+id).val();
+		var nama_petugas = $('#nama_petugas_'+id).val();
 		var user = $('#user_'+id).val();
 		var pass = $('#pass_'+id).val();
 		var pass2 = $('#pass2_'+id).val();
 		
-		var r = confirm("Apakah anda yakin akan menyimpan akun untuk "+nama_pemilik+" dengan nama akun *"+user+"* ?");
+		var r = confirm("Apakah anda yakin akan menyimpan akun untuk "+nama_petugas+" dengan nama akun *"+user+"* ?");
 		if (r == true) 
 		{
 			//alert("1.Cek Konfirm");
 			if(pass == pass2)
 			{
 				//alert("2.Proses Ajax");
-				$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/simpan_akun/"
+				$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_petugas/simpan_akun/"
 				, data: 
 						{
-							id_pelanggan:id_pelanggan,
+							id_petugas:id_petugas,
 							user:user,
 							pass:pass
 						}
@@ -689,7 +668,7 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		//alert(kode_kec);
 		$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Melakukan Proses ...</br></br>");
 		//KODE AKUN
-			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/get_list_kabkot/", data: {
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_petugas/get_list_kabkot/", data: {
 					kode_prov:kode_prov
 
 			}, success:function(data)
@@ -718,7 +697,7 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		//alert(kode_kec);
 		$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Melakukan Proses ...</br></br>");
 		//KODE AKUN
-			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/get_list_kec/", data: {
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_petugas/get_list_kec/", data: {
 					kode_kabkot:kode_kabkot
 
 			}, success:function(data)
@@ -747,7 +726,7 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		//alert(kode_kec);
 		$("#notif_pesan_paket").html("<img src='<?php echo base_url();?>assets/global/loading.gif'>Melakukan Proses ...</br></br>");
 		//KODE AKUN
-			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_pelanggan/get_list_desa/", data: {
+			$.ajax({type: "POST", url: "<?php echo base_url();?>C_data_petugas/get_list_desa/", data: {
 					kode_kec:kode_kec
 
 			}, success:function(data)
@@ -770,29 +749,25 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 	function edit(id)
 	{
 		
-		$('input[name=stat_edit]').val($('#id_pelanggan_'+id).val());
-		$('input[name=id_pelanggan]').val($('#id_pelanggan_'+id).val());
+		$('input[name=stat_edit]').val($('#id_petugas_'+id).val());
+		$('input[name=id_petugas]').val($('#id_petugas_'+id).val());
 		
-		//$('input[name=jenis_pelanggan]').val($('#jenis_pelanggan_'+id).val());
-		document.getElementById("jenis_pelanggan").options.item(0).text = $('#jenis_pelanggan_'+id).val();
-		document.getElementById("jenis_pelanggan").options.item(0).value = $('#jenis_pelanggan_'+id).val();
 		
-		$('input[name=nik_pelanggan]').val($('#nik_pelanggan_'+id).val());
-		$('input[name=no_pelanggan]').val($('#no_pelanggan_'+id).val());
-		$('input[name=nama_pelanggan]').val($('#nama_pelanggan_'+id).val());
+		$('input[name=nik]').val($('#nik_'+id).val());
+		$('input[name=nama_petugas]').val($('#nama_petugas_'+id).val());
+		$('input[name=nama_petugas]').val($('#nama_petugas_'+id).val());
 		
 		//$('input[name=kelamin_]').val($('#kelamin'+id).val());
 		document.getElementById("kelamin").options.item(0).text = $('#kelamin_'+id).val();
 		document.getElementById("kelamin").options.item(0).value = $('#kelamin_'+id).val();
 		
-		$('input[name=tempat_lahir]').val($('#tempat_lahir_'+id).val());
+		$('input[name=tampat_lahir]').val($('#tampat_lahir_'+id).val());
 		$('input[name=tgl_lahir]').val($('#tgl_lahir_'+id).val());
 		$('input[name=tlp]').val($('#tlp_'+id).val());
 		$('input[name=email]').val($('#email_'+id).val());
 		
-		$('input[name=nama_perusahaan]').val($('#nama_perusahaan_'+id).val());
+		$('input[name=tempat_tugas]').val($('#tempat_tugas_'+id).val());
 		$('input[name=jabatan]').val($('#jabatan_'+id).val());
-		
 		
 		$('#wil_prov').attr('class', 'required form-control');
 		document.getElementById("wil_prov").options.item(0).text = $('#nama_prov_'+id).val();
@@ -813,8 +788,8 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 		//$('input[name=alamat]').val($('#alamat_'+id).val());
 		document.getElementById("alamat").value = $('#alamat_'+id).val();
 		
-		//$('input[name=ket_pelanggan]').val($('#ket_pelanggan_'+id).val());
-		document.getElementById("ket_pelanggan").value = $('#ket_pelanggan_'+id).val();
+		//$('input[name=ket_petugas]').val($('#ket_petugas_'+id).val());
+		document.getElementById("ket_petugas").value = $('#ket_petugas_'+id).val();
 		
 		
 		
@@ -910,7 +885,7 @@ echo'<input type="hidden" id="nama_des_'.$no.'" name="nama_des_'.$no.'" value="'
 	}
 </script>
       
-     <!-- Bootstrap 3.3.4 -->
+    <!-- Bootstrap 3.3.4 -->
 	<script src="<?=base_url();?>assets/adminlte/bootstrap/js/bootstrap.min.js"></script>
 	<!-- Slimscroll -->
 	<script src="<?=base_url();?>assets/adminlte/plugins/slimScroll/jquery.slimscroll.min.js"></script>

@@ -315,9 +315,9 @@
 												
 												if($row['ket_cek_apar'] == '')
 												{
-													echo '<td style="border: 1px black solid;text-align:center;">V</td>';
-													echo '<td style="border: 1px black solid;text-align:center;"></td>';
-													echo '<td style="border: 1px black solid;text-align:center;"></td>';
+													echo '<td style="border: 1px black solid;">V</td>';
+													echo '<td style="border: 1px black solid;"></td>';
+													echo '<td style="border: 1px black solid;"></td>';
 												}
 												else
 												{

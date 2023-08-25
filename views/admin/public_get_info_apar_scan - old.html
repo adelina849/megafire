@@ -144,7 +144,6 @@
 			</b>
 			<?php 
 				echo '<br/>'.$get_data_kantor->alamat;
-				echo '<br/>(No Hp : '.$get_data_kantor->tlp.')';
 			?>
 		</p>
 		
@@ -152,107 +151,77 @@
 			<!-- PESAN ADE -->
 		<!-- </p> -->
 		</center>
-        <form action="<?php echo base_url();?>login-proses" method="post" class="form-horizontal frm-input">
+        <!-- <form action="<?php echo base_url();?>login-proses" method="post" class="frm-input"> -->
 			
 			<?php
 				if(!empty($data_apar))
 				{
 					?>				
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">ID APAR</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->id_apar; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">ID APAR</label>
+							<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->id_apar; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">PEMILIK APAR</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->pemilik_apar; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">PEMILIK APAR</label>
+							<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->pemilik_apar; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">DESA</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Desa Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->desa; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">DESA</label>
+							<input type="text" class="form-control" placeholder="Desa Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->desa; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">KECAMATAN</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Kecamatan Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->kecamatan; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">KECAMATAN</label>
+							<input type="text" class="form-control" placeholder="Kecamatan Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->kecamatan; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">KABUPATEN</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="KABUPATEN Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->kabupaten; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">MEREK</label>
+							<input type="text" class="form-control" placeholder="Merek Belum terisi" value="<?php echo $get_data_apar_hasil_scan->merek_apar; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">MEREK</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Merek Belum terisi" value="<?php echo $get_data_apar_hasil_scan->merek_apar; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">LOKASI APAR</label>
+							<input type="text" class="form-control" placeholder="Lokasi Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->lokasi_apar; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">LOKASI APAR</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Lokasi Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->lokasi_apar; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">PENYMPANAN APAR</label>
+							<input type="text" class="form-control" placeholder="Penyimpanan Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->penyimpanan; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">PENYIMPANAN APAR</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Penyimpanan Belum Terisi" value="<?php echo $get_data_apar_hasil_scan->penyimpanan; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">KAPASITAS</label>
+							<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->kapasitas; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">KAPASITAS</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->kapasitas; ?> Kg" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">JENIS APAR</label>
+							<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->jenis_apar; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">JENIS APAR</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->jenis_apar; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">TGL EXPIRED</label>
+							<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->tgl_exp; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">TGL EXPIRED</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->tgl_exp; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label for="alamat" class="col-sm-4 control-label">STATUS CEK</label>
-							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->sts_cek; ?>" class="required form-control" disabled="true">
-								<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
-							</div>
+						<div class="form-group has-feedback">
+							<label for="alamat">STATUS CEK/PEMERIKSAAN</label>
+							<input type="text" class="form-control" placeholder="Username" value="<?php echo $get_data_apar_hasil_scan->sts_cek; ?>" class="required form-control" disabled="true">
+							<!-- <span class="glyphicon glyphicon-user form-control-feedback"></span> -->
 						</div>
 					<?php
 				}
@@ -263,7 +232,7 @@
 			?>
 			
 			
-        </form>
+        <!-- </form> -->
 
         <!-- <a href="#">Lupa Password ?</a><br> -->
         <!-- <a href="register.html" class="text-center">Register a new membership</a> -->

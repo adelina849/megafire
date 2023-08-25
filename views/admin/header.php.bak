@@ -84,7 +84,7 @@
 						</a>
 						<ul class="dropdown-menu">
 						  <li class="header" style="border: 1px black solid;background-color:#ffff99;text-align:center;"><?php echo $fix_akum_msg;?> APAR Yang Belum Di Cek</li>
-						  <li style="border: 1px black solid; border-color: black;box-shadow: 0 7px 10px #000;">
+						  <li style="border: 1px black solid; border-color: black;box-shadow: 0 7px 7px #000;">
 							<!-- inner menu: contains the actual data -->
 							<ul class="menu">
 								<?php

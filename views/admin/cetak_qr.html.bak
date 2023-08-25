@@ -5,7 +5,7 @@
 			@page { size: auto; margin-top:0mm;margin-bottom:0mm; }	
 		</style>
 	</head>
-	<body onload="window.print();" style="font-family:arial narrow;font-size:13px;margin:-1px;">
+	<body onload="window.print();" style="font-family:calibri;font-size:13px;font-weight:bold;margin:-1px;">
 		<center>
 		<?php
 			if(!empty($list_pembelian))

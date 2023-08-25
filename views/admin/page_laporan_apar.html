@@ -303,20 +303,20 @@
 										
 										echo'<tr><td colspan="14" Style="font-weight:bold;text-align:center;border: 0px black solid;">PERIODE '.$dari.' Sampai '.$sampai.'</td></tr>';
 										echo '<tr>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">NO URUT</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">ID APAR</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">PEMILIK</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">DESA</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">KECAMATAN</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">MEREK</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">LOKASI</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">PENYIMPANAN</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">KAPASITAS</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">JENIS APAR</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">TGL EXP</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">STATUS EXP</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">STATUS CEK</th>';
-													echo '<th style="border: 1px black solid;background-color:#ffff99;">WILAYAH</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">NO URUT</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">ID APAR</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">PEMILIK</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">DESA</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">KECAMATAN</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">MEREK</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">LOKASI PENYIMPANAN</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">TEMPAT PENYIMPANAN</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">KAPASITAS</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">JENIS APAR</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">TGL EXP</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">STATUS EXP</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">STATUS CEK</th>';
+													echo '<th style="border: 1px black solid;background-color:#ffff99;text-align:center;">WILAYAH KERJA PETUGAS</th>';
 										echo '</tr>';
 										$list_result = $list_laporan_apar->result();
 										$no = 1;
@@ -333,7 +333,7 @@
 												echo '<td style="border: 1px black solid;">'.$row->merek_apar.'</td>';
 												echo '<td style="border: 1px black solid;">'.$row->lokasi_apar.'</td>';
 												echo '<td style="border: 1px black solid;">'.$row->penyimpanan.'</td>';
-												echo '<td style="border: 1px black solid;">'.$row->kapasitas.'</td>';
+												echo '<td style="border: 1px black solid;">'.$row->kapasitas.' Kg</td>';
 												echo '<td style="border: 1px black solid;">'.$row->jenis_apar.'</td>';
 												
 												if($row->selisih_exp <= 7)
