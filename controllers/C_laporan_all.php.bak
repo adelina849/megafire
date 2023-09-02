@@ -170,7 +170,7 @@ class C_laporan_all extends CI_Controller
 									,A.alasan
 									,A.tanggal_pindah
 								FROM tb_pemindahan_lokasi AS A 
-								INNER JOIN tb_pembelian AS B ON A.id_pembelian = B.id_pembelian
+								LEFT JOIN tb_pembelian AS B ON A.id_pembelian = B.id_pembelian
 								LEFT JOIN tb_petugas AS C ON B.id_petugas = C.id_petugas
 								WHERE DATE(A.tanggal_pindah) BETWEEN '".$dari."' AND '".$sampai."'
 								".$cari_pemilik."
